@@ -43,12 +43,18 @@
               <label for="provincia" class="mt-3">Provincia</label>
               <select type="text" name="provincia" placeholder="Roma" class="form-control " formControlName="">
                 <option value="">Seleziona Provincia</option>
+                <option *ngFor="let prov of province" [value]="prov.sigla">{{prov.sigla}}</option>
               </select>
 
               <label for="comune_id" class="mt-3">Comune</label>
               <select type="text" name="comune_id" placeholder="Roma" class="form-control " formControlName="indirizzo.comune_id">
                 <option value="">Seleziona Comune</option>
               </select>
+
+              <div class="mt-3">
+              <input type="checkbox" name="privacy" placeholder="privacy" class="form-check-input " formControlName="privacy">
+              <label for="privacy" class="form-check-label mx-2">Accetto la privacy</label>
+              </div>
 
             </div>
             <button type="submit" class="btn btn-primary mt-3" [disabled]="form.invalid">Registrati</button>

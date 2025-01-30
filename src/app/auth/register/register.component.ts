@@ -1,7 +1,11 @@
-import { Component } from '@angular/core';
+import { error } from './../../../../node_modules/ajv/lib/vocabularies/applicator/dependencies';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthsrvService } from '../authsrv.service';
 import { Router } from '@angular/router';
+import { iComuneResponse } from '../../interfaces/i-comune-response';
+import { ComuniSvcService } from '../../services/comuni-svc.service';
+import { iProvinciaRequest } from '../../interfaces/i-provincia-request';
 
 @Component({
   standalone:false,
@@ -9,11 +13,14 @@ import { Router } from '@angular/router';
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
+
+  comuni: iComuneResponse[] = [];
+  province: iProvinciaRequest[] = [];
 
   form: FormGroup
 
-  constructor(private authSrv: AuthsrvService, private router: Router){
+  constructor(private authSrv: AuthsrvService, private router: Router, private comuniSvc: ComuniSvcService){
     this.form = new FormGroup({
         name: new FormControl('', [Validators.required]),
         surname: new FormControl('',[Validators.required]),
@@ -32,6 +39,16 @@ export class RegisterComponent {
 
     })
   }
+  ngOnInit(): void {
+    this.comuniSvc.getProvince().subscribe({
+      next:(data) => {
+      this.province = data;},
+      error:(error) => {
+        console.log('Errore nel caricamento delle province', error)
+      }
+
+    })
+  }
 
   register(){
     if(this.form.valid){
@@ -40,7 +57,7 @@ export class RegisterComponent {
         {
           next: (data) => {
             console.log('registrazione effettuata con successo')
-            this.router.navigate(['home'])
+            this.router.navigate(['auth'])
           },
           error:(data) => {
             console.log('errore registrazione')
