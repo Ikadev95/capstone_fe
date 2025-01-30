@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { iComuneResponse } from '../interfaces/i-comune-response';
 import { BehaviorSubject, tap } from 'rxjs';
+import { iComuneResponse } from '../interfaces/i-comune-response';
 import { iProvinciaRequest } from '../interfaces/i-provincia-request';
 import { environment } from '../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
@@ -8,8 +8,9 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class ComuniSvcService {
-  comuneSubject$ = new BehaviorSubject<iComuneResponse[] | null>(null);
+export class ComunesvcService {
+
+    comuneSubject$ = new BehaviorSubject<iComuneResponse[] | null>(null);
   provinciaSubject$ = new BehaviorSubject<iProvinciaRequest[] | null>(null);
   id:number = 0;
 

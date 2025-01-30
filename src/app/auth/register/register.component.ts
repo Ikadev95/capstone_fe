@@ -1,11 +1,10 @@
-import { error } from './../../../../node_modules/ajv/lib/vocabularies/applicator/dependencies';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthsrvService } from '../authsrv.service';
 import { Router } from '@angular/router';
 import { iComuneResponse } from '../../interfaces/i-comune-response';
-import { ComuniSvcService } from '../../services/comuni-svc.service';
 import { iProvinciaRequest } from '../../interfaces/i-provincia-request';
+import { ComunesvcService } from '../../services/comunesvc.service';
 
 @Component({
   standalone:false,
@@ -13,14 +12,17 @@ import { iProvinciaRequest } from '../../interfaces/i-provincia-request';
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
+
 
   comuni: iComuneResponse[] = [];
   province: iProvinciaRequest[] = [];
 
   form: FormGroup
 
-  constructor(private authSrv: AuthsrvService, private router: Router, private comuniSvc: ComuniSvcService){
+
+
+  constructor(private authSrv: AuthsrvService, private router: Router, private comuneSvc: ComunesvcService){
     this.form = new FormGroup({
         name: new FormControl('', [Validators.required]),
         surname: new FormControl('',[Validators.required]),
@@ -39,15 +41,17 @@ export class RegisterComponent implements OnInit {
 
     })
   }
-  ngOnInit(): void {
-    this.comuniSvc.getProvince().subscribe({
-      next:(data) => {
-      this.province = data;},
-      error:(error) => {
-        console.log('Errore nel caricamento delle province', error)
-      }
 
-    })
+  ngOnInit(): void {
+    this.comuneSvc.getProvince().subscribe({
+      next: (data) => {
+        this.province = data;
+        console.log(this.province);
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
   }
 
   register(){
@@ -57,7 +61,7 @@ export class RegisterComponent implements OnInit {
         {
           next: (data) => {
             console.log('registrazione effettuata con successo')
-            this.router.navigate(['auth'])
+            this.router.navigate(['home'])
           },
           error:(data) => {
             console.log('errore registrazione')
