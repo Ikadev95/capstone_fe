@@ -1,4 +1,66 @@
 /* You can add global styles to this file, and also import other style files */
 
+
+$text: #32161F;
+$background: #fbfbfe;
+$primary: #37A49B;
+$secondary: #a4e5de;
+$accent: #FC7753;
+
+/* Importazione delle funzioni di Bootstrap */
+@import 'bootstrap/scss/functions';
+
+/* Sovrascrittura delle variabili Bootstrap */
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": #28a745,
+  "info": #17a2b8,
+  "warning": #ffc107,
+  "danger": #dc3545,
+);
+
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
+
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+// montserrat
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+*{
+  font-family: 'Montserrat', sans-serif;}
+h1{
+  font-family: "Playfair Display", serif;
+  font-size: 61.04px;
+  font-weight: 700;
+}
+h2{
+  font-family: "Playfair Display", serif;
+  font-size: 48.83px;
+  font-weight: 700;
+}
+h3{
+  font-family: "Playfair Display", serif;
+  font-size: 39.06px;
+  font-weight: 700;
+}
+h4{
+  font-family: "Playfair Display", serif;
+  font-size: 31.25px;
+  font-weight: 700;
+}
+h5{
+  font-family: "Playfair Display", serif;
+  font-size: 25px;
+}
+h6{
+  font-family: "Playfair Display", serif;
+  font-size: 20px;
+}
+p{
+  font-size: 16px;
+}
+small{
+  font-size: 12.8px;
+}

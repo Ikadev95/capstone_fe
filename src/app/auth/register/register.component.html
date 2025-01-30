@@ -1,0 +1,29 @@
+<div class="container-fluid cover">
+  <div class="row mt-5s">
+    <!-- colonna sx-->
+    <div class="col-12 col-md-6 col-lg-8">
+
+    </div>
+     <!-- colonna login-->
+    <div class=" col-12 col-md-6 pt-md-5 col-lg-4 ">
+      <div class="form-container p-4 pt-0 ">
+        <div class="p-3">
+          <h1>Registrati</h1>
+
+          <form [formGroup]="form" (ngSubmit)="register()">
+            <div class="form-group">
+              <input type="text" name="name" placeholder="nome" class="form-control" formControlName="name">
+              <input type="text" name="surname" placeholder="cognome" class="form-control mt-3" formControlName="surname">
+              <input type="text" name="email" placeholder="mail" class="form-control mt-3" formControlName="email">
+              <input type="password" name="password" placeholder="password" class="form-control mt-3" formControlName="password">
+            </div>
+            <button type="submit" class="btn btn-primary mt-3" [disabled]="form.invalid">Registrati</button>
+          </form>
+        </div>
+   </div>
+
+      </div>
+
+  </div>
+
+</div>

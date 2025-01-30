@@ -1,0 +1,30 @@
+<div class="container-fluid cover">
+  <div class="row mt-5s">
+    <!-- colonna sx-->
+    <div class="col-12 col-md-6 ">
+
+    </div>
+     <!-- colonna login-->
+    <div class=" col-12 col-md-6  ">
+      <div class="form-container p-4 pt-0 ">
+        <div class="p-3">
+          <h1>Bentornato! 👋🏻</h1>
+
+          <p>Da qui potrai accedere al tuo account per partecipare al concorso del Circolo Airali!</p>
+
+          <form [formGroup]="form" (ngSubmit)="login()">
+            <div class="form-group">
+              <input type="text" name="email" placeholder="mariorossi@gmail.com" class="form-control" formControlName="email">
+              <input type="password" name="password" placeholder="********" class="form-control mt-3" formControlName="password">
+            </div>
+            <button type="submit" class="btn btn-primary mt-3" [disabled]="form.invalid">Login</button>
+            <p class="mt-4">Non hai ancora un account? <a routerLink="register">Registrati</a> </p>
+          </form>
+        </div>
+   </div>
+
+      </div>
+
+  </div>
+
+</div>
