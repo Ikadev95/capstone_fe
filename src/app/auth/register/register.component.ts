@@ -18,7 +18,18 @@ export class RegisterComponent {
         name: new FormControl('', [Validators.required]),
         surname: new FormControl('',[Validators.required]),
         email: new FormControl('', [Validators.required, Validators.email]),
-        password: new FormControl('', [Validators.required])
+        password: new FormControl('', [Validators.required]),
+        username: new FormControl('', [Validators.required]),
+        privacy: new FormControl(false, [Validators.requiredTrue]),
+        data_di_nascita: new FormControl('', [Validators.required]),
+        telefono: new FormControl('', [Validators.required]),
+        indirizzo: new FormGroup({
+          via: new FormControl('', [Validators.required]),
+          civico: new FormControl('', [Validators.required]),
+          comune_id: new FormControl('', [Validators.required])
+        }),
+        comune_di_nascita_id: new FormControl('', [Validators.required])
+
     })
   }
 

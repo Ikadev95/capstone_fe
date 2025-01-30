@@ -8,13 +8,13 @@
     <div class=" col-12 col-md-6  ">
       <div class="form-container p-4 pt-0 ">
         <div class="p-3">
-          <h1>Bentornato! 👋🏻</h1>
+          <h2>Bentornato! 👋🏻</h2>
 
           <p>Da qui potrai accedere al tuo account per partecipare al concorso del Circolo Airali!</p>
 
           <form [formGroup]="form" (ngSubmit)="login()">
             <div class="form-group">
-              <input type="text" name="email" placeholder="mariorossi@gmail.com" class="form-control" formControlName="email">
+              <input type="text" name="username" placeholder="mariorossi" class="form-control" formControlName="username">
               <input type="password" name="password" placeholder="********" class="form-control mt-3" formControlName="password">
             </div>
             <button type="submit" class="btn btn-primary mt-3" [disabled]="form.invalid">Login</button>

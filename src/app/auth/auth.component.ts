@@ -16,7 +16,7 @@ export class AuthComponent {
 
   constructor(private authSvc: AuthsrvService,private router: Router){
     this.form = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
+      username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required])
     })
   }

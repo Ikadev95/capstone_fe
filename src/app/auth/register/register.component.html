@@ -1,21 +1,55 @@
 <div class="container-fluid cover">
   <div class="row mt-5s">
     <!-- colonna sx-->
-    <div class="col-12 col-md-6 col-lg-8">
+    <div class="col-12 col-md-6 ">
 
     </div>
      <!-- colonna login-->
-    <div class=" col-12 col-md-6 pt-md-5 col-lg-4 ">
+    <div class=" col-12 col-md-6 ">
       <div class="form-container p-4 pt-0 ">
         <div class="p-3">
-          <h1>Registrati</h1>
+          <h2>Registrati</h2>
 
           <form [formGroup]="form" (ngSubmit)="register()">
             <div class="form-group">
-              <input type="text" name="name" placeholder="nome" class="form-control" formControlName="name">
-              <input type="text" name="surname" placeholder="cognome" class="form-control mt-3" formControlName="surname">
-              <input type="text" name="email" placeholder="mail" class="form-control mt-3" formControlName="email">
-              <input type="password" name="password" placeholder="password" class="form-control mt-3" formControlName="password">
+
+              <label for="name">Nome</label>
+              <input type="text" name="name" placeholder="mario" class="form-control" formControlName="name">
+
+              <label for="surname" class="mt-3">Cognome</label>
+              <input type="text" name="surname" placeholder="rossi" class="form-control " formControlName="surname">
+
+              <label for="email" class="mt-3">Email</label>
+              <input type="text" name="email" placeholder="mario@gmail.com" class="form-control " formControlName="email">
+
+              <label for="password" class="mt-3">Password</label>
+              <input type="password" name="password" placeholder="********" class="form-control" formControlName="password">
+
+              <label for="username" class="mt-3">Username</label>
+              <input type="text" name="username" placeholder="mariorossi" class="form-control " formControlName="username">
+
+              <label for="data_di_nascita" class="mt-3">Data di nascita</label>
+              <input type="date" name="data_di_nascita" placeholder="data di nascita" class="form-control" formControlName="data_di_nascita">
+
+              <label for="telefono" class="mt-3">Telefono</label>
+              <input type="text" name="telefono" placeholder="3333333333" class="form-control" formControlName="telefono">
+
+              <label for="via" class="mt-3">Via</label>
+              <input type="text" name="via" placeholder="via roma " class="form-control " formControlName="indirizzo.via">
+
+              <label for="civico" class="mt-3">Civico</label>
+              <input type="text" name="civico" placeholder="13A" class="form-control " formControlName="indirizzo.civico">
+
+              <label for="provincia" class="mt-3">Provincia</label>
+              <select type="text" name="provincia" placeholder="Roma" class="form-control " formControlName="">
+                <option value="">Seleziona Provincia</option>
+              </select>
+
+              <label for="comune_id" class="mt-3">Comune</label>
+              <select type="text" name="comune_id" placeholder="Roma" class="form-control " formControlName="indirizzo.comune_id">
+                <option value="">Seleziona Comune</option>
+              </select>
+
             </div>
             <button type="submit" class="btn btn-primary mt-3" [disabled]="form.invalid">Registrati</button>
           </form>
