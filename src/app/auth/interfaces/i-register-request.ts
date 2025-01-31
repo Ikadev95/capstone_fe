@@ -10,5 +10,4 @@ export interface iRegisterRequest {
   privacy:boolean
   data_di_nascita:string
   indirizzo:iIndirizzoRequest
-  comune_di_nascita_id:number
 }

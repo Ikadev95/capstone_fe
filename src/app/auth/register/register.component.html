@@ -9,11 +9,11 @@
 
           <form [formGroup]="form" (ngSubmit)="register()">
             <div class="form-group">
-              <label for="name">Nome</label>
-              <input type="text" name="name" placeholder="Mario" class="form-control" formControlName="name">
+              <label for="nome">Nome</label>
+              <input type="text" name="nome" placeholder="Mario" class="form-control" formControlName="nome">
 
-              <label for="surname" class="mt-3">Cognome</label>
-              <input type="text" name="surname" placeholder="Rossi" class="form-control" formControlName="surname">
+              <label for="cognome" class="mt-3">Cognome</label>
+              <input type="text" name="cognome" placeholder="Rossi" class="form-control" formControlName="cognome">
 
               <label for="email" class="mt-3">Email</label>
               <input type="text" name="email" placeholder="mario@gmail.com" class="form-control" formControlName="email">
@@ -58,7 +58,11 @@
                         {{ comune.nome_comune }}
                     </option>
                 </datalist>
+
               </div>
+
+              <input type="checkbox" name="privacy" class="mt-3" formControlName="privacy">
+              <label for="privacy" class="mt-3 mx-2">Autorizzo il trattamento dei dati personali</label>
             </div>
 
             <button type="submit" class="btn btn-primary mt-3" [disabled]="form.invalid">Registrati</button>

@@ -27,8 +27,8 @@ export class RegisterComponent {
 
   constructor(private authSrv: AuthsrvService, private router: Router, private comuneSvc: ComunesvcService){
     this.form = new FormGroup({
-        name: new FormControl('', [Validators.required]),
-        surname: new FormControl('',[Validators.required]),
+        nome: new FormControl('', [Validators.required]),
+        cognome: new FormControl('',[Validators.required]),
         email: new FormControl('', [Validators.required, Validators.email]),
         password: new FormControl('', [Validators.required]),
         username: new FormControl('', [Validators.required]),
@@ -39,8 +39,7 @@ export class RegisterComponent {
           via: new FormControl('', [Validators.required]),
           civico: new FormControl('', [Validators.required]),
           comune_id: new FormControl('', [Validators.required])
-        }),
-        comune_di_nascita_id: new FormControl('', [Validators.required])
+        })
 
     })
   }
@@ -58,21 +57,23 @@ export class RegisterComponent {
   }
 
   register(){
+    console.log(this.form.valid);
+    console.log(this.form.controls);
     if(this.form.valid){
       console.log(this.form.value);
-      this.authSrv.register(this.form.value).subscribe(
-        {
-          next: (data) => {
-            console.log('registrazione effettuata con successo')
-            this.router.navigate(['home'])
-          },
-          error:(data) => {
-            console.log('errore registrazione')
-          }
+      this.authSrv.register(this.form.value).subscribe({
+        next: (data) => {
+          console.log('registrazione effettuata con successo');
+          console.log('Risposta ricevuta:', data);
+          this.router.navigate(['home']);
+        },
+        error: (error) => {
+          console.error('Errore nella registrazione', error);
+          alert('Si è verificato un errore nella registrazione');
         }
-      )
+      });
     }
-  }
+ }
 
   onProvinciaChange(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
@@ -127,7 +128,7 @@ export class RegisterComponent {
     const comuneSelezionato = this.comuni.find(c => c.nome_comune === value);
 
     if (comuneSelezionato) {
-      this.form.get('indirizzo.comune_id')?.setValue(comuneSelezionato.nome_comune);
+      this.form.get('indirizzo.comune_id')?.setValue(comuneSelezionato.id);
     }
   }
 
