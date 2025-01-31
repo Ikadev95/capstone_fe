@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ConcorsoComponent } from './concorso.component';
+import { ConcorsoFotoComponent } from './concorso-foto.component';
 
-const routes: Routes = [{ path: '', component: ConcorsoComponent }];
+const routes: Routes = [{ path: '', component: ConcorsoFotoComponent }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ConcorsoRoutingModule { }
+export class ConcorsoFotoRoutingModule { }

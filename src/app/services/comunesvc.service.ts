@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ComunesvcService {
 
-    comuneSubject$ = new BehaviorSubject<iComuneResponse[] | null>(null);
+  comuneSubject$ = new BehaviorSubject<iComuneResponse[] | null>(null);
   provinciaSubject$ = new BehaviorSubject<iProvinciaRequest[] | null>(null);
   id:number = 0;
 

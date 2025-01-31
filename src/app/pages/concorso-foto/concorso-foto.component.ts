@@ -3,21 +3,21 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-concorso',
+  selector: 'app-concorso-foto',
   standalone: false,
-
-  templateUrl: './concorso.component.html',
-  styleUrl: './concorso.component.scss'
+  templateUrl: './concorso-foto.component.html',
+  styleUrl: './concorso-foto.component.scss'
 })
-export class ConcorsoComponent {
-  form: FormGroup;
+export class ConcorsoFotoComponent {
+form: FormGroup;
   selectedFile: File | null = null;
   previewUrl: string | ArrayBuffer | null = null;
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
   constructor(private http: HttpClient) {
     this.form = new FormGroup({
-      file: new FormControl(null)
+      file: new FormControl(null),
+      titolo: new FormControl('', [Validators.required])
     });
   }
 
@@ -53,7 +53,4 @@ export class ConcorsoComponent {
       this.fileInput.nativeElement.value = '';
     }
   }
-
 }
-
-

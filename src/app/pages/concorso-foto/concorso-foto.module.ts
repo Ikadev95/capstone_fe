@@ -1,22 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { ConcorsoRoutingModule } from './concorso-routing.module';
-import { ConcorsoComponent } from './concorso.component';
+import { ConcorsoFotoRoutingModule } from './concorso-foto-routing.module';
+import { ConcorsoFotoComponent } from './concorso-foto.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 
 
 @NgModule({
   declarations: [
-    ConcorsoComponent
+    ConcorsoFotoComponent
   ],
   imports: [
     CommonModule,
-    ConcorsoRoutingModule,
+    ConcorsoFotoRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-
   ]
 })
-export class ConcorsoModule { }
+export class ConcorsoFotoModule { }
