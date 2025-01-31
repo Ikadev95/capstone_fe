@@ -14,15 +14,16 @@ export class ComunesvcService {
   provinciaSubject$ = new BehaviorSubject<iProvinciaRequest[] | null>(null);
   id:number = 0;
 
-  private comuneUrl:string = `${environment.baseUrl}comuni/byProvincia/${this.id}`
+
   private provinciaUrl:string = `${environment.baseUrl}province`
 
   constructor(private http:HttpClient) { }
 
-  getComuni(id:number){
-    this.id = id
-    this.comuneUrl = `${environment.baseUrl}comuni/byProvincia/${this.id}`
-    this.http.get<iComuneResponse[]>(this.comuneUrl).subscribe(data => this.comuneSubject$.next(data))
+  getComuni(id: number) {
+    this.id = id;
+    const comuneUrl = `${environment.baseUrl}comuni/byProvincia/${this.id}`;
+    return this.http.get<iComuneResponse[]>(comuneUrl)
+      .pipe(tap(data => this.comuneSubject$.next(data)));
   }
 
   getProvince(){

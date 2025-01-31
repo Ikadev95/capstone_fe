@@ -17,6 +17,9 @@ export class RegisterComponent {
 
   comuni: iComuneResponse[] = [];
   province: iProvinciaRequest[] = [];
+  selectedProvincia: boolean = false;
+  comuniFiltrati: iComuneResponse[] = [];
+  provinceFiltrate: iProvinciaRequest[] = [];
 
   form: FormGroup
 
@@ -68,6 +71,63 @@ export class RegisterComponent {
           }
         }
       )
+    }
+  }
+
+  onProvinciaChange(event: Event): void {
+    const value = (event.target as HTMLInputElement).value;
+    const provinciaSelezionata = this.province.find(provincia => provincia.nome_provincia === value);
+
+    if (provinciaSelezionata) {
+      this.form.get('indirizzo.provincia')?.setValue(provinciaSelezionata.id);
+      this.selectedProvincia = true;
+      this.comuneSvc.getComuni(provinciaSelezionata.id).subscribe({
+        next: (data) => {
+          this.comuni = data;
+          this.comuniFiltrati = [...this.comuni];
+        },
+        error: (err) => {
+          console.log(err);
+        }
+      });
+    } else {
+      this.selectedProvincia = false;
+      this.comuni = [];
+      this.comuniFiltrati = [];
+    }
+  }
+  filterComuni(event:Event): void {
+    const value = (event.target as HTMLInputElement).value;
+    this.comuniFiltrati = this.comuni.filter(comune =>
+      comune.nome_comune.toLowerCase().includes(value.toLowerCase())
+    );
+  }
+
+  filterProvince(event: Event): void {
+    const value = (event.target as HTMLInputElement).value.toLowerCase();
+    if (value) {
+      this.provinceFiltrate = this.province.filter(provincia =>
+        provincia.nome_provincia.toLowerCase().includes(value)
+      );
+    } else {
+      this.provinceFiltrate = [...this.province];
+    }
+  }
+
+  updateProvince(event: Event): void {
+    const value = (event.target as HTMLInputElement).value;
+    const provinciaSelezionata = this.province.find(provincia => provincia.nome_provincia === value);
+    if (provinciaSelezionata) {
+      this.form.get('indirizzo.provincia')?.setValue(provinciaSelezionata.id);
+    }
+  }
+
+  updateComune(event: Event): void {
+    const value = (event.target as HTMLInputElement).value;
+    const comuneSelezionato = this.comuni.find(c => c.nome_comune === value);
+
+    if (comuneSelezionato) {
+      this.form.get('indirizzo.comune_id')?.setValue(comuneSelezionato.nome_comune);
     }
   }
 
