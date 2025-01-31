@@ -1,1 +1,81 @@
-<p>navbar works!</p>
+<nav class="navbar navbar-expand-lg bg-black navbar-dark px-4 py-3 mb-3">
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarTogglerDemo01"
+    aria-controls="navbarTogglerDemo01"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+    (click)="toggleActive()"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div
+    class="collapse navbar-collapse"
+    [ngClass]="{ show: isActive }"
+    id="navbarTogglerDemo01"
+  >
+    <a class="navbar-brand" routerLink="/" *ngIf="!isActive"
+      ><img src="logo.png" alt="logo" width="58"
+    /></a>
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li
+        class="nav-item"
+      >
+        <a
+          routerLink="home"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="nav-link text-secondary"
+          aria-current="page"
+          >Home</a
+        >
+      </li>
+      <li class="nav-item" >
+        <a
+          routerLink="/concorso"
+          routerLinkActive="active"
+          class="nav-link text-secondary"
+          >Concorso</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          routerLink="/pagamenti"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="nav-link text-secondary"
+          >Pagamenti</a
+        >
+      </li>
+      <li class="nav-item" >
+        <a
+          routerLink="/auth"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="nav-link text-secondary"
+          >Login</a
+        >
+      </li>
+      <li class="nav-item" >
+        <a role="button" (click)="logout()" class="nav-link text-secondary"
+          >Logout</a
+        >
+      </li>
+    </ul>
+  </div>
+  <div>
+    <ul class="navbar-nav">
+      <li class="nav-item" >
+        <a
+          routerLink="/profile"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="nav-link text-secondary"
+          ><img class="avatar" [src]="avatar" width="40px"
+        /></a>
+      </li>
+    </ul>
+  </div>
+</nav>

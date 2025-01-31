@@ -57,8 +57,6 @@ export class RegisterComponent {
   }
 
   register(){
-    console.log(this.form.valid);
-    console.log(this.form.controls);
     if(this.form.valid){
       console.log(this.form.value);
       this.authSrv.register(this.form.value).subscribe({

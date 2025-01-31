@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ComunesvcService } from './comunesvc.service';
+import { DecodeTokenService } from './decode-token.service';
 
-describe('ComunesvcService', () => {
-  let service: ComunesvcService;
+describe('DecodeTokenService', () => {
+  let service: DecodeTokenService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ComunesvcService);
+    service = TestBed.inject(DecodeTokenService);
   });
 
   it('should be created', () => {
