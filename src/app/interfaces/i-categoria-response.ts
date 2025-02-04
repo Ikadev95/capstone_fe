@@ -1,10 +1,12 @@
 import { iAppUserRequest } from "./i-app-user-request";
-import { iComponimentoResponse } from "./i-componimento-response";
-import { iSezioni } from "./i-sezioni";
 
 export interface iCategoriaResponse {
+  id:number
   nome_categoria: string;
-  sezione: iSezioni;
+  sezione: SEZIONI;
   giudici: iAppUserRequest[];
-  componimenti: iComponimentoResponse[];
 }
+
+enum SEZIONI {
+ POESIA,
+ FOTOGRAFIA}

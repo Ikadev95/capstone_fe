@@ -9,9 +9,10 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
 
     //prendo il valore di accesso (se c'è) da authSubject$
     let accessData = authSvc.userAuthSubject$.getValue();
+    console.log(accessData?.accessToken)
 
     //se accessData non esiste mando la richiesta avanti
-    if(!accessData){
+    if(!accessData ){
       return next(req);
     }
     //altrimenti clono la richiesta e aggiungo il token

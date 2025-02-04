@@ -1,3 +1,4 @@
+import { DecodeTokenService } from './../services/decode-token.service';
 import { iAccess } from './interfaces/i-access';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -13,7 +14,10 @@ import { BehaviorSubject, tap } from 'rxjs';
 })
 export class AuthsrvService {
 
-  constructor(private http:HttpClient, private router:Router) { this.restoreUser()}
+  constructor(private http:HttpClient, private router:Router, private decodeToken: DecodeTokenService) {
+     this.restoreUser()
+     console.log(this.userAuthSubject$.getValue())
+    }
 
   private jwtHelper:JwtHelperService = new JwtHelperService();
 
@@ -33,6 +37,7 @@ export class AuthsrvService {
     return this.http.post<iAccess>(this.loginUrl,userDates).pipe(
       tap( dati => {
           this.userAuthSubject$.next(dati)
+          console.log(this.userAuthSubject$.getValue())
 
           localStorage.setItem('dati',JSON.stringify(dati))
 
@@ -46,8 +51,9 @@ export class AuthsrvService {
 
   logout(){
     this.userAuthSubject$.next(null)
+    this.decodeToken.userRoles$.next([]);
     localStorage.removeItem('dati')
-    this.router.navigate(['login'])
+    this.router.navigate(['/auth'])
   }
 
 
@@ -60,18 +66,20 @@ export class AuthsrvService {
     }, expMs)
   }
 
-  restoreUser(){
-    const userJson:string|null = localStorage.getItem('accessData')
-    if(!userJson)return
+  restoreUser() {
+    const userJson: string | null = localStorage.getItem('dati');
+    if (!userJson) return; // Se non ci sono dati, non fare nulla
 
-    const accessdata:iAccess = JSON.parse(userJson)
-
-    if(this.jwtHelper.isTokenExpired(accessdata.accessToken)) {
-      localStorage.removeItem('accessData')
-      return
+    const accessData: iAccess = JSON.parse(userJson);
+    if (this.jwtHelper.isTokenExpired(accessData.accessToken)) {
+      // Se il token è scaduto, rimuovi i dati dal localStorage
+      localStorage.removeItem('dati');
+      return;
     }
 
-    this.userAuthSubject$.next(accessdata)
+    // Se il token non è scaduto, aggiorna il BehaviorSubject
+    this.userAuthSubject$.next(accessData);
+    this.decodeToken.userRoles$.next(this.decodeToken.getRoles());
   }
 
 }

@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CategoriaSrvService } from '../../services/categoria-srv.service';
+import { iCategoriaResponse } from '../../interfaces/i-categoria-response';
+import { AuthsrvService } from '../../auth/authsrv.service';
 
 @Component({
   selector: 'app-concorso-foto',
@@ -8,17 +11,27 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   templateUrl: './concorso-foto.component.html',
   styleUrl: './concorso-foto.component.scss'
 })
-export class ConcorsoFotoComponent {
+export class ConcorsoFotoComponent{
 form: FormGroup;
   selectedFile: File | null = null;
   previewUrl: string | ArrayBuffer | null = null;
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+  Categorie: iCategoriaResponse[] = []
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private categoriaSrv: CategoriaSrvService, authSrv: AuthsrvService) {
     this.form = new FormGroup({
       file: new FormControl(null),
-      titolo: new FormControl('', [Validators.required])
+      titolo: new FormControl('', [Validators.required]),
+      categoria: new FormControl('',[Validators.required])
     });
+  }
+
+  ngOnInit() {
+    this.categoriaSrv.getCategorieBySezioneFotografia().subscribe(data => {
+      this.Categorie = data
+      console.log(this.Categorie);
+    })
+
   }
 
   onFileSelect(event: Event) {
