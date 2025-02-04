@@ -16,10 +16,25 @@ export class DecodeTokenService {
   userRoles$ = new BehaviorSubject<string[]>([]);
 
   getRoles() {
-    const json = localStorage.getItem('accessData');
+    const json = localStorage.getItem('dati');
     if (!json) return;
     const { token } = JSON.parse(json);
     if (!token) return;
     return this.jwtHelper.decodeToken(token).roles;
+  }
+  getUsername(): string | null {
+    const json = localStorage.getItem('dati');
+    console.log(json)
+    if (!json) return null;
+    const { token } = JSON.parse(json);
+    if (!token) return null;
+    console.log(token)
+
+    try {
+      return this.jwtHelper.decodeToken(token).sub || null;
+    } catch (error) {
+      console.error('Errore nel decodificare lo username:', error);
+      return null;
+    }
   }
 }

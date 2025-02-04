@@ -4,6 +4,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CategoriaSrvService } from '../../services/categoria-srv.service';
 import { iCategoriaResponse } from '../../interfaces/i-categoria-response';
 import { AuthsrvService } from '../../auth/authsrv.service';
+import { iFotografiaRequest } from '../../interfaces/i-fotografia-request';
+import { DecodeTokenService } from '../../services/decode-token.service';
 
 @Component({
   selector: 'app-concorso-foto',
@@ -18,11 +20,11 @@ form: FormGroup;
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
   Categorie: iCategoriaResponse[] = []
 
-  constructor(private http: HttpClient, private categoriaSrv: CategoriaSrvService, authSrv: AuthsrvService) {
+  constructor(private http: HttpClient, private categoriaSrv: CategoriaSrvService, private decoder: DecodeTokenService) {
     this.form = new FormGroup({
       file: new FormControl(null),
       titolo: new FormControl('', [Validators.required]),
-      categoria: new FormControl('',[Validators.required])
+      id_categoria: new FormControl('',[Validators.required])
     });
   }
 
@@ -50,9 +52,21 @@ form: FormGroup;
   uploadFile() {
     if (this.selectedFile) {
       const formData = new FormData();
-      formData.append('file', this.selectedFile);
 
-      this.http.post('http://localhost:8080/api/upload', formData).subscribe({
+      formData.append('file', this.selectedFile);
+      formData.append('titolo', this.form.value.titolo);
+
+      let username = this.decoder.getUsername();
+      if (username) {
+        formData.append('id_user', username);
+      }
+
+      formData.append('id_categoria', this.form.value.id_categoria);
+
+      for (let pair of formData.entries()) {
+        console.log(pair[0] + ':', pair[1]);
+      }
+      this.http.post('http://localhost:8080/api/fotografie/upload', formData).subscribe({
         next: () => alert('Upload riuscito!'),
         error: () => alert('Errore durante l\'upload')
       });
