@@ -8,20 +8,21 @@ import { environment } from '../../environments/environment.development';
 import { iUser } from './interfaces/i-user';
 import { iLoginRequest } from './interfaces/i-login-request';
 import { BehaviorSubject, tap } from 'rxjs';
+import {jwtDecode} from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthsrvService {
 
+  private jwtHelper:JwtHelperService = new JwtHelperService();
+
+  userAuthSubject$ = new BehaviorSubject<any | null>(null)
+
   constructor(private http:HttpClient, private router:Router, private decodeToken: DecodeTokenService) {
      this.restoreUser()
      console.log(this.userAuthSubject$.getValue())
     }
-
-  private jwtHelper:JwtHelperService = new JwtHelperService();
-
-  userAuthSubject$ = new BehaviorSubject<iAccess | null>(null)
 
   registerUrl:string = environment.registerUrl
   loginUrl:string = environment.loginUrl
@@ -38,6 +39,7 @@ export class AuthsrvService {
       tap( dati => {
           this.userAuthSubject$.next(dati)
           console.log(this.userAuthSubject$.getValue())
+          //qui lo stampa OK
 
           localStorage.setItem('dati',JSON.stringify(dati))
 
@@ -66,20 +68,35 @@ export class AuthsrvService {
     }, expMs)
   }
 
+
+
   restoreUser() {
     const userJson: string | null = localStorage.getItem('dati');
     if (!userJson) return; // Se non ci sono dati, non fare nulla
 
-    const accessData: iAccess = JSON.parse(userJson);
-    if (this.jwtHelper.isTokenExpired(accessData.accessToken)) {
-      // Se il token è scaduto, rimuovi i dati dal localStorage
-      localStorage.removeItem('dati');
+    const accessData: any = JSON.parse(userJson);
+    console.log(accessData);
+    console.log(accessData.token);
+
+    try {
+      const decodedToken: any = jwtDecode(accessData.token); // Decodifica il token
+      const expDate = new Date(decodedToken.exp * 1000); // Converti la data di scadenza in formato JavaScript
+      const currentDate = new Date();
+
+      if (expDate < currentDate) {
+        console.log("Token scaduto");
+        // Se il token è scaduto, rimuovi i dati dal localStorage
+        localStorage.removeItem('dati');
+        return;
+      }
+    } catch (error) {
+      console.log("Errore nel decodificare il token", error);
       return;
     }
 
     // Se il token non è scaduto, aggiorna il BehaviorSubject
     this.userAuthSubject$.next(accessData);
-    this.decodeToken.userRoles$.next(this.decodeToken.getRoles());
+    console.log("Utente ripristinato con successo", this.userAuthSubject$.getValue());
   }
 
 }
