@@ -34,9 +34,11 @@ export class AuthsrvService {
   }
 
   login(userDates: iLoginRequest){
+    console.log(userDates)
     // qui uso una post perchè proteggere i dati sensibili e creare un token lato server
     return this.http.post<iAccess>(this.loginUrl,userDates).pipe(
       tap( dati => {
+        console.log(dati)
           this.userAuthSubject$.next(dati)
           console.log(this.userAuthSubject$.getValue())
           //qui lo stampa OK
