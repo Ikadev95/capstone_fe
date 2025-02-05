@@ -31,13 +31,6 @@
   </ul>
 
 
-
-  <div class="form-group">
-    <label for="concorsoName">Nome del Concorso:</label>
-    <input type="text" id="concorsoName" class="form-control" [(ngModel)]="concorsoName" placeholder="Inserisci il nome del concorso" />
-  </div>
-
-
   <div class="section-title">Totale da Pagare: <span class="price">{{ selectedAmount | currency:'EUR' }}</span></div>
 
   <div class="payment-info">
@@ -45,6 +38,6 @@
     <p>Per completare il pagamento, seleziona la tua quota e procedi con il pagamento online.</p>
 
 
-    <app-payment-button [amount]="selectedAmount * 100" [name]="concorsoName" [sezione] ="sezione" [numeroComponimenti]="numeroComponimenti" [ragione] ="ragione"></app-payment-button>
+    <app-payment-button [amount]="selectedAmount * 100" [name]="concorsoName" [sezione] ="sezione" [numeroComponimenti]="numeroComponimenti" [ragione] ="ragione" [selectedAmount]="selectedAmount"></app-payment-button>
   </div>
 </div>

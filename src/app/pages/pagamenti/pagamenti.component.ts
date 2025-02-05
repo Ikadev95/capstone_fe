@@ -10,7 +10,7 @@ import { Component } from '@angular/core';
 export class PagamentiComponent {
 
   selectedAmount: number = 0;
-  concorsoName: string = '';
+  concorsoName: string = 'concorsoAirali';
   sezione: string = '';
   numeroComponimenti : number = 0;
   ragione: string = 'CONCORSO';

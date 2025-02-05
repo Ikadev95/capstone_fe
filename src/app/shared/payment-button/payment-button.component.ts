@@ -15,8 +15,9 @@ export class PaymentButtonComponent {
   @Input() sezione: string = '';
   @Input() numeroComponimenti : number = 0;
   @Input() ragione: string = '';
-
+  @Input() selectedAmount: number = 0
   stripe: Stripe | null = null;
+
 
   constructor(private http: HttpClient) {}
 
