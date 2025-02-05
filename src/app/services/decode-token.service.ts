@@ -28,7 +28,6 @@ export class DecodeTokenService {
     if (!json) return null;
     const { token } = JSON.parse(json);
     if (!token) return null;
-    console.log(token)
 
     try {
       return this.jwtHelper.decodeToken(token).sub || null;

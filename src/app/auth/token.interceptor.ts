@@ -14,7 +14,6 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
  // Parsing della stringa JSON
     if(data){
       let token = data.token; // Estrazione del token
-      console.log(token);
 
       //se accessData non esiste mando la richiesta avanti
       if(!token ){

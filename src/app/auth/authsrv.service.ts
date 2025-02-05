@@ -21,7 +21,6 @@ export class AuthsrvService {
 
   constructor(private http:HttpClient, private router:Router, private decodeToken: DecodeTokenService) {
      this.restoreUser()
-     console.log(this.userAuthSubject$.getValue())
     }
 
   registerUrl:string = environment.registerUrl
@@ -34,7 +33,6 @@ export class AuthsrvService {
   }
 
   login(userDates: iLoginRequest){
-    console.log(userDates)
     // qui uso una post perchè proteggere i dati sensibili e creare un token lato server
     return this.http.post<iAccess>(this.loginUrl,userDates).pipe(
       tap( dati => {
@@ -77,8 +75,6 @@ export class AuthsrvService {
     if (!userJson) return; // Se non ci sono dati, non fare nulla
 
     const accessData: any = JSON.parse(userJson);
-    console.log(accessData);
-    console.log(accessData.token);
 
     try {
       const decodedToken: any = jwtDecode(accessData.token); // Decodifica il token
