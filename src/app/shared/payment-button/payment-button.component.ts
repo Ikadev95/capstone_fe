@@ -11,7 +11,8 @@ import { loadStripe, Stripe } from '@stripe/stripe-js';
 })
 export class PaymentButtonComponent {
   @Input() amount!: number; // Importo in centesimi (€10 = 1000)
-  @Input() name!: string; // Descrizione del pagamento
+  @Input() name!: string;
+
   stripe: Stripe | null = null;
 
   constructor(private http: HttpClient) {}
@@ -25,8 +26,8 @@ export class PaymentButtonComponent {
     if (!this.stripe) return;
 
     const items = [{
-      name: this.name, // Descrizione del pagamento
-      amount: this.amount / 100, // Importo in centesimi
+      name: this.name,
+      amount: this.amount / 100,
     }];
 
     this.http.post<{ id: string }>('http://localhost:8080/api/payments/create-checkout-session', {
@@ -36,4 +37,6 @@ export class PaymentButtonComponent {
       if (error) console.error(error.message);
     });
   }
+
+
 }

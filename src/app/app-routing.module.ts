@@ -7,7 +7,8 @@ const routes: Routes = [
   { path: 'home', loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule) },
   { path: 'pagamenti', loadChildren: () => import('./pages/pagamenti/pagamenti.module').then(m => m.PagamentiModule) },
   { path: 'concorsoFoto', loadChildren: () => import('./pages/concorso-foto/concorso-foto.module').then(m => m.ConcorsoFotoModule) },
-  { path: 'concorsoPoesie', loadChildren: () => import('./pages/concorso-poesie/concorso-poesie.module').then(m => m.ConcorsoPoesieModule) }
+  { path: 'concorsoPoesie', loadChildren: () => import('./pages/concorso-poesie/concorso-poesie.module').then(m => m.ConcorsoPoesieModule) },
+  { path: 'successPagamento', loadChildren: () => import('./pages/success-pagamento/success-pagamento.module').then(m => m.SuccessPagamentoModule) }
 ];
 
 @NgModule({

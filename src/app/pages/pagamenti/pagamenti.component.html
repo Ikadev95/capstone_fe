@@ -1,1 +1,59 @@
-<app-payment-button [amount]="1000" name="Quota di partecipazione"></app-payment-button>
+<div class="container">
+  <h2 class="text-center">Contributo di Partecipazione al Concorso</h2>
+
+  <div class="payment-details">
+    <p>A sostegno delle spese organizzative, è richiesto un contributo di partecipazione per il concorso. Scegli la sezione a cui desideri partecipare e procedi con il pagamento.</p>
+  </div>
+
+  <!-- Sezione POESIA -->
+  <div class="section-title">Sezione POESIA</div>
+  <ul>
+    <li>
+      <label>
+        <input type="radio" name="sezione" value="poesia-singolo" (change)="onSelectAmount(10)" /> Partecipazione con un singolo componimento: <span class="price">€10</span>
+      </label>
+    </li>
+    <li>
+      <label>
+        <input type="radio" name="sezione" value="poesia-tre" (change)="onSelectAmount(20)" /> Partecipazione con tre componimenti (sezioni A, B, C, D): <span class="price">€20</span>
+      </label>
+    </li>
+  </ul>
+
+  <!-- Sezione FOTOGRAFIA -->
+  <div class="section-title">Sezione FOTOGRAFIA</div>
+  <ul>
+    <li>
+      <label>
+        <input type="radio" name="sezione" value="fotografia" (change)="onSelectAmount(10)" /> Partecipazione con tre scatti (sezioni E, F): <span class="price">€10</span>
+      </label>
+    </li>
+  </ul>
+
+  <!-- Sezione Combinata Poesia + Fotografia -->
+  <div class="section-title">Partecipazione a entrambe le sezioni (Poesia + Fotografia)</div>
+  <ul>
+    <li>
+      <label>
+        <input type="radio" name="sezione" value="entrambi" (change)="onSelectAmount(30)" /> Quota totale per entrambe le sezioni: <span class="price">€30</span>
+      </label>
+    </li>
+  </ul>
+
+  <!-- Nome del Concorso -->
+  <div class="form-group">
+    <label for="concorsoName">Nome del Concorso:</label>
+    <input type="text" id="concorsoName" class="form-control" [(ngModel)]="concorsoName" placeholder="Inserisci il nome del concorso" />
+  </div>
+
+  <!-- Totale -->
+  <div class="section-title">Totale da Pagare: <span class="price">{{ selectedAmount | currency:'EUR' }}</span></div>
+
+  <div class="payment-info">
+    <i class="icon-info fas fa-info-circle"></i>
+    <p>Per completare il pagamento, seleziona la tua quota e procedi con il pagamento online.</p>
+
+    <!-- Bottone per il pagamento -->
+    <app-payment-button [amount]="selectedAmount * 100" [name]="concorsoName"></app-payment-button>
+  </div>
+</div>
