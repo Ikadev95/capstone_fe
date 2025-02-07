@@ -16,4 +16,13 @@
 
     <button type="submit" class="btn btn-primary mt-3 ">Carica</button>
   </form>
+
+  <h2>Poesie Caricate</h2>
+  <div *ngFor="let poesie of Poesie">
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">{{ poesie.titolo }}</h5>
+        <p [style.white-space]="'pre-line'">{{ poesie.testo }}</p>
+      </div>
+    </div>
   </div>

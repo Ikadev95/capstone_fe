@@ -6,6 +6,7 @@ import { CategoriaSrvService } from '../../services/categoria-srv.service';
 import { DecodeTokenService } from '../../services/decode-token.service';
 import { ComponimentiSvcService } from '../../services/componimenti-svc.service';
 import { iPoesiaRequest } from '../../interfaces/i-poesia-request';
+import { iPoesiaResponse } from '../../interfaces/i-poesia-response';
 
 @Component({
   selector: 'app-concorso-poesie',
@@ -17,6 +18,7 @@ import { iPoesiaRequest } from '../../interfaces/i-poesia-request';
 export class ConcorsoPoesieComponent {
   form: FormGroup;
    Categorie: iCategoriaResponse[] = []
+   Poesie: iPoesiaResponse[] = []
 
   constructor(private http: HttpClient, private categoriaSrv: CategoriaSrvService,private decoder: DecodeTokenService, private compService: ComponimentiSvcService) {
     this.form = new FormGroup({
@@ -27,8 +29,10 @@ export class ConcorsoPoesieComponent {
 
     this.categoriaSrv.getCategrieBySezionePoesia().subscribe(data => {
       this.Categorie = data
-      console.log(this.Categorie);
     })
+
+    this.getPoesie();
+    console.log(this.Poesie)
 
   }
 
@@ -47,6 +51,13 @@ export class ConcorsoPoesieComponent {
       }
      )
 
+  }
+
+  getPoesie(){
+    this.compService.poesiaSubject$.subscribe(data => {
+      if(data){
+      this.Poesie = data}
+    })
   }
 
 }

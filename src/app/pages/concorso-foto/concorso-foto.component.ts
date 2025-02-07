@@ -32,7 +32,6 @@ form: FormGroup;
   ngOnInit() {
     this.categoriaSrv.getCategorieBySezioneFotografia().subscribe(data => {
       this.Categorie = data
-      console.log(this.Categorie);
     })
 
     this.getFoto();
@@ -91,7 +90,6 @@ form: FormGroup;
     this.compService.fotoSubject$.subscribe(data => {
       if(data)
       this.Fotografie = data
-      console.log(data);
     })
   }
 }

@@ -7,7 +7,6 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class DecodeTokenService {
   constructor() {
-    console.log('decode token service');
     this.userRoles$.next(this.getRoles());
   }
 
