@@ -35,13 +35,8 @@ form: FormGroup;
       console.log(this.Categorie);
     })
 
-    this.compService.getFotoByUser().subscribe(data => {
-      this.Fotografie = data
-      console.log(data);
-      this.Fotografie.forEach(foto => {
-        foto.percorsoFile = `http://localhost:8080/api/uploads/fotografie/${foto.percorsoFile.split('/').pop()}`
-      })
-    })
+    this.getFoto();
+
   }
 
   onFileSelect(event: Event) {
@@ -79,14 +74,24 @@ form: FormGroup;
           console.error('Errore durante il caricamento dell\'immagine:', error);
         }
       )
+      this.resetFile();
     }
   }
   resetFile() {
     this.selectedFile = null;
     this.previewUrl = null;
+    this.form.reset();
 
     if (this.fileInput?.nativeElement) {
       this.fileInput.nativeElement.value = '';
     }
+  }
+
+  getFoto(){
+    this.compService.fotoSubject$.subscribe(data => {
+      if(data)
+      this.Fotografie = data
+      console.log(data);
+    })
   }
 }

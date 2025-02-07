@@ -8,7 +8,9 @@ import { iFotografiaResponse } from '../interfaces/i-fotografia-response';
 })
 export class ComponimentiSvcService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient) {
+    this.getFotoByUser().subscribe();
+   }
 
   fotoSubject$ = new BehaviorSubject<iFotografiaResponse[] | null>(null);
 
