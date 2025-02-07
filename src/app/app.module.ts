@@ -7,6 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { tokenInterceptor } from './auth/token.interceptor';
 import { NavbarComponent } from './main-components/navbar/navbar.component';
+import { errorInterceptor } from './auth/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { NavbarComponent } from './main-components/navbar/navbar.component';
   ],
   providers: [
     provideHttpClient( withInterceptors([tokenInterceptor])),
+    provideHttpClient(withInterceptors([errorInterceptor]))
   ],
   bootstrap: [AppComponent]
 })
