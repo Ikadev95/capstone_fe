@@ -1,11 +1,11 @@
+import { iFotografiaResponse } from './../../interfaces/i-fotografia-response';
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CategoriaSrvService } from '../../services/categoria-srv.service';
 import { iCategoriaResponse } from '../../interfaces/i-categoria-response';
-import { AuthsrvService } from '../../auth/authsrv.service';
-import { iFotografiaRequest } from '../../interfaces/i-fotografia-request';
 import { DecodeTokenService } from '../../services/decode-token.service';
+import { ComponimentiSvcService } from '../../services/componimenti-svc.service';
 
 @Component({
   selector: 'app-concorso-foto',
@@ -19,8 +19,9 @@ form: FormGroup;
   previewUrl: string | ArrayBuffer | null = null;
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
   Categorie: iCategoriaResponse[] = []
+  Fotografie: iFotografiaResponse[] = []
 
-  constructor(private http: HttpClient, private categoriaSrv: CategoriaSrvService, private decoder: DecodeTokenService) {
+  constructor(private http: HttpClient, private categoriaSrv: CategoriaSrvService, private decoder: DecodeTokenService, private compService: ComponimentiSvcService) {
     this.form = new FormGroup({
       file: new FormControl(null),
       titolo: new FormControl('', [Validators.required]),
@@ -34,6 +35,13 @@ form: FormGroup;
       console.log(this.Categorie);
     })
 
+    this.compService.getFotoByUser().subscribe(data => {
+      this.Fotografie = data
+      console.log(data);
+      this.Fotografie.forEach(foto => {
+        foto.percorsoFile = `http://localhost:8080/api/uploads/fotografie/${foto.percorsoFile.split('/').pop()}`
+      })
+    })
   }
 
   onFileSelect(event: Event) {
@@ -63,13 +71,14 @@ form: FormGroup;
 
       formData.append('id_categoria', this.form.value.id_categoria);
 
-      for (let pair of formData.entries()) {
-        console.log(pair[0] + ':', pair[1]);
-      }
-      this.http.post('http://localhost:8080/api/fotografie/upload', formData).subscribe({
-        next: () => alert('Upload riuscito!'),
-        error: () => alert('Errore durante l\'upload')
-      });
+      this.compService.uploadFoto(formData).subscribe(
+        (response) => {
+          console.log('Immagine caricata con successo:', response);
+        },
+        (error) => {
+          console.error('Errore durante il caricamento dell\'immagine:', error);
+        }
+      )
     }
   }
   resetFile() {

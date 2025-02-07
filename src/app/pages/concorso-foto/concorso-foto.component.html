@@ -31,5 +31,16 @@
     </button>
 
 
+    <h3>Foto Caricate</h3>
+    <div *ngFor="let fotografie of Fotografie">
+      <div class="card mb-3">
+        <div class="card-body">
+          <p>{{ fotografie.titolo }}</p>
+          <img [src]="fotografie.percorsoFile" alt="Foto" width="200" />
+        </div>
+      </div>
+    </div>
+
+
 </form>
 </div>
