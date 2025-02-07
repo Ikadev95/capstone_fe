@@ -43,10 +43,6 @@ export class AuthsrvService {
 
           localStorage.setItem('dati',JSON.stringify(dati))
 
-          //recupero la data di scadenza del token
-          const date = this.jwtHelper.getTokenExpirationDate(dati.accessToken)
-          if (date) this.autoLogout(date)
-
       } )
     )
   }
@@ -59,40 +55,25 @@ export class AuthsrvService {
   }
 
 
-  autoLogout(expDate: Date){
-      // calcolo quanto tempo manca tra la data di exp e il momento attuale
-    const expMs = expDate.getTime() - new Date().getTime()
-
-    this.autoLogoutTimer = setTimeout(() => {
-      this.logout()
-    }, expMs)
-  }
-
-
-
   restoreUser() {
     const userJson: string | null = localStorage.getItem('dati');
-    if (!userJson) return; // Se non ci sono dati, non fare nulla
+    if (!userJson) {
+      console.log("Non ci sono dati nel localStorage");
+      this.router.navigate(['/auth']);
+      return;
+    }
+    // Se non ci sono dati, non fare nulla
 
     const accessData: any = JSON.parse(userJson);
 
     try {
       const decodedToken: any = jwtDecode(accessData.token); // Decodifica il token
-      const expDate = new Date(decodedToken.exp * 1000); // Converti la data di scadenza in formato JavaScript
-      const currentDate = new Date();
-
-      if (expDate < currentDate) {
-        console.log("Token scaduto");
-        // Se il token è scaduto, rimuovi i dati dal localStorage
-        localStorage.removeItem('dati');
-        return;
-      }
     } catch (error) {
       console.log("Errore nel decodificare il token", error);
       return;
     }
 
-    // Se il token non è scaduto, aggiorna il BehaviorSubject
+    //aggiorna il BehaviorSubject
     this.userAuthSubject$.next(accessData);
     console.log("Utente ripristinato con successo", this.userAuthSubject$.getValue());
   }
