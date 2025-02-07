@@ -1,3 +1,4 @@
+import { iPoesiaRequest } from './../interfaces/i-poesia-request';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, tap } from 'rxjs';
@@ -24,6 +25,16 @@ export class ComponimentiSvcService {
 
   uploadFoto(formData:FormData){ {
     return this.http.post('http://localhost:8080/api/fotografie/upload', formData)
+    .pipe(
+      tap(() => {
+        this.getFotoByUser().subscribe();
+      })
+    );
+    }
+  }
+
+  uploadPoesia( dati: iPoesiaRequest){ {
+    return this.http.post('http://localhost:8080/api/poesie/create',dati)
     .pipe(
       tap(() => {
         this.getFotoByUser().subscribe();
