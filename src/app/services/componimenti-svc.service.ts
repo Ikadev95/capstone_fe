@@ -18,13 +18,7 @@ export class ComponimentiSvcService {
   fotoSubject$ = new BehaviorSubject<iFotografiaResponse[] | null>(null);
   poesiaSubject$ = new BehaviorSubject<iPoesiaResponse[] | null>(null);
 
-  getFotoByUser(){
-    return this.http.get<iFotografiaResponse[]>('http://localhost:8080/api/fotografie/user').pipe
-    (tap(data => this.fotoSubject$.next(data.map(foto => ({
-      ...foto,
-       percorsoFile: `http://localhost:8080/api/uploads/fotografie/${foto.percorsoFile.split('/').pop()}`
-    })))))
-  }
+
 
   uploadFoto(formData:FormData){ {
     return this.http.post('http://localhost:8080/api/fotografie/upload', formData)
@@ -40,17 +34,23 @@ export class ComponimentiSvcService {
     return this.http.post('http://localhost:8080/api/poesie/create',dati)
     .pipe(
       tap(() => {
-        this.getFotoByUser().subscribe();
+        this.getPoesieByUser().subscribe();
       })
     );
     }
   }
 
+  getFotoByUser(){
+    return this.http.get<iFotografiaResponse[]>('http://localhost:8080/api/fotografie/user').pipe
+    (tap(data => this.fotoSubject$.next(data.map(foto => ({
+      ...foto,
+       percorsoFile: `http://localhost:8080/api/uploads/fotografie/${foto.percorsoFile.split('/').pop()}`
+    })))))
+  }
+
   getPoesieByUser(){
     return this.http.get<iPoesiaResponse[]>('http://localhost:8080/api/poesie/user').pipe
-    (tap(data =>
-    { console.log(data)
-      this.poesiaSubject$.next(data)}))
+    (tap(data => this.poesiaSubject$.next(data)))
   }
 
 }

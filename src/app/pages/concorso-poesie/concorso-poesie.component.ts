@@ -27,13 +27,14 @@ export class ConcorsoPoesieComponent {
        testo: new FormControl('',[Validators.required])
     })
 
+  }
+
+  ngOnInit() {
     this.categoriaSrv.getCategrieBySezionePoesia().subscribe(data => {
       this.Categorie = data
     })
 
     this.getPoesie();
-    console.log(this.Poesie)
-
   }
 
   uploadPoesia() {
@@ -50,13 +51,15 @@ export class ConcorsoPoesieComponent {
         console.error('Errore durante il caricamento della poesia:', error);
       }
      )
+     this.form.reset();
+     this.getPoesie();
 
   }
 
   getPoesie(){
     this.compService.poesiaSubject$.subscribe(data => {
-      if(data){
-      this.Poesie = data}
+      if(data)
+      this.Poesie = data
     })
   }
 
