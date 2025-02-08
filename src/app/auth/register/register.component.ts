@@ -64,7 +64,7 @@ export class RegisterComponent {
         next: (data) => {
           console.log('registrazione effettuata con successo');
           console.log('Risposta ricevuta:', data);
-          this.router.navigate(['home']);
+          this.router.navigate(['auth']);
         },
         error: (error) => {
           console.error('Errore nella registrazione', error);

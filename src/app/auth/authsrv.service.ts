@@ -53,6 +53,9 @@ export class AuthsrvService {
     this.decodeToken.userRoles$.next([]);
     localStorage.removeItem('dati')
     this.router.navigate(['/auth'])
+    .then(() => {
+      window.location.reload();
+    });
   }
 
 

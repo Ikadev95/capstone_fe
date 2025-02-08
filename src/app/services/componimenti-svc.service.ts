@@ -20,6 +20,7 @@ export class ComponimentiSvcService {
 
 
 
+
   uploadFoto(formData:FormData){ {
     return this.http.post('http://localhost:8080/api/fotografie/upload', formData)
     .pipe(
