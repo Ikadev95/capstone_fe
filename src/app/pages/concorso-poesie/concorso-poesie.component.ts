@@ -44,7 +44,7 @@ export class ConcorsoPoesieComponent {
      this.pagamentiService.pagamentiSubject$.subscribe(data => {
           if (data) {
             this.PagamentoPoesie = data.filter((pagamento: iPagamentoResponse) => pagamento.ragione_pagamento === 'CONCORSO_POESIA');
-            console.log(this.PagamentoPoesie);
+            if(this.PagamentoPoesie.length > 0)
             this.poesiePagate = this.PagamentoPoesie[0].numero_poesie_pagate;
           }
         });

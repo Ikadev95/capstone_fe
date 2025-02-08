@@ -45,8 +45,8 @@ form: FormGroup;
     this.pagamentiService.pagamentiSubject$.subscribe(data => {
       if (data) {
         this.PagamentoFoto = data.filter((pagamento: iPagamentoResponse) => pagamento.ragione_pagamento === 'CONCORSO_FOTOGRAFIA');
-        console.log(this.PagamentoFoto);
-        this.fotoPagate = this.PagamentoFoto[0].numero_foto_pagate;
+        if(this.PagamentoFoto.length > 0){
+        this.fotoPagate = this.PagamentoFoto[0].numero_foto_pagate;}
       }
     });
 
