@@ -14,13 +14,11 @@ export class PagamentiSvcService {
     this.getPagamentiUser().subscribe();
    }
 
-  getPagamentiUser(){
+   getPagamentiUser(){
     return this.http.get<iPagamentoResponse[]>('http://localhost:8080/pagamenti/user').pipe(
       tap(data => {
-        if(data == null){
-          this.pagamentiSubject$.next(data)
-        }
-     }
-       ))
+        this.pagamentiSubject$.next(data);
+      })
+    );
   }
 }
