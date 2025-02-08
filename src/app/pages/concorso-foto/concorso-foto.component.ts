@@ -51,11 +51,24 @@ form: FormGroup;
     });
 
   }
-
   onFileSelect(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0];
+      const file = input.files[0];
+
+      // Controllo tipo di file
+      if (!file.type.startsWith('image/')) {
+        alert('Il file selezionato non è un\'immagine valida.');
+        return;
+      }
+
+      // Controllo dimensione file (5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        alert('Il file è troppo grande! La dimensione massima consentita è di 5MB.');
+        return;
+      }
+
+      this.selectedFile = file;
 
       // Anteprima immagine
       const reader = new FileReader();
@@ -112,4 +125,19 @@ form: FormGroup;
       this.Fotografie = data
     })
   }
+
+  isValid(fieldName: string) {
+    return this.form.get(fieldName)?.valid;
+  }
+
+  isTouched(fieldName: string) {
+    return this.form.get(fieldName)?.touched;
+  }
+
+  isInValidTouched(fieldName: string) {
+    return !this.isValid(fieldName) && this.isTouched(fieldName);
+  }
+
+
+
 }

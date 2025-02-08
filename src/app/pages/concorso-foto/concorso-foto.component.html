@@ -1,46 +1,84 @@
 <div class="container">
   <h2>Carica le tue foto</h2>
-<div *ngIf="previewUrl">
-  <h3>File caricati:</h3>
-  <img [src]="previewUrl" alt="Anteprima" width="200" />
-</div>
 
-<form [formGroup]="form" (submit)="uploadFile()">
+  <div *ngIf="previewUrl">
+    <img [src]="previewUrl" alt="Anteprima" class="preview" />
+  </div>
 
+  <form [formGroup]="form" (submit)="uploadFile()">
 
-    <label for="titolo" class="mt-3">Titolo</label>
-    <input type="text" name="titolo" placeholder="Titolo" class="form-control" formControlName="titolo">
-
-    <label for="id_categoria" class="mt-3">Categoria</label>
-    <select name="id_categoria" class="form-control" formControlName="id_categoria">
-      <option *ngFor="let categoria of Categorie" [value]="categoria.id">{{ categoria.nome_categoria }}</option>
-    </select>
-
-
-    <div  *ngIf="!selectedFile" class="upload-container mt-3">
-      <input type="file" #fileInput class="upload" (change)="onFileSelect($event)" accept="image/*" />
+    <div *ngIf="!selectedFile" class="upload-container mt-3">
+      <input
+        type="file"
+        #fileInput
+        class="upload"
+        (change)="onFileSelect($event)"
+        accept="image/*"
+      />
       <div class="d-flex flex-column justify-content-center align-items-center up">
         <span class="material-symbols-outlined">upload</span>
-        <small>Drag and drop or select a file</small></div>
+        <small>Drag and drop or select a file</small>
+      </div>
     </div>
 
+    <div>
+      <button
+        type="button"
+        *ngIf="selectedFile"
+        (click)="resetFile()"
+        class="btn btn-secondary mt-3"
+      >
+        Cambia foto
+      </button>
+    </div>
 
-    <button type="submit" *ngIf="selectedFile" class="btn btn-primary mt-3 ">Carica</button>
-    <button type="button" *ngIf="selectedFile" (click)="resetFile()" class="btn btn-secondary mt-3">
-      Ricarica foto
+    <label for="titolo" class="mt-3">Titolo</label>
+    <input
+      type="text"
+      name="titolo"
+      placeholder="Titolo"
+      class="form-control"
+      formControlName="titolo"
+      [ngClass]="{'is-invalid': isInValidTouched('titolo')}"
+    />
+    <div *ngIf="isInValidTouched('titolo')" class="invalid-feedback">
+      Il titolo è obbligatorio.
+    </div>
+
+    <label for="id_categoria" class="mt-3">Categoria</label>
+    <select
+      name="id_categoria"
+      class="form-control"
+      formControlName="id_categoria"
+      [ngClass]="{'is-invalid': isInValidTouched('id_categoria')}"
+    >
+      <option *ngFor="let categoria of Categorie" [value]="categoria.id">
+        {{ categoria.nome_categoria }}
+      </option>
+    </select>
+    <div *ngIf="isInValidTouched('id_categoria')" class="invalid-feedback">
+      Seleziona una categoria.
+    </div>
+
+    <button
+      type="submit"
+      [disabled]="!selectedFile || form.invalid"
+      class="btn btn-primary mt-3"
+    >
+      Carica Fotografia
     </button>
 
-
-    <h3 class="mt-3">Foto Caricate</h3>
-    <div *ngFor="let fotografie of Fotografie">
-      <div class="card mb-3">
-        <div class="card-body">
-          <p>{{ fotografie.titolo }}</p>
-          <img [src]="fotografie.percorsoFile" alt="Foto" width="200" />
+    <h3 class="mt-3" *ngIf="Fotografie.length > 0">Foto Caricate</h3>
+    <div class="row">
+      <div class="col-md-6 col-lg-4" *ngFor="let fotografie of Fotografie">
+        <div class="card mb-3">
+          <div class="card-body">
+            <p>{{ fotografie.titolo }}</p>
+            <img [src]="fotografie.percorsoFile" alt="Foto" class="foto" />
+          </div>
         </div>
       </div>
     </div>
 
-
-</form>
+  </form>
 </div>
