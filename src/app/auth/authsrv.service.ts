@@ -9,6 +9,7 @@ import { iUser } from './interfaces/i-user';
 import { iLoginRequest } from './interfaces/i-login-request';
 import { BehaviorSubject, tap } from 'rxjs';
 import {jwtDecode} from 'jwt-decode';
+import { ComponimentiSvcService } from '../services/componimenti-svc.service';
 
 @Injectable({
   providedIn: 'root'
@@ -62,20 +63,23 @@ export class AuthsrvService {
       this.router.navigate(['/auth']);
       return;
     }
-    // Se non ci sono dati, non fare nulla
+    else{
+      const accessData: any = JSON.parse(userJson);
 
-    const accessData: any = JSON.parse(userJson);
+      try {
+        const decodedToken: any = jwtDecode(accessData.token); // Decodifica il token
+      } catch (error) {
+        console.log("Errore nel decodificare il token", error);
+        return;
+      }
 
-    try {
-      const decodedToken: any = jwtDecode(accessData.token); // Decodifica il token
-    } catch (error) {
-      console.log("Errore nel decodificare il token", error);
-      return;
+      //aggiorna il BehaviorSubject
+      this.userAuthSubject$.next(accessData);
+      console.log("Utente ripristinato con successo", this.userAuthSubject$.getValue());
     }
 
-    //aggiorna il BehaviorSubject
-    this.userAuthSubject$.next(accessData);
-    console.log("Utente ripristinato con successo", this.userAuthSubject$.getValue());
+
+
   }
 
 }

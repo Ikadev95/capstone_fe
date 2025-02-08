@@ -59,6 +59,7 @@ export class RegisterComponent {
   register(){
     if(this.form.valid){
       console.log(this.form.value);
+      this.form.get('indirizzo.comune_id')?.setValue(this.form.value.indirizzo.comune_id.id);
       this.authSrv.register(this.form.value).subscribe({
         next: (data) => {
           console.log('registrazione effettuata con successo');
@@ -124,9 +125,10 @@ export class RegisterComponent {
   updateComune(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
     const comuneSelezionato = this.comuni.find(c => c.nome_comune === value);
+    console.log(comuneSelezionato);
 
     if (comuneSelezionato) {
-      this.form.get('indirizzo.comune_id')?.setValue(comuneSelezionato.id);
+      this.form.get('indirizzo.comune_id')?.setValue(comuneSelezionato.nome_comune);
     }
   }
 

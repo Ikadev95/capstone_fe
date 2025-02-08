@@ -1,3 +1,4 @@
+import { iPagamentoResponse } from './../../interfaces/i-pagamento-response';
 import { iFotografiaResponse } from './../../interfaces/i-fotografia-response';
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, ViewChild } from '@angular/core';
@@ -6,6 +7,8 @@ import { CategoriaSrvService } from '../../services/categoria-srv.service';
 import { iCategoriaResponse } from '../../interfaces/i-categoria-response';
 import { DecodeTokenService } from '../../services/decode-token.service';
 import { ComponimentiSvcService } from '../../services/componimenti-svc.service';
+import { PagamentiSvcService } from '../../services/pagamenti-svc.service';
+
 
 @Component({
   selector: 'app-concorso-foto',
@@ -20,8 +23,11 @@ form: FormGroup;
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
   Categorie: iCategoriaResponse[] = []
   Fotografie: iFotografiaResponse[] = []
+  PagamentoFoto: iPagamentoResponse[] = []
+  fotoPagate: number = 0;
 
-  constructor(private http: HttpClient, private categoriaSrv: CategoriaSrvService, private decoder: DecodeTokenService, private compService: ComponimentiSvcService) {
+  constructor(private http: HttpClient, private categoriaSrv: CategoriaSrvService, private decoder: DecodeTokenService,
+    private compService: ComponimentiSvcService, private pagamentiService: PagamentiSvcService) {
     this.form = new FormGroup({
       file: new FormControl(null),
       titolo: new FormControl('', [Validators.required]),
@@ -35,6 +41,14 @@ form: FormGroup;
     })
 
     this.getFoto();
+
+    this.pagamentiService.pagamentiSubject$.subscribe(data => {
+      if (data) {
+        this.PagamentoFoto = data.filter((pagamento: iPagamentoResponse) => pagamento.ragione_pagamento === 'CONCORSO_FOTOGRAFIA');
+        console.log(this.PagamentoFoto);
+        this.fotoPagate = this.PagamentoFoto[0].numero_foto_pagate;
+      }
+    });
 
   }
 
@@ -52,6 +66,12 @@ form: FormGroup;
     }
   }
   uploadFile() {
+
+    if (this.Fotografie.length >= this.fotoPagate) {
+      alert("Hai raggiunto il numero massimo di foto che puoi caricare!");
+      return;
+    }
+
     if (this.selectedFile) {
       const formData = new FormData();
 

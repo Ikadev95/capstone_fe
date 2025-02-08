@@ -13,21 +13,24 @@ export class PagamentiComponent {
   concorsoName: string = 'concorsoAirali';
   sezione: string = '';
   numeroComponimenti : number = 0;
-  ragione: string = 'CONCORSO';
+  ragione: string = '';
 
   onSelectAmount(amount: number, tipo:string) {
     this.selectedAmount = amount;
     if(tipo === 'singolo-poesia') {
       this.sezione = 'POESIA';
       this.numeroComponimenti = 1;
+      this.ragione = 'CONCORSO_POESIA';
   }
   else if(tipo === 'tre-poesia') {
     this.sezione = 'POESIA';
     this.numeroComponimenti = 3;
+    this.ragione = 'CONCORSO_POESIA';
   }
   else {
     this.sezione = 'FOTOGRAFIA';
     this.numeroComponimenti = 3;
+    this.ragione = 'CONCORSO_FOTOGRAFIA';
   }
 }
 
