@@ -1,5 +1,5 @@
 <div class="container">
-  <h2 class="text-center">Contributo di Partecipazione al Concorso</h2>
+  <h2>Contributo di Partecipazione al Concorso</h2>
 
   <div class="payment-details">
     <p>A sostegno delle spese organizzative, è richiesto un contributo di partecipazione per il concorso. Scegli la sezione a cui desideri partecipare e procedi con il pagamento.</p>
@@ -34,8 +34,10 @@
   <div class="section-title">Totale da Pagare: <span class="price">{{ selectedAmount | currency:'EUR' }}</span></div>
 
   <div class="payment-info">
-    <i class="icon-info fas fa-info-circle"></i>
-    <p>Per completare il pagamento, seleziona la tua quota e procedi con il pagamento online.</p>
+
+    <div class="info">
+      <p> <span class="material-symbols-outlined">info </span> Per completare il pagamento, seleziona la tua quota e procedi con il pagamento online.</p>
+    </div>
 
 
     <app-payment-button [amount]="selectedAmount * 100" [name]="concorsoName" [sezione] ="sezione" [numeroComponimenti]="numeroComponimenti" [ragione] ="ragione" [selectedAmount]="selectedAmount"></app-payment-button>
