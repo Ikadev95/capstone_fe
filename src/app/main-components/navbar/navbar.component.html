@@ -61,18 +61,19 @@
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
           class="nav-link text-secondary"
-          >Registra Giudice</a
+          >Giudici</a
         >
       </li>
-      <li class="nav-item" *ngIf="roles.includes('ROLE_ADMIN')" >
+      <li class="nav-item" *ngIf="roles.includes('ROLE_ADMIN')">
         <a
-          routerLink="/assegnaGiudice"
+          routerLink="/utenti"
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
           class="nav-link text-secondary"
-          >Assegna Giudice</a
+          >Utenti</a
         >
       </li>
+
       <li class="nav-item" *ngIf="roles.length == 0">
         <a
           routerLink="/auth"

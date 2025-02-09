@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AssegnaGiudiceComponent } from './assegna-giudice.component';
+import { UtentiComponent } from './utenti.component';
 
-describe('AssegnaGiudiceComponent', () => {
-  let component: AssegnaGiudiceComponent;
-  let fixture: ComponentFixture<AssegnaGiudiceComponent>;
+describe('UtentiComponent', () => {
+  let component: UtentiComponent;
+  let fixture: ComponentFixture<UtentiComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AssegnaGiudiceComponent]
+      declarations: [UtentiComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AssegnaGiudiceComponent);
+    fixture = TestBed.createComponent(UtentiComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

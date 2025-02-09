@@ -13,8 +13,8 @@ const routes: Routes = [
   { path: 'concorsoPoesie', loadChildren: () => import('./pages/concorso-poesie/concorso-poesie.module').then(m => m.ConcorsoPoesieModule), canActivate: [UserGuard] },
   { path: 'successPagamento', loadChildren: () => import('./pages/success-pagamento/success-pagamento.module').then(m => m.SuccessPagamentoModule), },
   { path: 'registraGiudice', loadChildren: () => import('./pages/registra-giudice/registra-giudice.module').then(m => m.RegistraGiudiceModule), canActivate: [AdminGuard] },
-  { path: 'assegnaGiudice', loadChildren: () => import('./pages/assegna-giudice/assegna-giudice.module').then(m => m.AssegnaGiudiceModule), canActivate: [AdminGuard] },
-  { path: 'profilo', loadChildren: () => import('./pages/profilo/profilo.module').then(m => m.ProfiloModule), canActivate: [LoggedGuard]}
+  { path: 'profilo', loadChildren: () => import('./pages/profilo/profilo.module').then(m => m.ProfiloModule), canActivate: [LoggedGuard]},
+  { path: 'utenti', loadChildren: () => import('./pages/utenti/utenti.module').then(m => m.UtentiModule) }
 ];
 
 @NgModule({
