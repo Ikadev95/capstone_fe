@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs';
 })
 export class NavbarComponent {
 
-  avatar: string = '';
+  avatar: string = 'user.png';
   roles: string[] = [];
   private rolesSubscription!: Subscription;
   isActive: boolean = false;

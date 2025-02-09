@@ -43,6 +43,7 @@ export class AuthsrvService {
           //qui lo stampa OK
 
           localStorage.setItem('dati',JSON.stringify(dati))
+          this.decodeToken.getRoles()
 
       } )
     )

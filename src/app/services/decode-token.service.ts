@@ -12,18 +12,21 @@ export class DecodeTokenService {
 
   jwtHelper: JwtHelperService = new JwtHelperService();
 
-  userRoles$ = new BehaviorSubject<string[]>([]);
+  userRoles$ = new BehaviorSubject<string[]>(this.getRoles());
 
-  getRoles() {
+  getRoles(): string[] {
     const json = localStorage.getItem('dati');
-    if (!json) return;
+    if (!json) return [];
+
     const { token } = JSON.parse(json);
-    if (!token) return;
-    return this.jwtHelper.decodeToken(token).roles;
+    if (!token) return [];
+
+    const decodedToken = this.jwtHelper.decodeToken(token);
+    return decodedToken.roles ? decodedToken.roles : [];
   }
   getUsername(): string | null {
     const json = localStorage.getItem('dati');
-   // console.log(json)
+   console.log(json)
     if (!json) return null;
     const { token } = JSON.parse(json);
     if (!token) return null;

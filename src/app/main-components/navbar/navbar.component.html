@@ -20,9 +20,7 @@
       ><img src="logo.png" alt="logo" width="58"
     /></a>
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li
-        class="nav-item"
-      >
+      <li class="nav-item" *ngIf="roles.includes('ROLE_USER')" >
         <a
           routerLink="home"
           routerLinkActive="active"
@@ -32,7 +30,7 @@
           >Home</a
         >
       </li>
-      <li class="nav-item" >
+      <li class="nav-item" *ngIf="roles.includes('ROLE_USER')" >
         <a
           routerLink="/concorsoFoto"
           routerLinkActive="active"
@@ -40,7 +38,7 @@
           >Concorso Foto</a
         >
       </li>
-      <li class="nav-item" >
+      <li class="nav-item" *ngIf="roles.includes('ROLE_USER')" >
         <a
           routerLink="/concorsoPoesie"
           routerLinkActive="active"
@@ -48,7 +46,7 @@
           >Concorso Poesie</a
         >
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="roles.includes('ROLE_USER')">
         <a
           routerLink="/pagamenti"
           routerLinkActive="active"
@@ -57,7 +55,25 @@
           >Pagamenti</a
         >
       </li>
-      <li class="nav-item" >
+      <li class="nav-item" *ngIf="roles.includes('ROLE_ADMIN')">
+        <a
+          routerLink="/registraGiudice"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="nav-link text-secondary"
+          >Registra Giudice</a
+        >
+      </li>
+      <li class="nav-item" *ngIf="roles.includes('ROLE_ADMIN')" >
+        <a
+          routerLink="/assegnaGiudice"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="nav-link text-secondary"
+          >Assegna Giudice</a
+        >
+      </li>
+      <li class="nav-item" *ngIf="roles.length == 0">
         <a
           routerLink="/auth"
           routerLinkActive="active"
@@ -66,18 +82,19 @@
           >Login</a
         >
       </li>
-      <li class="nav-item" >
-        <a role="button" (click)="logout()" class="nav-link text-secondary"
-          >Logout</a
-        >
-      </li>
+
     </ul>
   </div>
   <div>
     <ul class="navbar-nav">
-      <li class="nav-item" >
+      <li class="nav-item" *ngIf="roles.length !== 0">
+        <a role="button" (click)="logout()" class="nav-link text-secondary logout"
+          ><i class="fa-solid fa-right-from-bracket" ></i></a
+        >
+      </li>
+      <li class="nav-item" *ngIf="roles.length !== 0">
         <a
-          routerLink="/profile"
+          routerLink="/profilo"
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
           class="nav-link text-secondary"

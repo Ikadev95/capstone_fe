@@ -3,6 +3,8 @@ import { AuthsrvService } from './authsrv.service';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { iLoginRequest } from './interfaces/i-login-request';
+import { tap } from 'rxjs';
+import { DecodeTokenService } from '../services/decode-token.service';
 
 @Component({
   standalone:false,
@@ -14,7 +16,7 @@ export class AuthComponent {
 
   form: FormGroup;
 
-  constructor(private authSvc: AuthsrvService,private router: Router){
+  constructor(private authSvc: AuthsrvService,private router: Router, private decodeToken: DecodeTokenService){
     this.form = new FormGroup({
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required])
@@ -23,26 +25,26 @@ export class AuthComponent {
 
   login(){
     if(this.form.valid){
-      //prendo i dati dal form e li inserisco in una varabile
       const formData: iLoginRequest = this.form.value;
-      this.authSvc.login(formData).subscribe(
-
-        {
-          next: (data) => {
-            console.log('login effettuato con successo')
-            this.router.navigate(['home'])
-          },
-          error:(data) => {
-            console.log('errore login')
-          }
-        }
+      this.authSvc.login(formData) .pipe(
+        tap((res) =>
+          this.decodeToken.userRoles$.next(this.decodeToken.getRoles())
+        )
       )
-
-    }
-    else{
-      console.log('form invalido')
-    }
+      .subscribe((res) => {
+        console.log(res);
+        setTimeout(() => {
+          if (this.decodeToken.userRoles$.getValue().includes('ROLE_ADMIN')) {
+            this.router.navigate(['profilo']);
+          } else {
+            this.router.navigate(['home']);
+          }
+        }, 1000);
+      });
+  } else {
+    console.log('form invalido');
   }
+}
 
 
 }
