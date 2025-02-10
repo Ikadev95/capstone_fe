@@ -115,8 +115,8 @@ export class UserSvcService {
 	//  Ricerca e filtraggio degli utenti
 	private _search(): Observable<SearchResult> {
 		const { sortColumn, sortDirection, pageSize, page, searchTerm } = this._state;
-
-		return this.getUsers(page - 1, pageSize, sortColumn).pipe(
+    console.log(this._state)
+		return this.getUsers(page - 1, pageSize).pipe(
 			switchMap((users) => {
 				// 1. Ordina i risultati
 				let sortedUsers = this.sort(users.content, sortColumn, sortDirection);
@@ -126,8 +126,12 @@ export class UserSvcService {
 
 				const total = sortedUsers.length;
 
+        console.log(this._state)
+
 				// 3. Pagina i risultati
-				sortedUsers = sortedUsers.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
+        const startIndex = (page - 1) * pageSize;
+        const endIndex = startIndex + pageSize;
+				sortedUsers = sortedUsers.slice(startIndex, endIndex);
 				return of({ users: sortedUsers, total });
 			})
 		);

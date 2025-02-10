@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
   styleUrl: './utenti.component.scss'
 })
 
-export class UtentiComponent implements OnInit {
+export class UtentiComponent {
 
   user$!: Observable<iUserPaged[]>;
   total$!: Observable<number>;
@@ -22,9 +22,6 @@ export class UtentiComponent implements OnInit {
   constructor(public service: UserSvcService) {
     this.user$ = this.service.users$;
     this.total$ = service.total$;
-  }
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
   }
 
 	onSort({ column, direction }: SortEvent) {
