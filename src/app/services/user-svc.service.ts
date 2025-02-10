@@ -13,96 +13,98 @@ interface SearchResult {
 
 @Injectable({ providedIn: 'root' })
 export class UserSvcService {
-	private _loading$ = new BehaviorSubject<boolean>(true);
-	private _search$ = new Subject<void>();
-	private _users$ = new BehaviorSubject<iUserPaged[]>([]);
-	private _total$ = new BehaviorSubject<number>(0);
+  private _loading$ = new BehaviorSubject<boolean>(true);
+   _search$ = new Subject<void>();
+  private _users$ = new BehaviorSubject<iUserPaged[]>([]);
+  private _total$ = new BehaviorSubject<number>(0);
+ _pages$ = new BehaviorSubject<number[]>([]);
 
-	private _state: State = {
-		page: 1,
-		pageSize: 4,
-		searchTerm: '',
-		sortColumn: '',
-		sortDirection: '',
-	};
+  private _state: State = {
+    page: 1,
+    pageSize: 3,
+    searchTerm: '',
+    sortColumn: '',
+    sortDirection: '',
+  };
 
-	constructor(private http: HttpClient) {
-		this._search$
-			.pipe(
-				tap(() => this._loading$.next(true)),
-				debounceTime(200),
-				switchMap(() => this._search()),
-				delay(200),
-				tap(() => this._loading$.next(false)),
-			)
-			.subscribe((result) => {
-				this._users$.next(result.users);
-				this._total$.next(result.total);
-			});
+  constructor(private http: HttpClient) {
+    this._search$
+      .pipe(
+        tap(() => this._loading$.next(true)),
+        debounceTime(200),
+        switchMap(() => this._search()),
+        delay(200),
+        tap(() => this._loading$.next(false)),
+      )
+      .subscribe((result) => {
+        this._users$.next(result.users);
+       // this._total$.next(result.total);
+      });
 
-		this._search$.next();
-	}
+    // Iniziamo la ricerca
+    this._search$.next();
+  }
 
-	//  GETTER per lo stato reattivo
-	get users$(): Observable<iUserPaged[]> {
-		return this._users$.asObservable();
-	}
-	get total$(): Observable<number> {
-		return this._total$.asObservable();
-	}
-	get loading$(): Observable<boolean> {
-		return this._loading$.asObservable();
-	}
-	get page(): number {
-		return this._state.page;
-	}
-	get pageSize(): number {
-		return this._state.pageSize;
-	}
-	get searchTerm(): string {
-		return this._state.searchTerm;
-	}
+  // GETTER per lo stato reattivo
+  get users$(): Observable<iUserPaged[]> {
+    return this._users$.asObservable();
+  }
+  get total$(): Observable<number> {
+    return this._total$.asObservable();
+  }
+  get loading$(): Observable<boolean> {
+    return this._loading$.asObservable();
+  }
+  get page(): number {
+    return this._state.page;
+  }
+  get pageSize(): number {
+    return this._state.pageSize;
+  }
+  get searchTerm(): string {
+    return this._state.searchTerm;
+  }
 
-	//  SETTER per aggiornare lo stato
-	set page(page: number) {
-		this._set({ page });
-	}
-	set pageSize(pageSize: number) {
-		this._set({ pageSize });
-	}
-	set searchTerm(searchTerm: string) {
-		this._set({ searchTerm });
-	}
-	set sortColumn(sortColumn: SortColumn) {
-		this._set({ sortColumn });
-	}
-	set sortDirection(sortDirection: SortDirection) {
-		this._set({ sortDirection });
-	}
+  // SETTER per aggiornare lo stato
+  set page(page: number) {
+    this._set({ page });
+  }
+  set pageSize(pageSize: number) {
+    this._set({ pageSize });
+  }
+  set searchTerm(searchTerm: string) {
+    this._set({ searchTerm });
+  }
+  set sortColumn(sortColumn: SortColumn) {
+    this._set({ sortColumn });
+  }
+  set sortDirection(sortDirection: SortDirection) {
+    this._set({ sortDirection });
+  }
 
-	private _set(patch: Partial<State>) {
-		Object.assign(this._state, patch);
-		this._search$.next();
-	}
+  private _set(patch: Partial<State>) {
+    Object.assign(this._state, patch);
+    this._search$.next();
+  }
 
-	//  Funzione di confronto
-	private compare(v1: string | number, v2: string | number): number {
-		return v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
-	}
+  // Funzione per ordinamento
+  private sort(users: iUserPaged[], column: SortColumn, direction: SortDirection): iUserPaged[] {
+    if (direction === '' || column === '') {
+      return users;
+    } else {
+      return [...users].sort((a, b) => {
+        const res = this.compare(a[column], b[column]);
+        return direction === 'asc' ? res : -res;
+      });
+    }
+  }
 
-	//  Funzione per ordinamento
-	private sort(users: iUserPaged[], column: SortColumn, direction: SortDirection): iUserPaged[] {
-		if (direction === '' || column === '') {
-			return users;
-		} else {
-			return [...users].sort((a, b) => {
-				const res = this.compare(a[column], b[column]);
-				return direction === 'asc' ? res : -res;
-			});
-		}
-	}
+  // Funzione di confronto
+  private compare(v1: string | number, v2: string | number): number {
+    return v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
+  }
 
-	//  Funzione per filtrare i risultati
+  // Funzione per filtrare i risultati
   private matches(user: iUserPaged, term: string): boolean {
     return (
       user.nome.toLowerCase().includes(term.toLowerCase()) ||
@@ -112,42 +114,31 @@ export class UserSvcService {
     );
   }
 
-	//  Ricerca e filtraggio degli utenti
-	private _search(): Observable<SearchResult> {
-		const { sortColumn, sortDirection, pageSize, page, searchTerm } = this._state;
-    console.log(this._state)
-		return this.getUsers(page - 1, pageSize).pipe(
-			switchMap((users) => {
-				// 1. Ordina i risultati
-				let sortedUsers = this.sort(users.content, sortColumn, sortDirection);
+  // Funzione per eseguire la ricerca, ordinamento e paginazione
+  private _search(): Observable<SearchResult> {
+    const { sortColumn, sortDirection, pageSize, page, searchTerm } = this._state;
 
-				// 2. Filtra i risultati
-				sortedUsers = sortedUsers.filter(user => this.matches(user, searchTerm));
+    console.log(this._state);
 
-				const total = sortedUsers.length;
+    return this.getUsers(page - 1, pageSize).pipe(
+      switchMap((data) => {
+        let sortedUsers = this.sort(data.content, sortColumn, sortDirection); // Ordinamento
 
-        console.log(this._state)
+        sortedUsers = sortedUsers.filter(user => this.matches(user, searchTerm)); // Filtraggio
 
-				// 3. Pagina i risultati
-        const startIndex = (page - 1) * pageSize;
-        const endIndex = startIndex + pageSize;
-				sortedUsers = sortedUsers.slice(startIndex, endIndex);
-				return of({ users: sortedUsers, total });
-			})
-		);
-	}
+        const pages = Array.from({ length: data.totalPages }, (_, i) => i + 1);
+        console.log(pages , "pages");
+        this._pages$.next(pages);
+        this._total$.next(data.totalElements);
 
-  getUsers(page: number, size: number, sort?: string) {
-    let url = `http://localhost:8080/api/utenti/paged/year?page=${page}&size=${size}`;
-
-    if (sort) {
-      url += `&sort=${sort}`;
-    }
-
-    return this.http.get<{ content: iUserPaged[] }>(url).pipe(
-      tap(data => {
-        this._users$.next(data.content);
-        })
+        return of({ users: sortedUsers, total: this._total$.getValue() });
+      })
     );
+  }
+
+  // Ottieni gli utenti dalla API
+  getUsers(page: number, size: number) {
+    let url = `http://localhost:8080/api/utenti/paged/year?page=${page}&size=${size}`;
+    return this.http.get<Paged>(url);
   }
 }

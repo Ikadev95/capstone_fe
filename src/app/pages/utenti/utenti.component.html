@@ -21,7 +21,7 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th scope="col">#</th>
+          <th scope="col">Id</th>
           <th scope="col" sortable="nome" (sort)="onSort($event)">Nome</th>
           <th scope="col" sortable="cognome" (sort)="onSort($event)">Cognome</th>
           <th scope="col" sortable="username" (sort)="onSort($event)">Username</th>
@@ -46,15 +46,46 @@
     </table>
 
 
-    	<div class="d-flex justify-content-between p-2">
-        <ngb-pagination [collectionSize]="(total$ | async)!" [(page)]="service.page" [pageSize]="service.pageSize">
-        </ngb-pagination>
+    <div class="d-flex justify-content-between p-2">
+      <!-- Paginazione personalizzata -->
+      <button
+        class="btn btn-primary"
+        [disabled]="service.page <= 1"
+        (click)="changePage(service.page - 1)"
+      >
+        Precedente
+      </button>
 
-      <select class="form-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+      <!-- Numeri delle pagine -->
+
+      <div class="pagination-numbers">
+        @for (page of pages$ | async; track page) {
+        <button
+          [class.active]="page === service.page"
+          class="btn btn-outline-primary"
+          (click)="changePage(page)"
+        >
+          {{ page }}
+        </button>
+      }
+      </div>
+
+      <!-- Paginazione con dimensione personalizzata
+      <select class="form-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize" (change)="changePageSize($event)">
         <option [ngValue]="2">2 per pagina</option>
         <option [ngValue]="4">4 per pagina</option>
         <option [ngValue]="6">6 per pagina</option>
-      </select>
+      </select> -->
+
+      <button
+        class="btn btn-primary"
+        [disabled]="service.page >= service._pages$.value .length"
+        (click)="changePage(service.page + 1)"
+      >
+        Successivo
+      </button>
+
     </div>
   </form>
 </div>
+

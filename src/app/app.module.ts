@@ -3,11 +3,12 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbHighlight, NgbModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { tokenInterceptor } from './auth/token.interceptor';
 import { NavbarComponent } from './main-components/navbar/navbar.component';
 import { errorInterceptor } from './auth/error.interceptor';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,10 @@ import { errorInterceptor } from './auth/error.interceptor';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+   NgbPaginationModule,
+    NgbHighlight,
+    FormsModule,
   ],
   providers: [
     provideHttpClient( withInterceptors([tokenInterceptor])),
