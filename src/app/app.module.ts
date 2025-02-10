@@ -12,7 +12,7 @@ import { errorInterceptor } from './auth/error.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,

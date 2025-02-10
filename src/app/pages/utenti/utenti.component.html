@@ -1,3 +1,58 @@
 <div class="container">
-  <h2>Utenti</h2>
+  <h2>Users</h2>
+
+  <form>
+    <div class="mb-3 row">
+      <label for="table-complete-search" class="col-xs-3 col-sm-auto col-form-label">Cerca: </label>
+      <div class="col-xs-3 col-sm-auto">
+        <input
+          id="table-complete-search"
+          type="text"
+          class="form-control"
+          name="searchTerm"
+          [(ngModel)]="service.searchTerm"
+          (ngModelChange)="onSearch()"
+        />
+      </div>
+    </div>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col" sortable="nome" (sort)="onSort($event)">Nome</th>
+          <th scope="col" sortable="cognome" (sort)="onSort($event)">Cognome</th>
+          <th scope="col" sortable="username" (sort)="onSort($event)">Username</th>
+          <th scope="col" sortable="email" (sort)="onSort($event)">Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of utenti; trackBy: trackById">
+          <th scope="row">{{ user.id }}</th>
+          <td><ngb-highlight [result]="user.nome" [term]="service.searchTerm" /></td>
+          <td><ngb-highlight [result]="user.cognome" [term]="service.searchTerm" /></td>
+          <td><ngb-highlight [result]="user.username" [term]="service.searchTerm" /></td>
+          <td><ngb-highlight [result]="user.email" [term]="service.searchTerm" /></td>
+        </tr>
+        <tr *ngIf="!utenti.length">
+          <td colspan="5" style="text-align: center">Non ci sono utenti</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="d-flex justify-content-between p-2">
+        <ngb-pagination
+        [collectionSize]="(service.total$ | async) ?? 0"
+        [(page)]="service.page"
+        [pageSize]="service.pageSize"
+        (pageChange)="getUtenti()">
+      </ngb-pagination>
+
+      <select class="form-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+        <option [ngValue]="2">2 per pagina</option>
+        <option [ngValue]="4">4 per pagina</option>
+        <option [ngValue]="6">6 per pagina</option>
+      </select>
+    </div>
+  </form>
 </div>
