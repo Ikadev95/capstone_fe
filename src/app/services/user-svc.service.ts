@@ -26,8 +26,6 @@ export class UserSvcService {
 		sortDirection: '',
 	};
 
-	utentiSubject$ = new BehaviorSubject<iUserPaged[] | null>(null);
-
 	constructor(private http: HttpClient) {
 		this._search$
 			.pipe(
@@ -135,14 +133,17 @@ export class UserSvcService {
 		);
 	}
 
-  getUsers(page: number, size: number, sort: string) {
-    return this.http
-      .get<Paged>('http://localhost:8080/api/utenti/paged/' + `year?page=${page}&size=${size}`)
-      .pipe(
-        tap(data => {
-          const utenti = data.content;
-          this.utentiSubject$.next(utenti);
+  getUsers(page: number, size: number, sort?: string) {
+    let url = `http://localhost:8080/api/utenti/paged/year?page=${page}&size=${size}`;
+
+    if (sort) {
+      url += `&sort=${sort}`;
+    }
+
+    return this.http.get<{ content: iUserPaged[] }>(url).pipe(
+      tap(data => {
+        this._users$.next(data.content);
         })
-      );
+    );
   }
 }

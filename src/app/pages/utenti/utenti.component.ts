@@ -2,6 +2,7 @@ import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { UserSvcService } from '../../services/user-svc.service';
 import { iUserPaged } from '../../interfaces/i-user-paged';
 import { NgbdSortableHeader, SortEvent } from '../../directives/sortable.directive';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-utenti',
@@ -12,43 +13,28 @@ import { NgbdSortableHeader, SortEvent } from '../../directives/sortable.directi
 })
 
 export class UtentiComponent implements OnInit {
-  utenti: iUserPaged[] = [];
+
+  user$!: Observable<iUserPaged[]>;
+  total$!: Observable<number>;
 
   @ViewChildren(NgbdSortableHeader) headers!: QueryList<NgbdSortableHeader>;
 
   constructor(public service: UserSvcService) {
-    this.getUtenti();
+    this.user$ = this.service.users$;
+    this.total$ = service.total$;
   }
   ngOnInit(): void {
-    console.log('Utenti iniziali:', this.utenti);
+    throw new Error('Method not implemented.');
   }
 
+	onSort({ column, direction }: SortEvent) {
+		this.headers.forEach((header) => {
+			if (header.sortable !== column) {
+				header.direction = '';
+			}
+		});
 
-  onSearch() {
-    this.service.page = 1;
-    this.getUtenti();
-  }
-
-  onSort({ column, direction }: SortEvent) {
-    this.headers.forEach((header) => {
-      if (header.sortable !== column) {
-        header.direction = '';
-      }
-    });
-    this.service.sortColumn = column;
-    this.service.sortDirection = direction;
-    this.getUtenti();
-  }
-
-  getUtenti() {
-    this.service.getUsers(this.service.page, this.service.pageSize, this.service.sortColumn)
-      .subscribe();
-    this.service.utentiSubject$.pipe().subscribe(data => {
-      if(data)
-      this.utenti = data});
-  }
-
-  trackById(index: number, user: iUserPaged) {
-    return user.id;
-  }
+		this.service.sortColumn = column;
+		this.service.sortDirection = direction;
+	}
 }
