@@ -10,13 +10,15 @@ import { iCategoriaResponse } from '../interfaces/i-categoria-response';
 })
 export class CategoriaSrvService {
 
-    categoriaSubject$ = new BehaviorSubject<iCategoriaResponse[] | null>(null);
+    categoriaSubject$ = new BehaviorSubject<iCategoriaResponse[]>([]);
     sezionePoesieSubject$ = new BehaviorSubject<iCategoriaResponse[] | null>(null);
     sezioneFotografieSubject$ = new BehaviorSubject<iCategoriaResponse[] | null>(null);
 
     private provinciaUrl:string = `${environment.baseUrl}categorie`
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient) {
+    this.getAllCategorie().subscribe();
+   }
 
 
   getAllCategorie(){

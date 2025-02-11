@@ -6,6 +6,7 @@ import { iGiudiceResponse } from '../../interfaces/i-giudice-response';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { iCategoriaResponse } from '../../interfaces/i-categoria-response';
 import { HttpClient } from '@angular/common/http';
+import { CategoriaSrvService } from '../../services/categoria-srv.service';
 
 @Component({
   selector: 'app-giudici',
@@ -26,11 +27,13 @@ export class GiudiciComponent {
 
   @ViewChild('modalContent') modalContent: any;
 
-  constructor(public service : GiudiciSrcService, private modalService: NgbModal, private http : HttpClient) {
+  constructor(public service : GiudiciSrcService, private modalService: NgbModal, private http : HttpClient, private categorieSvc: CategoriaSrvService) {
     this.user$ = this.service.users$;
     this.total$ = this.service.total$;
     this.updatePagination();
     this.pages$ = this.service._pages$;
+    this.categorie$ = this.categorieSvc.categoriaSubject$;
+    this.categorie$.subscribe(data => console.log(data));
 
   }
 
