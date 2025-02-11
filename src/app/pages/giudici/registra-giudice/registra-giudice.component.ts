@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { GiudiciSrcService } from '../../../services/giudici-src.service';
 
 @Component({
   selector: 'app-registra-giudice',
@@ -12,7 +13,7 @@ export class RegistraGiudiceComponent {
 
 form: FormGroup
 
-  constructor() {
+  constructor(private giudiciSvc: GiudiciSrcService) {
     this.form = new FormGroup
     ({
       nome: new FormControl('', [Validators.required]),
@@ -26,7 +27,12 @@ form: FormGroup
 
   onSubmit() {
     if (this.form.valid) {
-      console.log('Form Submitted', this.form.value);
+      this.giudiciSvc.registerGiudice(this.form.value).subscribe({
+        next: (data) => {
+          console.log('Giudice registrato con successo');
+        }
+      })
+
     }
   }
 }
