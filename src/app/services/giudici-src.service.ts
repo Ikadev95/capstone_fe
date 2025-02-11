@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { iGiudiceRegister } from '../interfaces/i-giudice-register';
-import { Paged } from '../interfaces/paged';
 import { BehaviorSubject, debounceTime, delay, Observable, of, Subject, switchMap, tap } from 'rxjs';
 import { iGiudiceResponse } from '../interfaces/i-giudice-response';
 import { State } from '../interfaces/state';
 import { SortColumn, SortDirection } from '../directives/sortable.directive';
+import { PagedGiudice } from '../interfaces/paged-giudice';
 
 interface SearchResult {
   users: iGiudiceResponse[];
@@ -18,12 +18,12 @@ interface SearchResult {
 export class GiudiciSrcService {
 
   registerGiudice(giudice:Partial<iGiudiceRegister>){
-    return this.http.post('http://localhost:8080/api/auth/registerJudge',giudice);
+    return this.http.post('http://localhost:8080/api/auth/registerJudge',giudice)
   }
 
   getGiudici(page: number, size: number) {
     let url = `http://localhost:8080/api/utenti/paged/judge?page=${page}&size=${size}`;
-    return this.http.get<Paged>(url);
+    return this.http.get<PagedGiudice>(url)
   }
 
 
@@ -138,6 +138,7 @@ export class GiudiciSrcService {
 
     return this.getGiudici(page - 1, pageSize).pipe(
       switchMap((data) => {
+        console.log(data.content)
         let sortedUsers = this.sort(data.content, sortColumn, sortDirection); // Ordinamento
 
         sortedUsers = sortedUsers.filter(user => this.matches(user, searchTerm)); // Filtraggio

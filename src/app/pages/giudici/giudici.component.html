@@ -28,6 +28,7 @@
             <th scope="col" sortable="cognome" (sort)="onSort($event)">Cognome</th>
             <th scope="col" sortable="username" (sort)="onSort($event)">Username</th>
             <th scope="col" sortable="email" (sort)="onSort($event)">Email</th>
+            <th scope="col">Categoria</th>
             <th scope="col">Azioni</th>
           </tr>
         </thead>
@@ -39,6 +40,7 @@
             <td><ngb-highlight [result]="user.cognome" [term]="service.searchTerm" /></td>
             <td><ngb-highlight [result]="user.username" [term]="service.searchTerm" /></td>
             <td><ngb-highlight [result]="user.email" [term]="service.searchTerm" /></td>
+            <td><ngb-highlight [result]="user.categoria" [term]="service.searchTerm" /></td>
             <td (click)="openModal(user.id)"><i class="fa-solid fa-pen-to-square"></i> assegna</td>
           </tr>
           }  @empty {

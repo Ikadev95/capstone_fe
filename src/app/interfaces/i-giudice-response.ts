@@ -4,4 +4,5 @@ export interface iGiudiceResponse {
   nome: string
   cognome: string
   email: string
+  categoria: string
 }
