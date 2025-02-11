@@ -1,8 +1,11 @@
-import { Component, QueryList, ViewChildren } from '@angular/core';
+import { Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { GiudiciSrcService } from '../../services/giudici-src.service';
 import { Observable } from 'rxjs';
 import { NgbdSortableHeader, SortEvent } from '../../directives/sortable.directive';
 import { iGiudiceResponse } from '../../interfaces/i-giudice-response';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { iCategoriaResponse } from '../../interfaces/i-categoria-response';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-giudici',
@@ -17,8 +20,13 @@ export class GiudiciComponent {
   user$!: Observable<iGiudiceResponse[]>;
   total$!: Observable<number>;
   @ViewChildren(NgbdSortableHeader) headers!: QueryList<NgbdSortableHeader>;
+  selectedCategoryId!: number;
+  selectedUserId!: number;
+  categorie$!: Observable<iCategoriaResponse[]>;
 
-  constructor(public service : GiudiciSrcService) {
+  @ViewChild('modalContent') modalContent: any;
+
+  constructor(public service : GiudiciSrcService, private modalService: NgbModal, private http : HttpClient) {
     this.user$ = this.service.users$;
     this.total$ = this.service.total$;
     this.updatePagination();
@@ -70,5 +78,29 @@ export class GiudiciComponent {
     this.service._search$.next();  // Esegui una nuova ricerca
   }
 
+  openModal(user_id: number) {
+    this.selectedUserId = user_id;
+    this.modalService.open(this.modalContent, { ariaLabelledBy: 'modal-title' });
+  }
+
+  assignCategory() {
+    if (!this.selectedCategoryId || !this.selectedUserId) {
+      alert('Seleziona una categoria prima di assegnare!');
+      return;
+    }
+
+    const url = `http://localhost:8080/api/categorie/${this.selectedCategoryId}/giudice/${this.selectedUserId}`;
+
+    this.http.post(url, {}).subscribe({
+      next: () => {
+        alert('Categoria assegnata con successo!');
+        this.modalService.dismissAll();
+      },
+      error: (err) => {
+        alert('Errore nell\'assegnazione');
+        console.error(err);
+      }
+    });
+  }
 
 }

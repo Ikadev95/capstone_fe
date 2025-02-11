@@ -28,6 +28,7 @@
             <th scope="col" sortable="cognome" (sort)="onSort($event)">Cognome</th>
             <th scope="col" sortable="username" (sort)="onSort($event)">Username</th>
             <th scope="col" sortable="email" (sort)="onSort($event)">Email</th>
+            <th scope="col">Azioni</th>
           </tr>
         </thead>
         <tbody>
@@ -38,6 +39,7 @@
             <td><ngb-highlight [result]="user.cognome" [term]="service.searchTerm" /></td>
             <td><ngb-highlight [result]="user.username" [term]="service.searchTerm" /></td>
             <td><ngb-highlight [result]="user.email" [term]="service.searchTerm" /></td>
+            <td (click)="openModal(user.id)"><i class="fa-solid fa-pen-to-square"></i> assegna</td>
           </tr>
           }  @empty {
             <tr>
@@ -89,6 +91,26 @@
 
       </div>
     </form>
+
+  <!-- Template della Modale -->
+  <ng-template #modalContent let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Assegna Categoria</h4>
+      <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body">
+      <label for="categoria">Seleziona Categoria:</label>
+      <select id="categoria" class="form-select" [(ngModel)]="selectedCategoryId">
+        <option *ngFor="let categoria of categorie$ | async" [value]="categoria.id">
+          {{ categoria.nome_categoria }}
+        </option>
+      </select>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Annulla</button>
+      <button type="button" class="btn btn-primary" (click)="assignCategory()">Assegna</button>
+    </div>
+  </ng-template>
 
 
 

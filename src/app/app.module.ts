@@ -22,6 +22,7 @@ import { FormsModule } from '@angular/forms';
    NgbPaginationModule,
     NgbHighlight,
     FormsModule,
+    NgbModule
   ],
   providers: [
     provideHttpClient( withInterceptors([tokenInterceptor])),

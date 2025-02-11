@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GiudiciSrcService } from '../../../services/giudici-src.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registra-giudice',
@@ -13,7 +14,7 @@ export class RegistraGiudiceComponent {
 
 form: FormGroup
 
-  constructor(private giudiciSvc: GiudiciSrcService) {
+  constructor(private giudiciSvc: GiudiciSrcService, private router: Router) {
     this.form = new FormGroup
     ({
       nome: new FormControl('', [Validators.required]),
@@ -30,6 +31,11 @@ form: FormGroup
       this.giudiciSvc.registerGiudice(this.form.value).subscribe({
         next: (data) => {
           console.log('Giudice registrato con successo');
+          console.log('Risposta ricevuta:', data);
+          setTimeout(() => {
+            this.router.navigate(['giudici']);
+          }, 1000)
+
         }
       })
 

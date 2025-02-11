@@ -5,7 +5,7 @@ import { GiudiciRoutingModule } from './giudici-routing.module';
 import { GiudiciComponent } from './giudici.component';
 import { RegistraGiudiceComponent } from './registra-giudice/registra-giudice.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgbHighlight } from '@ng-bootstrap/ng-bootstrap';
+import { NgbHighlight, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbdSortableHeader } from '../../directives/sortable.directive';
 
 
@@ -21,7 +21,8 @@ import { NgbdSortableHeader } from '../../directives/sortable.directive';
     FormsModule,
     NgbHighlight,
     AsyncPipe,
-    NgbdSortableHeader
+    NgbdSortableHeader,
+    NgbModule
   ]
 })
 export class GiudiciModule { }
