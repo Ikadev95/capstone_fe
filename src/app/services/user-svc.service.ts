@@ -21,7 +21,7 @@ export class UserSvcService {
 
   private _state: State = {
     page: 1,
-    pageSize: 3,
+    pageSize: 15,
     searchTerm: '',
     sortColumn: '',
     sortDirection: '',

@@ -1,0 +1,52 @@
+<div class="container mt-4">
+  <div class="">
+    <button class="btn btn-primary" [routerLink]="'/giudici/'"> Torna alla Home</button>
+
+  </div>
+  <h3 class="text-center">Registra Giudice</h3>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="mx-auto w-50">
+
+    <div class="mb-3">
+      <label for="username" class="form-label">Username</label>
+      <input id="username" formControlName="username" type="text" class="form-control" />
+      <div *ngIf="form.get('username')?.invalid && form.get('username')?.touched" class="text-danger">
+        Il campo Username è obbligatorio.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input id="password" formControlName="password" type="password" class="form-control" />
+      <div *ngIf="form.get('password')?.invalid && form.get('password')?.touched" class="text-danger">
+        Il campo Password è obbligatorio.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="nome" class="form-label">Nome</label>
+      <input id="nome" formControlName="nome" type="text" class="form-control" />
+      <div *ngIf="form.get('nome')?.invalid && form.get('nome')?.touched" class="text-danger">
+        Il campo Nome è obbligatorio.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="cognome" class="form-label">Cognome</label>
+      <input id="cognome" formControlName="cognome" type="text" class="form-control" />
+      <div *ngIf="form.get('cognome')?.invalid && form.get('cognome')?.touched" class="text-danger">
+        Il campo Cognome è obbligatorio.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input id="email" formControlName="email" type="email" class="form-control" />
+      <div *ngIf="form.get('email')?.invalid && form.get('email')?.touched" class="text-danger">
+        <span *ngIf="form.get('email')?.errors?.['required']">Il campo Email è obbligatorio.</span>
+        <span *ngIf="form.get('email')?.errors?.['email']">Inserisci un'email valida.</span>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100" [disabled]="form.invalid">Registra Giudice</button>
+  </form>
+</div>

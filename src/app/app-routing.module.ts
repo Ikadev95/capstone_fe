@@ -12,9 +12,9 @@ const routes: Routes = [
   { path: 'concorsoFoto', loadChildren: () => import('./pages/concorso-foto/concorso-foto.module').then(m => m.ConcorsoFotoModule), canActivate: [UserGuard] },
   { path: 'concorsoPoesie', loadChildren: () => import('./pages/concorso-poesie/concorso-poesie.module').then(m => m.ConcorsoPoesieModule), canActivate: [UserGuard] },
   { path: 'successPagamento', loadChildren: () => import('./pages/success-pagamento/success-pagamento.module').then(m => m.SuccessPagamentoModule), },
-  { path: 'registraGiudice', loadChildren: () => import('./pages/registra-giudice/registra-giudice.module').then(m => m.RegistraGiudiceModule), canActivate: [AdminGuard] },
   { path: 'profilo', loadChildren: () => import('./pages/profilo/profilo.module').then(m => m.ProfiloModule), canActivate: [LoggedGuard]},
-  { path: 'utenti', loadChildren: () => import('./pages/utenti/utenti.module').then(m => m.UtentiModule) }
+  { path: 'utenti', loadChildren: () => import('./pages/utenti/utenti.module').then(m => m.UtentiModule) },
+  { path: 'giudici', loadChildren: () => import('./pages/giudici/giudici.module').then(m => m.GiudiciModule) }
 ];
 
 @NgModule({
