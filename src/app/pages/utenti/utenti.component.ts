@@ -74,4 +74,9 @@ export class UtentiComponent {
     this.service._search$.next();  // Esegui una nuova ricerca
   }
 
+  onToggle(event: Event){
+    this.service.sorting = !this.service.sorting
+    this.service._search$.next();
+  }
+
 }

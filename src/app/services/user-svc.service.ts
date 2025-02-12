@@ -14,10 +14,11 @@ interface SearchResult {
 @Injectable({ providedIn: 'root' })
 export class UserSvcService {
   private _loading$ = new BehaviorSubject<boolean>(true);
-   _search$ = new Subject<void>();
+  _search$ = new Subject<void>();
   private _users$ = new BehaviorSubject<iUserPaged[]>([]);
   private _total$ = new BehaviorSubject<number>(0);
- _pages$ = new BehaviorSubject<number[]>([]);
+  _pages$ = new BehaviorSubject<number[]>([]);
+  private sorted = false;
 
   private _state: State = {
     page: 1,
@@ -64,6 +65,9 @@ export class UserSvcService {
   get searchTerm(): string {
     return this._state.searchTerm;
   }
+  get sorting():boolean {
+    return this.sorted;
+  }
 
   // SETTER per aggiornare lo stato
   set page(page: number) {
@@ -80,6 +84,9 @@ export class UserSvcService {
   }
   set sortDirection(sortDirection: SortDirection) {
     this._set({ sortDirection });
+  }
+  set sorting(sorting: boolean) {
+    this.sorted = sorting;
   }
 
   private _set(patch: Partial<State>) {
@@ -118,9 +125,24 @@ export class UserSvcService {
   private _search(): Observable<SearchResult> {
     const { sortColumn, sortDirection, pageSize, page, searchTerm } = this._state;
 
-    //console.log(this._state);
+    if(this.sorted){
+      return this.getUsers(page - 1, pageSize).pipe(
+        switchMap((data) => {
+          let sortedUsers = this.sort(data.content, sortColumn, sortDirection); // Ordinamento
 
-    return this.getUsers(page - 1, pageSize).pipe(
+          sortedUsers = sortedUsers.filter(user => this.matches(user, searchTerm)); // Filtraggio
+
+          const pages = Array.from({ length: data.totalPages }, (_, i) => i + 1);
+
+          this._pages$.next(pages);
+          this._total$.next(data.totalElements);
+
+          return of({ users: sortedUsers, total: this._total$.getValue() });
+        })
+      );
+    };
+
+    return this.getAllUsers(page - 1, pageSize).pipe(
       switchMap((data) => {
         let sortedUsers = this.sort(data.content, sortColumn, sortDirection); // Ordinamento
 
@@ -134,11 +156,17 @@ export class UserSvcService {
         return of({ users: sortedUsers, total: this._total$.getValue() });
       })
     );
+
+
   }
 
   // Ottieni gli utenti dalla API
   getUsers(page: number, size: number) {
     let url = `http://localhost:8080/api/utenti/paged/year?page=${page}&size=${size}`;
+    return this.http.get<Paged>(url);
+  }
+  getAllUsers(page: number, size: number) {
+    let url = `http://localhost:8080/api/utenti/paged?page=${page}&size=${size}`;
     return this.http.get<Paged>(url);
   }
 }
