@@ -40,7 +40,7 @@
             <td><ngb-highlight [result]="user.cognome" [term]="service.searchTerm" /></td>
             <td><ngb-highlight [result]="user.username" [term]="service.searchTerm" /></td>
             <td><ngb-highlight [result]="user.email" [term]="service.searchTerm" /></td>
-            <td><ngb-highlight [result]="user.categoria" [term]="service.searchTerm" /></td>
+            <td><ngb-highlight [result]="user.nome_categoria" [term]="service.searchTerm" /></td>
             <td (click)="openModal(user.id)"><i class="fa-solid fa-pen-to-square"></i> assegna</td>
           </tr>
           }  @empty {
