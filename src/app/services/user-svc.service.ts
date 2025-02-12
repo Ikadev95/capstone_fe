@@ -118,7 +118,7 @@ export class UserSvcService {
   private _search(): Observable<SearchResult> {
     const { sortColumn, sortDirection, pageSize, page, searchTerm } = this._state;
 
-    console.log(this._state);
+    //console.log(this._state);
 
     return this.getUsers(page - 1, pageSize).pipe(
       switchMap((data) => {
@@ -127,7 +127,7 @@ export class UserSvcService {
         sortedUsers = sortedUsers.filter(user => this.matches(user, searchTerm)); // Filtraggio
 
         const pages = Array.from({ length: data.totalPages }, (_, i) => i + 1);
-        console.log(pages , "pages");
+
         this._pages$.next(pages);
         this._total$.next(data.totalElements);
 

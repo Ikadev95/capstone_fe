@@ -34,7 +34,7 @@ export class GiudiciComponent {
     this.service._search$.next();
     this.pages$ = this.service._pages$;
     this.categorie$ = this.categorieSvc.categoriaSubject$;
-    this.categorie$.subscribe(data => console.log(data));
+
 
   }
 
