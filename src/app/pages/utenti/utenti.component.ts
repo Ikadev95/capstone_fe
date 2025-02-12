@@ -79,4 +79,19 @@ export class UtentiComponent {
     this.service._search$.next();
   }
 
+  deleteUser(id: number) {
+    if (confirm("Sei sicuro di voler eliminare questo utente?")) {
+      this.service.deleteUser(id).subscribe({
+        next: () => {
+          alert("Utente eliminato con successo!");
+          this.service._search$.next(); // Aggiorna la lista
+        },
+        error: (err) => {
+          alert("Errore nell'eliminazione dell'utente!");
+          console.error(err);
+        }
+      });
+    }
+  }
+
 }

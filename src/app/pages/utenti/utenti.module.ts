@@ -3,7 +3,7 @@ import { AsyncPipe, CommonModule } from '@angular/common';
 
 import { UtentiRoutingModule } from './utenti-routing.module';
 import { UtentiComponent } from './utenti.component';
-import { NgbHighlight, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbHighlight, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { NgbdSortableHeader } from '../../directives/sortable.directive';
 
@@ -19,7 +19,8 @@ import { NgbdSortableHeader } from '../../directives/sortable.directive';
     NgbHighlight,
     FormsModule,
     AsyncPipe,
-    NgbdSortableHeader
+    NgbdSortableHeader,
+    NgbDropdownModule
   ]
 })
 export class UtentiModule { }

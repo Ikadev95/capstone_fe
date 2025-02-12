@@ -169,4 +169,9 @@ export class UserSvcService {
     let url = `http://localhost:8080/api/utenti/paged?page=${page}&size=${size}`;
     return this.http.get<Paged>(url);
   }
+
+  deleteUser(id:number){
+    let url = `http://localhost:8080/api/utenti/${id}/delete`
+    return this.http.delete(url)
+  }
 }

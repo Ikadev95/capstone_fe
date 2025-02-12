@@ -1,5 +1,5 @@
 <div class="container">
-  <h2>Users</h2>
+  <h2>{{ service.sorting ? 'Partecipanti al concorso' : 'Utenti' }}</h2>
 
   <form>
     <div class="d-flex justify-content-between align-items-center mb-3 ">
@@ -34,6 +34,7 @@
           <th scope="col" sortable="cognome" (sort)="onSort($event)">Cognome</th>
           <th scope="col" sortable="username" (sort)="onSort($event)">Username</th>
           <th scope="col" sortable="email" (sort)="onSort($event)">Email</th>
+          <th scope="col">Azioni</th>
         </tr>
       </thead>
       <tbody>
@@ -44,6 +45,20 @@
           <td><ngb-highlight [result]="user.cognome" [term]="service.searchTerm" /></td>
           <td><ngb-highlight [result]="user.username" [term]="service.searchTerm" /></td>
           <td><ngb-highlight [result]="user.email" [term]="service.searchTerm" /></td>
+          <td>
+            <div ngbDropdown class="d-inline-block">
+              <!-- Bottone dropdown -->
+              <button class="px-4 border-0 bg-transparent" ngbDropdownToggle>
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+              </button>
+
+              <!-- Contenuto del menu dropdown -->
+              <div ngbDropdownMenu>
+                <button class="dropdown-item" (click)="deleteUser(user.id)">Elimina Utente</button>
+
+              </div>
+            </div>
+          </td>
         </tr>
         }  @empty {
           <tr>
