@@ -31,6 +31,7 @@ export class GiudiciComponent {
     this.user$ = this.service.users$;
     this.total$ = this.service.total$;
     this.updatePagination();
+    this.service._search$.next();
     this.pages$ = this.service._pages$;
     this.categorie$ = this.categorieSvc.categoriaSubject$;
     this.categorie$.subscribe(data => console.log(data));
@@ -98,6 +99,7 @@ export class GiudiciComponent {
       next: () => {
         alert('Categoria assegnata con successo!');
         this.modalService.dismissAll();
+        this.service._search$.next();
       },
       error: (err) => {
         alert('Errore nell\'assegnazione');

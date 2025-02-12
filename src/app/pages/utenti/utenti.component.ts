@@ -24,6 +24,7 @@ export class UtentiComponent {
     this.user$ = this.service.users$;
     this.total$ = this.service.total$;
     this.updatePagination();
+    this.service._search$.next();
     this.pages$ = this.service._pages$;
 
 
