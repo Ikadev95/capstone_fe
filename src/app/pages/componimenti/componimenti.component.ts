@@ -1,3 +1,4 @@
+import { iVotoRequest } from './../../interfaces/i-voto-request';
 import { Component, QueryList, TemplateRef, ViewChild, ViewChildren } from '@angular/core';
 
 import { ComponimentiJudgeSvcService } from '../../services/componimenti-judge-svc.service';
@@ -56,10 +57,25 @@ export class ComponimentiComponent {
   }
   submitVote() {
     if (this.vote && this.componimentToVote) {
-      // Invia il voto e il commento al backend
+      let vote: iVotoRequest = {
+        voto: this.vote,
+        id_componimento: this.componimentToVote.id
+      };
+
+      console.log(vote);
+      this.service.vote(vote).subscribe({
+        next: (response) => {
+          console.log(`Voto inviato con successo: ${response}`);
+          alert(`Voto registrato con successo per: ${this.componimentToVote.titolo}`);
+          this.modalService.dismissAll();
+        },
+        error: (err) => {
+          console.error("Errore durante l'invio del voto:", err);
+          alert("Si è verificato un errore durante l'invio del voto. Riprova.");
+        }
+      });
+
       console.log(`Voto per: ${this.componimentToVote.titolo}, Voto: ${this.vote}, Commento: ${this.comment}`);
-      // Chiudi la modale
-      this.modalService.dismissAll();
     }
   }
 

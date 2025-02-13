@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { PagedComponimenti } from '../interfaces/paged-componimenti';
 import { State } from '../interfaces/state';
 import { StateOnlyPagination } from '../interfaces/state-only-pagination';
+import { iVotoRequest } from '../interfaces/i-voto-request';
 
 interface SearchResult {
   componimenti: iComponimentoFullResponse[];
@@ -112,5 +113,9 @@ export class ComponimentiJudgeSvcService {
   getComponimentiBySezione(page: number, size: number) {
     return this.http.get<PagedComponimenti>(`http://localhost:8080/api/componimenti/sezione/?page=${page}&size=${size}`)
       .pipe(tap(data => this.componimentiJudge$.next(data)));
+  }
+
+  vote(vote:iVotoRequest){
+    return this.http.post<iVotoRequest>(`http://localhost:8080/api/voto/create`, vote)
   }
 }
