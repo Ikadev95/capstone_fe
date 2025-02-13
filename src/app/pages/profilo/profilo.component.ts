@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { iUtenteResponse } from '../../interfaces/i-utente-response';
+import { ProfileSvcService } from '../../services/profile-svc.service';
 
 @Component({
   selector: 'app-profilo',
@@ -11,8 +13,10 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 export class ProfiloComponent {
   profileForm!: FormGroup;
   avatarPreview: string | ArrayBuffer | null = null;
+  modifyMode = false;
+  datiUtente! : iUtenteResponse
 
-  constructor() {
+  constructor(private profileSrv: ProfileSvcService) {
     this.profileForm = new FormGroup({
       username: new FormControl('', [Validators.required, Validators.minLength(3)]),
       nome: new FormControl ('', Validators.required),
@@ -21,6 +25,13 @@ export class ProfiloComponent {
       telefono: new FormControl('', [Validators.pattern('^\\+?[0-9]{10,15}$')]),
       avatar: new FormControl (null)
     });
+
+    profileSrv.MyDatesSubject$.subscribe(
+      data => this.datiUtente = data
+    )
+    console.log(this.datiUtente)
+
+
   }
 
   onFileChange(event: any) {
@@ -40,6 +51,10 @@ export class ProfiloComponent {
     } else {
       alert('Compila correttamente tutti i campi!');
     }
+  }
+
+  modifyModeFunction(){
+    this.modifyMode = !this.modifyMode
   }
 
 

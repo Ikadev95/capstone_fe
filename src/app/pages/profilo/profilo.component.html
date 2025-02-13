@@ -1,6 +1,24 @@
 <div class="container">
-  <h2>Profilo</h2>
-  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="container mt-4">
+  <div class="d-flex justify-content-between ">
+    <h2>Profilo</h2>
+    <button class="btn btn-primary" (click)="modifyModeFunction()">
+      {{modifyMode? "Torna al profilo" : "Modifica Profilo"}}
+    </button>
+  </div>
+
+
+  <div *ngIf="!modifyMode">
+
+  <p>Username: {{datiUtente.appUser.username}}</p>
+  <p>Nome: {{datiUtente.nome}}</p>
+  <p>Cognome: {{datiUtente.cognome}}</p>
+  <p>Email: {{datiUtente.email}}</p>
+  <p>Telefono: {{datiUtente.telefono}}</p>
+
+  </div>
+
+
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="container mt-4 " *ngIf="modifyMode">
     <div class="mb-3">
       <label class="form-label">Username</label>
       <input type="text" class="form-control" formControlName="username">
