@@ -14,7 +14,8 @@ const routes: Routes = [
   { path: 'successPagamento', loadChildren: () => import('./pages/success-pagamento/success-pagamento.module').then(m => m.SuccessPagamentoModule), },
   { path: 'profilo', loadChildren: () => import('./pages/profilo/profilo.module').then(m => m.ProfiloModule), canActivate: [LoggedGuard]},
   { path: 'utenti', loadChildren: () => import('./pages/utenti/utenti.module').then(m => m.UtentiModule) },
-  { path: 'giudici', loadChildren: () => import('./pages/giudici/giudici.module').then(m => m.GiudiciModule) }
+  { path: 'giudici', loadChildren: () => import('./pages/giudici/giudici.module').then(m => m.GiudiciModule) },
+  { path: 'componimenti', loadChildren: () => import('./pages/componimenti/componimenti.module').then(m => m.ComponimentiModule) }
 ];
 
 @NgModule({

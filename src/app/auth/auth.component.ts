@@ -34,7 +34,7 @@ export class AuthComponent {
       .subscribe((res) => {
         console.log(res);
         setTimeout(() => {
-          if (this.decodeToken.userRoles$.getValue().includes('ROLE_ADMIN')) {
+          if (this.decodeToken.userRoles$.getValue().includes('ROLE_ADMIN') || this.decodeToken.userRoles$.getValue().includes('ROLE_JUDGE')) {
             this.router.navigate(['profilo']);
           } else {
             this.router.navigate(['home']);
