@@ -18,6 +18,7 @@ export class ComponimentiComponent {
     componiments$!: Observable<iComponimentoFullResponse[]>;
     total$!: Observable<number>;
 
+
   constructor(public service: ComponimentiJudgeSvcService) {
     this.componiments$ = this.service.componimenti$;
     this.total$ = this.service.total$;
@@ -42,5 +43,8 @@ export class ComponimentiComponent {
       this.service._pages$.next(Array.from({ length: totalPages }, (_, i) => i + 1));
     });
   }
+openModal(componiment: iComponimentoFullResponse){
+  console.log("modale aperta")
+}
 
 }
