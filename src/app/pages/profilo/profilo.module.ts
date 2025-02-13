@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ProfiloRoutingModule } from './profilo-routing.module';
 import { ProfiloComponent } from './profilo.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { ProfiloComponent } from './profilo.component';
   ],
   imports: [
     CommonModule,
-    ProfiloRoutingModule
+    ProfiloRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class ProfiloModule { }

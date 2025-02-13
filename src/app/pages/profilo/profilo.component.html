@@ -1,1 +1,31 @@
-<p>profilo works!</p>
+<div class="container">
+  <h2>Profilo</h2>
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="container mt-4">
+    <div class="mb-3">
+      <label class="form-label">Username</label>
+      <input type="text" class="form-control" formControlName="username">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Nome</label>
+      <input type="text" class="form-control" formControlName="nome">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Cognome</label>
+      <input type="text" class="form-control" formControlName="cognome">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Email</label>
+      <input type="email" class="form-control" formControlName="email">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Telefono</label>
+      <input type="text" class="form-control" formControlName="telefono">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Avatar</label>
+      <input type="file" class="form-control" (change)="onFileChange($event)">
+      <img *ngIf="avatarPreview" [src]="avatarPreview" class="img-thumbnail mt-2" style="max-width: 150px;">
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="profileForm.invalid">Aggiorna Profilo</button>
+  </form>
+</div>
