@@ -5,6 +5,7 @@ import { BehaviorSubject, tap } from 'rxjs';
 import { iFotografiaResponse } from '../interfaces/i-fotografia-response';
 import { iPoesiaResponse } from '../interfaces/i-poesia-response';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,6 +18,7 @@ export class ComponimentiSvcService {
 
   fotoSubject$ = new BehaviorSubject<iFotografiaResponse[] | null>(null);
   poesiaSubject$ = new BehaviorSubject<iPoesiaResponse[] | null>(null);
+
 
 
 
@@ -53,5 +55,7 @@ export class ComponimentiSvcService {
     return this.http.get<iPoesiaResponse[]>('http://localhost:8080/api/poesie/user').pipe
     (tap(data => this.poesiaSubject$.next(data)))
   }
+
+
 
 }
