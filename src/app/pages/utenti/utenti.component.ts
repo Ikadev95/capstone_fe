@@ -26,8 +26,6 @@ export class UtentiComponent {
     this.updatePagination();
     this.service._search$.next();
     this.pages$ = this.service._pages$;
-
-
   }
 
 	onSort({ column, direction }: SortEvent) {

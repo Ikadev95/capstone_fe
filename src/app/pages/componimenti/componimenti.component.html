@@ -1,3 +1,37 @@
 <div class="container">
   <h2>Componimenti</h2>
+  <div class="d-flex justify-content-between p-2">
+    <!-- Paginazione personalizzata -->
+    <button
+      class="btn btn-primary"
+      [disabled]="service.page <= 1"
+      (click)="changePage(service.page - 1)"
+    >
+      Precedente
+    </button>
+
+    <!-- Numeri delle pagine -->
+
+    <div class="pagination-numbers">
+      @for (page of pages$ | async; track page) {
+      <button
+        [class.active]="page === service.page"
+        class="btn btn-outline-primary"
+        (click)="changePage(page)"
+      >
+        {{ page }}
+      </button>
+    }
+    </div>
+
+
+    <button
+      class="btn btn-primary"
+      [disabled]="service.page >= service._pages$.value .length"
+      (click)="changePage(service.page + 1)"
+    >
+      Successivo
+    </button>
+
+  </div>
 </div>
