@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { ComponimentiRoutingModule } from './componimenti-routing.module';
 import { ComponimentiComponent } from './componimenti.component';
 import { SharedModule } from '../../shared/shared.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -13,7 +15,9 @@ import { SharedModule } from '../../shared/shared.module';
   imports: [
     CommonModule,
     ComponimentiRoutingModule,
-    SharedModule
+    SharedModule,
+    NgbModule,
+    FormsModule
   ]
 })
 export class ComponimentiModule { }

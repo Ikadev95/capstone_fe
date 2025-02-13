@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, QueryList, TemplateRef, ViewChild, ViewChildren } from '@angular/core';
 
 import { ComponimentiJudgeSvcService } from '../../services/componimenti-judge-svc.service';
 import { Observable } from 'rxjs';
 import { iComponimentoFullResponse } from '../../interfaces/i-componimento-full-response';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-componimenti',
@@ -13,13 +14,18 @@ import { iComponimentoFullResponse } from '../../interfaces/i-componimento-full-
 })
 export class ComponimentiComponent {
 
+   @ViewChild('voteModal') voteModal: TemplateRef<any> | undefined;
     pages$: Observable<number[]> = new Observable;
     currentPage: number = 1;
     componiments$!: Observable<iComponimentoFullResponse[]>;
     total$!: Observable<number>;
+    selectedComponimento: iComponimentoFullResponse | null = null;
+    vote: number | null = null;
+    comment: string = '';
+    componimentToVote: any;
 
 
-  constructor(public service: ComponimentiJudgeSvcService) {
+  constructor(public service: ComponimentiJudgeSvcService, private modalService: NgbModal) {
     this.componiments$ = this.service.componimenti$;
     this.total$ = this.service.total$;
     this.updatePagination();
@@ -43,8 +49,18 @@ export class ComponimentiComponent {
       this.service._pages$.next(Array.from({ length: totalPages }, (_, i) => i + 1));
     });
   }
-openModal(componiment: iComponimentoFullResponse){
-  console.log("modale aperta")
-}
+
+  openModal(componiment: any) {
+    this.componimentToVote = componiment;
+    this.modalService.open(this.voteModal);
+  }
+  submitVote() {
+    if (this.vote && this.componimentToVote) {
+      // Invia il voto e il commento al backend
+      console.log(`Voto per: ${this.componimentToVote.titolo}, Voto: ${this.vote}, Commento: ${this.comment}`);
+      // Chiudi la modale
+      this.modalService.dismissAll();
+    }
+  }
 
 }
