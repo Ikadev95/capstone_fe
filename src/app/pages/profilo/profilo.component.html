@@ -1,6 +1,6 @@
 <div class="container">
   <div class="d-flex justify-content-between mb-3 ">
-    <h2>Profilo</h2>
+    <h2> {{modifyMode ? 'Modifica Profilo' : 'Profilo'}}</h2>
     <button *ngIf="modifyMode" class="btn link" (click)="modifyModeFunction()">
       <i class="fa-solid fa-arrow-left"></i> Torna al profilo
     </button>
