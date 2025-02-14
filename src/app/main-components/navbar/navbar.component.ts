@@ -1,3 +1,4 @@
+import { ProfileSvcService } from './../../services/profile-svc.service';
 import { Component } from '@angular/core';
 import { AuthsrvService } from '../../auth/authsrv.service';
 import { DecodeTokenService } from '../../services/decode-token.service';
@@ -20,12 +21,14 @@ export class NavbarComponent {
 
   constructor(private authSvc: AuthsrvService,
     private decodeToken: DecodeTokenService,
-    private router: Router) { }
+    private ProfileSvcService: ProfileSvcService) { }
 
     ngOnInit(): void {
       this.rolesSubscription = this.decodeToken.userRoles$.subscribe((roles) => {
         this.roles = roles || [];
       });
+      console.log(this.ProfileSvcService.MyDatesSubject$.value.avatar)
+      this.ProfileSvcService.MyDatesSubject$.subscribe(data => data.avatar? this.avatar = `http://localhost:8080/uploads/avatar/${data.avatar.split('/').pop()}` : this.avatar = 'user.png')
     }
     logout() {
       this.authSvc.logout();
