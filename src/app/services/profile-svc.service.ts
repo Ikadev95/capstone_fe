@@ -28,7 +28,13 @@ export class ProfileSvcService {
   });
 
   constructor(private http: HttpClient) {
-    this.getMyDates().subscribe(
+    this.getMyDates();
+
+  }
+
+  getMyDates(){
+    let url = `http://localhost:8080/api/utenti/me`
+    return this.http.get<iUtenteResponse>(url).subscribe(
       dates => {
         console.log('Dati ottenuti:', dates);
         this.MyDatesSubject$.next(dates);
@@ -37,14 +43,6 @@ export class ProfileSvcService {
         console.log('Errore nel recupero dei dati:', error);
       }
     );
-
-  }
-
-  getMyDates(){
-    let url = `http://localhost:8080/api/utenti/me`
-    return this.http.get<iUtenteResponse>(url).pipe(tap(
-    )
-    )
 
   }
 

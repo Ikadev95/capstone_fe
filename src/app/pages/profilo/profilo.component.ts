@@ -70,6 +70,8 @@ export class ProfiloComponent {
         next: (response) => {
           console.log('Profilo aggiornato:', response);
           alert('Profilo aggiornato con successo!');
+          this.profileSrv.getMyDates()
+          this.modifyMode = false;
         },
         error: (error) => {
           console.error('Errore durante l’aggiornamento:', error);
