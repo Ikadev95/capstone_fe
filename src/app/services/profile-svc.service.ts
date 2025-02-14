@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { iUtenteResponse } from '../interfaces/i-utente-response';
 
 @Injectable({
@@ -46,6 +46,12 @@ export class ProfileSvcService {
     )
     )
 
+  }
+
+
+  updateUserProfile(formData: FormData): Observable<any> {
+    let apiUrl = 'http://localhost:8080/api/utenti/upload/avatar';
+    return this.http.post(`${apiUrl}`, formData);
   }
 
 

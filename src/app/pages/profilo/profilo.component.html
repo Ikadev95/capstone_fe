@@ -9,6 +9,9 @@
 
   <div *ngIf="!modifyMode">
 
+
+  <img src="{{datiUtente.avatar==null? 'user.png' : avatarPreview}}" alt="Avatar" class="avatar">
+
   <p>Username: {{datiUtente.appUser.username}}</p>
   <p>Nome: {{datiUtente.nome}}</p>
   <p>Cognome: {{datiUtente.cognome}}</p>
@@ -19,10 +22,7 @@
 
 
   <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="container mt-4 " *ngIf="modifyMode">
-    <div class="mb-3">
-      <label class="form-label">Username</label>
-      <input type="text" class="form-control" formControlName="username">
-    </div>
+
     <div class="mb-3">
       <label class="form-label">Nome</label>
       <input type="text" class="form-control" formControlName="nome">
@@ -40,7 +40,7 @@
       <input type="text" class="form-control" formControlName="telefono">
     </div>
     <div class="mb-3">
-      <label class="form-label">Avatar</label>
+      <label class="form-label">Foto Profilo</label>
       <input type="file" class="form-control" (change)="onFileChange($event)">
       <img *ngIf="avatarPreview" [src]="avatarPreview" class="img-thumbnail mt-2" style="max-width: 150px;">
     </div>

@@ -5,6 +5,10 @@
     <p>A sostegno delle spese organizzative, è richiesto un contributo di partecipazione per il concorso. Scegli la sezione a cui desideri partecipare e procedi con il pagamento.</p>
   </div>
 
+  <div class="info">
+    <p> <i class="fa-regular fa-circle-question mx-2"></i> Per completare il pagamento, seleziona la tua quota e procedi con il pagamento online.</p>
+  </div>
+
 
   <div class="section-title">Sezione POESIA</div>
   <ul>
@@ -35,9 +39,6 @@
 
   <div class="payment-info">
 
-    <div class="info">
-      <p> <span class="material-symbols-outlined">info </span> Per completare il pagamento, seleziona la tua quota e procedi con il pagamento online.</p>
-    </div>
 
 
     <app-payment-button [amount]="selectedAmount * 100" [name]="concorsoName" [sezione] ="sezione" [numeroComponimenti]="numeroComponimenti" [ragione] ="ragione" [selectedAmount]="selectedAmount"></app-payment-button>
