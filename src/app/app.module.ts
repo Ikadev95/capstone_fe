@@ -9,11 +9,13 @@ import { tokenInterceptor } from './auth/token.interceptor';
 import { NavbarComponent } from './main-components/navbar/navbar.component';
 import { errorInterceptor } from './auth/error.interceptor';
 import { FormsModule } from '@angular/forms';
+import { FooterComponent } from './main-components/footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

@@ -125,7 +125,7 @@ export class UserSvcService {
   private _search(): Observable<SearchResult> {
     const { sortColumn, sortDirection, pageSize, page, searchTerm } = this._state;
 
-    if(this.sorted){
+    if(!this.sorted){
       return this.getUsers(page - 1, pageSize).pipe(
         switchMap((data) => {
           let sortedUsers = this.sort(data.content, sortColumn, sortDirection); // Ordinamento

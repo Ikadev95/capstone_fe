@@ -1,27 +1,51 @@
 <div class="container">
-  <div class="d-flex justify-content-between ">
+  <div class="d-flex justify-content-between mb-3 ">
     <h2>Profilo</h2>
-    <button class="btn btn-primary" (click)="modifyModeFunction()">
-      {{modifyMode? "Torna al profilo" : "Modifica Profilo"}}
+    <button *ngIf="modifyMode" class="btn link" (click)="modifyModeFunction()">
+      <i class="fa-solid fa-arrow-left"></i> Torna al profilo
     </button>
   </div>
 
 
-  <div *ngIf="!modifyMode">
+  <div *ngIf="!modifyMode" class=" mt-3">
+    <div class="row">
+      <div class="col col-12 col-md-6 d-flex justify-content-center">
+        <img src="{{datiUtente.avatar==null? 'user.png' : avatarPreview}}" alt="Avatar" class="avatar shadow">
+      </div>
+      <div class="col col-12 col-md-6 py-3 text-center
+      text-md-start">
+
+          <h4 class="mb-4">Dati personali:</h4>
+
+          <p>Username: <b>{{datiUtente.appUser.username}}</b></p>
+          <p>Nome: <b>{{datiUtente.nome}}</b></p>
+          <p>Cognome: <b>{{datiUtente.cognome}}</b></p>
+          <p>Email: <b>{{datiUtente.email}}</b></p>
+          <p>Telefono: <b>{{datiUtente.telefono}}</b></p>
+
+          <button class="btn btn-primary text-white mt-4" (click)="modifyModeFunction()">
+            <i class="fa-solid fa-pen"></i>  Modifica Profilo
+          </button>
 
 
-  <img src="{{datiUtente.avatar==null? 'user.png' : avatarPreview}}" alt="Avatar" class="avatar">
+      </div>
+    </div>
 
-  <p>Username: {{datiUtente.appUser.username}}</p>
-  <p>Nome: {{datiUtente.nome}}</p>
-  <p>Cognome: {{datiUtente.cognome}}</p>
-  <p>Email: {{datiUtente.email}}</p>
-  <p>Telefono: {{datiUtente.telefono}}</p>
+
+
 
   </div>
 
 
   <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="container mt-4 " *ngIf="modifyMode">
+
+    <div class="mb-3 d-flex align-items-center">
+      <img *ngIf="avatarPreview" [src]="avatarPreview" class=" mt-2 imgTub " style="max-width: 150px;">
+      <div class="ms-4">
+        <label class="form-label">Foto Profilo</label>
+        <input type="file" class="form-control" (change)="onFileChange($event)">
+      </div>
+    </div>
 
     <div class="mb-3">
       <label class="form-label">Nome</label>
@@ -39,11 +63,7 @@
       <label class="form-label">Telefono</label>
       <input type="text" class="form-control" formControlName="telefono">
     </div>
-    <div class="mb-3">
-      <label class="form-label">Foto Profilo</label>
-      <input type="file" class="form-control" (change)="onFileChange($event)">
-      <img *ngIf="avatarPreview" [src]="avatarPreview" class="img-thumbnail mt-2" style="max-width: 150px;">
-    </div>
-    <button type="submit" class="btn btn-primary" [disabled]="profileForm.invalid">Aggiorna Profilo</button>
+
+    <button type="submit" class="btn btn-primary text-white mt-3" [disabled]="profileForm.invalid">Aggiorna Profilo</button>
   </form>
 </div>
