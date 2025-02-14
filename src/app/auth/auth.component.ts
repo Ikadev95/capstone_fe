@@ -1,3 +1,4 @@
+import { ProfileSvcService } from './../services/profile-svc.service';
 import { Router } from '@angular/router';
 import { AuthsrvService } from './authsrv.service';
 import { Component } from '@angular/core';
@@ -16,7 +17,8 @@ export class AuthComponent {
 
   form: FormGroup;
 
-  constructor(private authSvc: AuthsrvService,private router: Router, private decodeToken: DecodeTokenService){
+  constructor(private authSvc: AuthsrvService,private router: Router,
+    private decodeToken: DecodeTokenService, private ProfileSvcService: ProfileSvcService) {
     this.form = new FormGroup({
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required])
@@ -35,8 +37,10 @@ export class AuthComponent {
         console.log(res);
         setTimeout(() => {
           if (this.decodeToken.userRoles$.getValue().includes('ROLE_ADMIN') || this.decodeToken.userRoles$.getValue().includes('ROLE_JUDGE')) {
+            this.ProfileSvcService.getMyDates();
             this.router.navigate(['profilo']);
           } else {
+            this.ProfileSvcService.getMyDates();
             this.router.navigate(['home']);
           }
         }, 1000);

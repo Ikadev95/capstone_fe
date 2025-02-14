@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { iUtenteResponse } from '../interfaces/i-utente-response';
+import { DecodeTokenService } from './decode-token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,9 +28,10 @@ export class ProfileSvcService {
     }
   });
 
-  constructor(private http: HttpClient) {
-    this.getMyDates();
-
+  constructor(private http: HttpClient, private decodeTokenService: DecodeTokenService) {
+    if (this.decodeTokenService.getUsername()) {
+      this.getMyDates();
+    }
   }
 
   getMyDates(){
