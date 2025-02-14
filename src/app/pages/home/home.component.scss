@@ -1,5 +1,7 @@
 img{
   width: 100px;
+  height: 80px;
+  object-fit: cover;
 }
 .banner{
   background-color: #ECF6F5;
@@ -25,4 +27,5 @@ img{
   border-radius: 20px;
   box-shadow: 0px 0px 14px 1px rgba(0, 0, 0, 0.063);
   height: 100%;
+
 }
