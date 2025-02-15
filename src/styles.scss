@@ -3,8 +3,8 @@
 
 $text: #32161F;
 $background: #fbfbfe;
-$primary: #2f958d;
-$secondary: #a4e5de;
+$primary: #2F958D;
+$secondary: #b0ede7;
 $accent: #FC7753;
 
 /* Importazione delle funzioni di Bootstrap */
@@ -29,35 +29,37 @@ $theme-colors: (
 
 // montserrat
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Nothing+You+Could+Do&display=swap');
 *{
   font-family: 'Montserrat', sans-serif;}
 h1{
-  font-family: "Playfair Display", serif;
-  font-size: 47.78px;
+  font-family: "Nothing You Could Do", serif;
+  font-size: 61.04px;
   font-weight: 700;
 }
 h2{
-  font-family: "Playfair Display", serif;
-  font-size: 39.81px;
+  font-family: "Nothing You Could Do", serif;
+  font-size: 48.83px;
   font-weight: 700;
 }
 h3{
-  font-family: "Playfair Display", serif;
-  font-size: 33.18px;
+  font-family: "Nothing You Could Do", serif;
+  font-size: 39.06px;
   font-weight: 700;
 }
 h4{
-  font-family: "Playfair Display", serif;
-  font-size: 27.65px;
+  font-family: "Nothing You Could Do", serif;
+  font-size: 31.25px;
   font-weight: 700;
 }
 h5{
-  font-family: "Playfair Display", serif;
-  font-size: 23.04px;
+  font-family: "Nothing You Could Do", serif;
+  font-size: 25px;
 }
 h6{
-  font-family: "Playfair Display", serif;
-  font-size: 19.2px;
+  font-family: "Nothing You Could Do", serif;
+  font-size: 20px;
 }
 p{
   font-size: 16px;
