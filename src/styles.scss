@@ -67,3 +67,11 @@ p{
 small{
   font-size: 13.33px;
 }
+input:-webkit-autofill {
+  background-color: #ffffff !important;
+  color: #333 !important;
+  box-shadow: 0 0 0px 1000px #f5f5f5 inset !important;
+}
+.btn-primary{
+  color: white !important;
+}
