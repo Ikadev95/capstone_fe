@@ -1,6 +1,16 @@
 <div class="container">
-  <h2>Carica le tue Poesie</h2>
 
+
+  <h2 class="mt-3" *ngIf="Poesie.length > 0">🪶 Poesie Caricate</h2>
+  <div  *ngFor="let poesie of Poesie">
+    <div class="card mb-3 border-0 shadow">
+      <div class="card-body">
+        <h5 class="card-title">{{ poesie.titolo }}</h5>
+        <p [style.white-space]="'pre-line'">{{ poesie.testo }}</p>
+      </div>
+    </div>
+
+    <h3 class="mt-4">Carica le tue Poesie</h3>
   <form [formGroup]="form" (submit)="uploadPoesia()">
 
     <label for="titolo" class="mt-3">Titolo</label>
@@ -17,12 +27,5 @@
     <button type="submit" class="btn btn-primary mt-3 ">Carica</button>
   </form>
 
-  <h3 class="mt-3" *ngIf="Poesie.length > 0">Poesie Caricate</h3>
-  <div *ngFor="let poesie of Poesie">
-    <div class="card mb-3">
-      <div class="card-body">
-        <h5 class="card-title">{{ poesie.titolo }}</h5>
-        <p [style.white-space]="'pre-line'">{{ poesie.testo }}</p>
-      </div>
-    </div>
+
   </div>
