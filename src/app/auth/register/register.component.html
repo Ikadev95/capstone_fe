@@ -1,73 +1,103 @@
 <div class="container-fluid container-xl cover">
   <div class="row mt-3">
-    <div class="col-12 col-md-6"></div>
+    <div class="col-12 col-md-6">
+      <img src="foto.jpg" class="fluid-img">
+    </div>
 
     <div class="col-12 col-md-6">
       <div class="form-container p-4 pt-0">
-        <div class="">
-          <h2>Registrati</h2>
+        <h2>Registrati</h2>
 
-          <form [formGroup]="form" (ngSubmit)="register()">
-            <div class="form-group">
-              <label for="nome">Nome</label>
-              <input type="text" name="nome" placeholder="Mario" class="form-control" formControlName="nome">
+        <form [formGroup]="form" (ngSubmit)="register()">
 
-              <label for="cognome" class="mt-3">Cognome</label>
-              <input type="text" name="cognome" placeholder="Rossi" class="form-control" formControlName="cognome">
+        <div>
+            <!-- STEP 1: Dati personali -->
+            <div *ngIf="step === 1">
+              <div class="form-group">
+                <label for="nome">Nome</label>
+                <input type="text" class="form-control" formControlName="nome" placeholder="Mario">
 
-              <label for="email" class="mt-3">Email</label>
-              <input type="text" name="email" placeholder="mario@gmail.com" class="form-control" formControlName="email">
+                <label for="cognome" class="mt-3">Cognome</label>
+                <input type="text" class="form-control" formControlName="cognome" placeholder="Rossi">
 
-              <label for="password" class="mt-3">Password</label>
-              <input type="password" name="password" placeholder="********" class="form-control" formControlName="password">
+                <label for="email" class="mt-3">Email</label>
+                <input type="email" class="form-control" formControlName="email" placeholder="mario@gmail.com">
 
-              <label for="username" class="mt-3">Username</label>
-              <input type="text" name="username" placeholder="mariorossi" class="form-control" formControlName="username">
+                <label for="password" class="mt-3">Password</label>
+                <input type="password" class="form-control" formControlName="password" placeholder="********">
 
-              <label for="data_di_nascita" class="mt-3">Data di nascita</label>
-              <input type="date" name="data_di_nascita" class="form-control" formControlName="data_di_nascita">
+                <label for="username" class="mt-3">Username</label>
+                <input type="text" class="form-control" formControlName="username" placeholder="mariorossi">
 
-              <label for="telefono" class="mt-3">Telefono</label>
-              <input type="text" name="telefono" placeholder="3333333333" class="form-control" formControlName="telefono">
+                <label for="data_di_nascita" class="mt-3">Data di nascita</label>
+                <input type="date" class="form-control" formControlName="data_di_nascita">
 
-              <div formGroupName="indirizzo">
-                <label for="via" class="mt-3">Via</label>
-                <input type="text" name="via" placeholder="via Roma" class="form-control" formControlName="via">
-
-                <label for="civico" class="mt-3">Civico</label>
-                <input type="text" name="civico" placeholder="13A" class="form-control" formControlName="civico">
-
-
-                <label for="provincia" class="mt-3">Provincia</label>
-                <input name="provincia" class="form-control" (change)="onProvinciaChange($event)"
-                    (input)="filterProvince($event)" list="provinciaList" placeholder="Cerca una provincia">
-                <datalist id="provinciaList">
-                    <option *ngFor="let provincia of provinceFiltrate" [value]="provincia.nome_provincia">
-                        {{ provincia.nome_provincia }}
-                    </option>
-                </datalist>
-
-                <label *ngIf="selectedProvincia" for="comune_id" class="mt-3">Comune</label>
-                <input *ngIf="selectedProvincia" list="comuniList" name="comune_id"
-                    (input)="filterComuni($event)" formControlName="comune_id"
-                    (change)="updateComune($event)" class="form-control"
-                    placeholder="Cerca un comune">
-
-                <datalist id="comuniList">
-                    <option *ngFor="let comune of comuniFiltrati" [value]="comune.nome_comune">
-                        {{ comune.nome_comune }}
-                    </option>
-                </datalist>
 
               </div>
 
-              <input type="checkbox" name="privacy" class="mt-3" formControlName="privacy">
-              <label for="privacy" class="mt-3 mx-2">Autorizzo il trattamento dei dati personali</label>
+              <!-- Pulsante Avanti -->
+              <button type="button" class="btn btn-primary mt-3" (click)="nextStep()" >
+                Avanti
+              </button>
             </div>
 
-            <button type="submit" class="btn btn-primary mt-3" [disabled]="form.invalid">Registrati</button>
-          </form>
+            <!-- STEP 2: Indirizzo -->
+            <div *ngIf="step === 2">
+
+                <label for="telefono" class="mt-3">Telefono</label>
+                <input type="text" class="form-control" formControlName="telefono" placeholder="3333333333">
+
+                <ng-container class="form-group" formGroupName="indirizzo">
+
+                  <label for="via" class="mt-3">Via</label>
+                  <input type="text" class="form-control" formControlName="via" placeholder="Via Roma">
+
+                  <label for="civico" class="mt-3">Civico</label>
+                  <input type="text" class="form-control" formControlName="civico" placeholder="13A">
+
+                  <label for="provincia" class="mt-3">Provincia</label>
+                  <input name="provincia" class="form-control" (change)="onProvinciaChange($event)"
+                    (input)="filterProvince($event)" list="provinciaList" placeholder="Cerca una provincia">
+                  <datalist id="provinciaList">
+                    <option *ngFor="let provincia of provinceFiltrate" [value]="provincia.nome_provincia">
+                      {{ provincia.nome_provincia }}
+                    </option>
+                  </datalist>
+
+                  <label *ngIf="selectedProvincia" for="comune_id" class="mt-3">Comune</label>
+                  <input *ngIf="selectedProvincia" list="comuniList" class="form-control"
+                    (input)="filterComuni($event)" formControlName="comune_id"
+                    (change)="updateComune($event)" placeholder="Cerca un comune">
+                  <datalist id="comuniList">
+                    <option *ngFor="let comune of comuniFiltrati" [value]="comune.nome_comune">
+                      {{ comune.nome_comune }}
+                    </option>
+                  </datalist>
+
+                </ng-container>
+
+
+
+
+
+
+
+                <input type="checkbox" class="mt-3" formControlName="privacy">
+                <label for="privacy" class="mt-3 mx-2">Autorizzo il trattamento dei dati personali</label>
+
+
+
+            <!-- Pulsanti Indietro e Registrati -->
+            <button type="button" class="btn btn-secondary mt-3 me-2" (click)="prevStep()">
+              Indietro
+            </button>
+            <button type="submit" class="btn btn-success mt-3" [disabled]="form.invalid">
+              Registrati
+            </button>
+          </div>
         </div>
+
+        </form>
       </div>
     </div>
   </div>

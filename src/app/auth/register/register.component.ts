@@ -132,4 +132,23 @@ export class RegisterComponent {
     }
   }
 
+  step = 1;
+
+  nextStep() {
+    if (this.form.get('nome')?.valid &&
+        this.form.get('cognome')?.valid &&
+        this.form.get('email')?.valid &&
+        this.form.get('password')?.valid &&
+        this.form.get('username')?.valid &&
+        this.form.get('data_di_nascita')?.valid) {
+      this.step = 2;
+    } else {
+      console.log(this.form)
+      alert("Compila tutti i campi prima di proseguire!");
+    }
+  }
+
+  prevStep() {
+    this.step = 1;
+  }
 }
