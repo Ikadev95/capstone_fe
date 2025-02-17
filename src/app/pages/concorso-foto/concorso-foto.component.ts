@@ -25,6 +25,11 @@ form: FormGroup;
   Fotografie: iFotografiaResponse[] = []
   PagamentoFoto: iPagamentoResponse[] = []
   fotoPagate: number = 0;
+  defaultImage = 'nofoto.png';
+  img1 = false;
+  img2 = false;
+  img3 = false;
+
 
   constructor(private http: HttpClient, private categoriaSrv: CategoriaSrvService, private decoder: DecodeTokenService,
     private compService: ComponimentiSvcService, private pagamentiService: PagamentiSvcService) {
@@ -40,6 +45,10 @@ form: FormGroup;
       this.Categorie = data
     })
 
+    console.log(this.img1);
+    console.log(this.img2);
+    console.log(this.img3);
+
     this.getFoto();
 
     this.pagamentiService.pagamentiSubject$.subscribe(data => {
@@ -49,6 +58,8 @@ form: FormGroup;
         this.fotoPagate = this.PagamentoFoto[0].numero_foto_pagate;}
       }
     });
+
+
 
   }
   onFileSelect(event: Event) {
@@ -119,12 +130,25 @@ form: FormGroup;
     }
   }
 
-  getFoto(){
+  getFoto() {
     this.compService.fotoSubject$.subscribe(data => {
-      if(data)
-      this.Fotografie = data
-    })
+      if (data) {
+        this.Fotografie = data;
+
+        this.img1 = data.length > 0 && !!data[0]?.percorsoFile;
+        this.img2 = data.length > 1 && !!data[1]?.percorsoFile;
+        this.img3 = data.length > 2 && !!data[2]?.percorsoFile;
+
+        // Debugging per verificare i dati ricevuti
+        console.log("Dati ricevuti:", data);
+        console.log("Foto 1:", this.img1, "Percorso:", data[0]?.percorsoFile);
+        console.log("Foto 2:", this.img2, "Percorso:", data[1]?.percorsoFile);
+        console.log("Foto 3:", this.img3, "Percorso:", data[2]?.percorsoFile);
+      }
+    });
   }
+
+
 
   isValid(fieldName: string) {
     return this.form.get(fieldName)?.valid;
