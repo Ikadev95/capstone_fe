@@ -23,7 +23,7 @@ export class ConcorsoPoesieComponent {
    Poesie: iPoesiaResponse[] = []
    PagamentoPoesie: iPagamentoResponse[] = []
    poesiePagate: number = 0
-   blocco: boolean = false
+   sblocco: boolean = false
 
   constructor(private http: HttpClient, private categoriaSrv: CategoriaSrvService,private decoder: DecodeTokenService,
      private compService: ComponimentiSvcService, private pagamentiService: PagamentiSvcService) {
@@ -51,8 +51,9 @@ export class ConcorsoPoesieComponent {
             }
 
             if (this.Poesie.length >= this.poesiePagate) {
-              this.blocco = false}
-
+              this.sblocco = false
+            } else
+              this.sblocco = true
           }
         });
 
@@ -61,11 +62,11 @@ export class ConcorsoPoesieComponent {
   uploadPoesia() {
 
     if (this.Poesie.length >= this.poesiePagate) {
-      this.blocco = false
+      this.sblocco = false
       alert("Hai raggiunto il numero massimo di poesie che puoi caricare!");
       return;
     }
-    this.blocco = true
+    this.sblocco = true
 
 
     let data : iPoesiaRequest = this.form.value;
@@ -92,7 +93,7 @@ export class ConcorsoPoesieComponent {
       if(data)
       this.Poesie = data
       if (this.Poesie.length >= this.poesiePagate) {
-        this.blocco = false}
+        this.sblocco = false}
     })
   }
 
