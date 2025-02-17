@@ -151,4 +151,10 @@ export class RegisterComponent {
   prevStep() {
     this.step = 1;
   }
+
+  showPassword = false;
+
+togglePasswordVisibility() {
+  this.showPassword = !this.showPassword;
+}
 }
