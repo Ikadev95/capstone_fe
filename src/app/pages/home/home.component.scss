@@ -53,4 +53,21 @@ img{
   width: 430px;
   height: 430px;
   border-radius: 50%;
+  z-index: 2;
+}
+.imgCont{
+  i{
+    bottom: 0;
+    left: -10%;
+    font-size: 260px;
+    color: #ECF6F5;
+  }
+}
+.imgCont1{
+  i{
+    bottom: 10%;
+    right: -15%;
+    font-size: 270px;
+    color: #ECF6F5;
+  }
 }
