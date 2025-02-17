@@ -29,6 +29,7 @@ form: FormGroup;
   img1 = false;
   img2 = false;
   img3 = false;
+  blocco: boolean = false;
 
 
   constructor(private http: HttpClient, private categoriaSrv: CategoriaSrvService, private decoder: DecodeTokenService,
@@ -57,6 +58,10 @@ form: FormGroup;
         if(this.PagamentoFoto.length > 0){
         this.fotoPagate = this.PagamentoFoto[0].numero_foto_pagate;}
       }
+
+      if (this.Fotografie.length >= this.fotoPagate) {
+        this.blocco = false}
+        else this.blocco = true
     });
 
 
@@ -92,9 +97,11 @@ form: FormGroup;
   uploadFile() {
 
     if (this.Fotografie.length >= this.fotoPagate) {
+      this.blocco = false
       alert("Hai raggiunto il numero massimo di foto che puoi caricare!");
       return;
     }
+    this.blocco = true
 
     if (this.selectedFile) {
       const formData = new FormData();
@@ -134,6 +141,10 @@ form: FormGroup;
     this.compService.fotoSubject$.subscribe(data => {
       if (data) {
         this.Fotografie = data;
+
+
+      if (this.Fotografie.length >= this.fotoPagate) {
+        this.blocco = false}
 
         this.img1 = data.length > 0 && !!data[0]?.percorsoFile;
         this.img2 = data.length > 1 && !!data[1]?.percorsoFile;
