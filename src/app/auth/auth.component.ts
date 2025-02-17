@@ -36,12 +36,14 @@ export class AuthComponent {
       .subscribe((res) => {
         console.log(res);
         setTimeout(() => {
-          if (this.decodeToken.userRoles$.getValue().includes('ROLE_ADMIN') || this.decodeToken.userRoles$.getValue().includes('ROLE_JUDGE')) {
+          if (this.decodeToken.userRoles$.getValue().includes('ROLE_USER') || this.decodeToken.userRoles$.getValue().includes('ROLE_JUDGE')) {
             this.ProfileSvcService.getMyDates();
-            this.router.navigate(['profilo']);
+
+            this.router.navigate(['home']);
           } else {
             this.ProfileSvcService.getMyDates();
-            this.router.navigate(['home']);
+            this.router.navigate(['utenti']);
+
           }
         }, 1000);
       });

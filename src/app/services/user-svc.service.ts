@@ -18,7 +18,7 @@ export class UserSvcService {
   private _users$ = new BehaviorSubject<iUserPaged[]>([]);
   private _total$ = new BehaviorSubject<number>(0);
   _pages$ = new BehaviorSubject<number[]>([]);
-  private sorted = false;
+  private sorted = true;
 
   private _state: State = {
     page: 1,

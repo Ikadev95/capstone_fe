@@ -3,11 +3,22 @@
   width: 380px;
   height: 380px;
   object-fit: cover;
+  z-index: 100;
 }
 .imgTub{
   border-radius: 50%;
   width: 150px;
   height: 150px;
   object-fit: cover;
+
 }
 
+.avatarCont{
+
+  i{
+    bottom: 0;
+    left: 0;
+    font-size: 260px;
+    color: #ECF6F5;
+  }
+}
