@@ -1,17 +1,21 @@
 <div class="container">
 
+  <h2 class="mt-3">🪶 Poesie Caricate</h2>
+  <div class="void mt-3 px-3 py-4" *ngIf="Poesie.length == 0">
+    <p class="m-0"><i class="fa-solid fa-circle-info mx-2"></i> {{ blocco ? 'Non ci sono poesie caricate' : 'Per caricare le tue opere procedi prima con il pagamento' }} </p>
+  </div>
 
-  <h2 class="mt-3" *ngIf="Poesie.length > 0">🪶 Poesie Caricate</h2>
-  <div  *ngFor="let poesie of Poesie">
+  <div class="col-12 col-md-6" *ngFor="let poesia of Poesie">
     <div class="card mb-3 border-0 shadow">
       <div class="card-body">
-        <h5 class="card-title">{{ poesie.titolo }}</h5>
-        <p [style.white-space]="'pre-line'">{{ poesie.testo }}</p>
+        <h5 class="card-title">{{ poesia.titolo }}</h5>
+        <p [style.white-space]="'pre-line'">{{ poesia.testo }}</p>
       </div>
     </div>
+  </div>
 
-    <h3 class="mt-4">Carica le tue Poesie</h3>
-  <form [formGroup]="form" (submit)="uploadPoesia()">
+  <h3 class="mt-4" *ngIf="blocco">Carica le tue Poesie</h3>
+  <form  *ngIf="blocco" [formGroup]="form" (submit)="uploadPoesia()">
 
     <label for="titolo" class="mt-3">Titolo</label>
     <input type="text" name="titolo" placeholder="Titolo" class="form-control" formControlName="titolo">
@@ -24,8 +28,7 @@
     <label for="testo" class="mt-3">Testo</label>
     <textarea name="testo" placeholder="Testo" class="form-control" formControlName="testo"></textarea>
 
-    <button type="submit" class="btn btn-primary mt-3 ">Carica</button>
+    <button type="submit" class="btn btn-primary mt-3">Carica</button>
   </form>
 
-
-  </div>
+</div>

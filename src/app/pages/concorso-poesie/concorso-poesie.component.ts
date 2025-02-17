@@ -23,6 +23,7 @@ export class ConcorsoPoesieComponent {
    Poesie: iPoesiaResponse[] = []
    PagamentoPoesie: iPagamentoResponse[] = []
    poesiePagate: number = 0
+   blocco: boolean = false
 
   constructor(private http: HttpClient, private categoriaSrv: CategoriaSrvService,private decoder: DecodeTokenService,
      private compService: ComponimentiSvcService, private pagamentiService: PagamentiSvcService) {
@@ -44,18 +45,28 @@ export class ConcorsoPoesieComponent {
      this.pagamentiService.pagamentiSubject$.subscribe(data => {
           if (data) {
             this.PagamentoPoesie = data.filter((pagamento: iPagamentoResponse) => pagamento.ragione_pagamento === 'CONCORSO_POESIA');
-            if(this.PagamentoPoesie.length > 0)
-            this.poesiePagate = this.PagamentoPoesie[0].numero_poesie_pagate;
+            if(this.PagamentoPoesie.length > 0){
+              this.poesiePagate = this.PagamentoPoesie[0].numero_poesie_pagate;
+
+            }
+
+            if (this.Poesie.length >= this.poesiePagate) {
+              this.blocco = false}
+
           }
         });
+
   }
 
   uploadPoesia() {
 
     if (this.Poesie.length >= this.poesiePagate) {
-      alert("Hai raggiunto il numero massimo di foto che puoi caricare!");
+      this.blocco = false
+      alert("Hai raggiunto il numero massimo di poesie che puoi caricare!");
       return;
     }
+    this.blocco = true
+
 
     let data : iPoesiaRequest = this.form.value;
     let username = this.decoder.getUsername();
@@ -76,9 +87,12 @@ export class ConcorsoPoesieComponent {
   }
 
   getPoesie(){
+
     this.compService.poesiaSubject$.subscribe(data => {
       if(data)
       this.Poesie = data
+      if (this.Poesie.length >= this.poesiePagate) {
+        this.blocco = false}
     })
   }
 

@@ -6,13 +6,13 @@
   </div>
 
   <div class="info">
-    <p class="m-0"> <i class="fa-regular fa-circle-question mx-2"></i> Per completare il pagamento, seleziona la tua quota e procedi con il pagamento online.</p>
+    <p class="m-0"> <i class="fa-solid fa-circle-info mx-2"></i> {{fotoBlocco && poesieBlocco ? 'Grazie per aver partecipato al concorso!' : 'Per completare il pagamento, seleziona la tua quota e procedi con il pagamento online.'}} </p>
   </div>
 
 
-  <h4 class="mt-4">Sezione Poesia</h4>
+  <h4 class="mt-4" *ngIf="!poesieBlocco">Sezione Poesia</h4>
 
-  <div class="row">
+  <div class="row" *ngIf="!poesieBlocco">
 
     <div class="col">
       <div class="card shadow">
@@ -43,9 +43,9 @@
 
 
 
-  <h4 class="mt-4">Sezione Fotografia</h4>
+  <h4 class="mt-4" *ngIf="!fotoBlocco">Sezione Fotografia</h4>
 
-<div class="card shadow">
+<div class="card shadow" *ngIf="!fotoBlocco">
         <div class="d-flex justify-content-between">
           <span class="price">€ 10</span>
           <div class="cont">
@@ -57,10 +57,8 @@
 
 
 
-  <div class="payment-info">
-
-
-
-    <app-payment-button [amount]="selectedAmount * 100" [name]="concorsoName" [sezione] ="sezione" [numeroComponimenti]="numeroComponimenti" [ragione] ="ragione" [selectedAmount]="selectedAmount"></app-payment-button>
+  <div class="payment-info" >
+    <app-payment-button  [amount]="selectedAmount * 100" [name]="concorsoName" [sezione] ="sezione" [numeroComponimenti]="numeroComponimenti" [ragione] ="ragione" [selectedAmount]="selectedAmount"></app-payment-button>
   </div>
+
 </div>
