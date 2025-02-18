@@ -1,0 +1,14 @@
+.card{
+  height: 100%;
+  border: 0;
+  background-color: #ecf6f5;
+  i{
+    color: #2F958D;
+  }
+  b{
+    color: #2F958D;
+  }
+}
+.dropdown-toggle::after {
+  opacity: 0;
+}

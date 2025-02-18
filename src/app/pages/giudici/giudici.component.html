@@ -1,94 +1,88 @@
-<div class="container mt-4">
-  <div class="d-flex justify-content-between ">
+<div class="container mt-3">
+  <div class="d-flex justify-content-between align-items-center">
     <h2>Giudici</h2>
-    <button class="btn btn-primary" [routerLink]="'/giudici/registra'"> + Registra un Giudice</button>
+    <div>
+      <button class="btn btn-primary" [routerLink]="'/giudici/registra'"> <i class="fa-solid fa-user-plus"></i> Aggiungi </button>
+    </div>
   </div>
-    <form>
-      <div class="mb-3 row">
-        <label for="table-complete-search" class="col-xs-3 col-sm-auto col-form-label">Cerca: </label>
-        <div class="col-xs-3 col-sm-auto">
-          <input
-            id="table-complete-search"
-            type="text"
-            class="form-control"
-            name="searchTerm"
-            [(ngModel)]="service.searchTerm"
-          />
-        </div>
-        @if (service.loading$ | async) {
-          <span class="col col-form-label">Caricamento...</span>
-        }
+
+  <form>
+    <div class="my-3 row">
+      <label for="card-search" class="col-xs-3 col-sm-auto col-form-label">Cerca: </label>
+      <div class="col-xs-3 col-sm-auto">
+        <input
+          id="card-search"
+          type="text"
+          class="form-control"
+          name="searchTerm"
+          [(ngModel)]="service.searchTerm"
+        />
       </div>
+      @if (service.loading$ | async) {
+        <span class="col col-form-label">Caricamento...</span>
+      }
+    </div>
+  </form>
 
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">Id</th>
-            <th scope="col" sortable="nome" (sort)="onSort($event)">Nome</th>
-            <th scope="col" sortable="cognome" (sort)="onSort($event)">Cognome</th>
-            <th scope="col" sortable="username" (sort)="onSort($event)">Username</th>
-            <th scope="col" sortable="email" (sort)="onSort($event)">Email</th>
-            <th scope="col">Categoria</th>
-            <th scope="col">Azioni</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (user of user$ | async; track user.id) {
-          <tr >
-            <th scope="row">{{ user.id }}</th>
-            <td><ngb-highlight [result]="user.nome" [term]="service.searchTerm" /></td>
-            <td><ngb-highlight [result]="user.cognome" [term]="service.searchTerm" /></td>
-            <td><ngb-highlight [result]="user.username" [term]="service.searchTerm" /></td>
-            <td><ngb-highlight [result]="user.email" [term]="service.searchTerm" /></td>
-            <td><ngb-highlight [result]="user.nome_categoria" [term]="service.searchTerm" /></td>
-            <td (click)="openModal(user.id)"><i class="fa-solid fa-pen-to-square"></i> assegna</td>
-          </tr>
-          }  @empty {
-            <tr>
-              <td colspan="4" style="text-align: center">Non ci sono utenti</td>
-            </tr>
-          }
-        </tbody>
-      </table>
-
-
-      <div class="d-flex justify-content-between p-2">
-        <!-- Paginazione personalizzata -->
-        <button
-          class="btn btn-primary"
-          [disabled]="service.page <= 1"
-          (click)="changePage(service.page - 1)"
-        >
-          Precedente
-        </button>
-
-        <!-- Numeri delle pagine -->
-
-        <div class="pagination-numbers">
-          @for (page of pages$ | async; track page) {
-          <button
-            [class.active]="page === service.page"
-            class="btn btn-outline-primary"
-            (click)="changePage(page)"
-          >
-            {{ page }}
-          </button>
-        }
+  <div class="row mt-4">
+    @for (user of user$ | async; track user.id) {
+      <div class="col-md-6 col-lg-4 mb-3">
+        <div class="card p-2">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h4 class="card-title m-0">{{ user.nome }} {{ user.cognome }}</h4>
+              <div ngbDropdown>
+                <button class=" border-0 bg-transparent" ngbDropdownToggle>
+                  <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+                <div ngbDropdownMenu>
+                  <button class="dropdown-item" (click)="openModal(user.id)">
+                    <i class="fa-solid fa-pen-to-square"></i> Assegna
+                  </button>
+                </div>
+              </div>
+            </div>
+            <p class="card-text mb-2"> <i class="fa-solid fa-user"></i>  <b> Username: </b> {{ user.username }}</p>
+            <p class="card-text mb-2"> <i class="fa-solid fa-envelope"></i> <b> Email: </b> {{ user.email }}</p>
+            <p class="card-text"><i class="fa-solid fa-layer-group"></i> <b> Categoria: </b> {{ user.nome_categoria }}</p>
+          </div>
         </div>
-
-
-        <button
-          class="btn btn-primary"
-          [disabled]="service.page >= service._pages$.value .length"
-          (click)="changePage(service.page + 1)"
-        >
-          Successivo
-        </button>
-
       </div>
-    </form>
+    } @empty {
+      <div class="col-12 text-center">
+        <p>Non ci sono utenti</p>
+      </div>
+    }
+  </div>
 
-  <!-- Template della Modale -->
+  <div class="d-flex justify-content-between p-2">
+    <button
+      class="btn btn-primary"
+      [disabled]="service.page <= 1"
+      (click)="changePage(service.page - 1)"
+    >
+    <i class="fa-solid fa-arrow-left"></i>
+    </button>
+    <div class="pagination-numbers">
+      @for (page of pages$ | async; track page) {
+      <button
+        [class.active]="page === service.page"
+        class="btn border-0"
+        (click)="changePage(page)"
+      >
+        {{ page }}
+      </button>
+      }
+    </div>
+    <button
+      class="btn btn-primary"
+      [disabled]="service.page >= service._pages$.value.length"
+      (click)="changePage(service.page + 1)"
+    >
+    <i class="fa-solid fa-arrow-right"></i>
+    </button>
+  </div>
+
   <ng-template #modalContent let-modal>
     <div class="modal-header">
       <h4 class="modal-title">Assegna Categoria</h4>
@@ -107,8 +101,6 @@
       <button type="button" class="btn btn-primary" (click)="assignCategory()">Assegna</button>
     </div>
   </ng-template>
-
-
 
   <router-outlet></router-outlet>
 </div>

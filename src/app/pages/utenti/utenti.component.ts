@@ -35,8 +35,6 @@ export class UtentiComponent {
 			}
 		});
 
-		this.service.sortColumn = column;
-		this.service.sortDirection = direction;
 	}
 
   change(){
@@ -46,30 +44,30 @@ export class UtentiComponent {
 
   updatePagination(): void {
     this.total$.subscribe(total => {
-      const totalPages = Math.ceil(total / this.service.pageSize); // Calcola il numero di pagine
-      this.service._pages$.next(Array.from({ length: totalPages }, (_, i) => i + 1)); // Aggiorna le pagine = Array.from({ length: totalPages }, (_, i) => i + 1); // Genera il range delle pagine
+      const totalPages = Math.ceil(total / this.service.pageSize);
+      this.service._pages$.next(Array.from({ length: totalPages }, (_, i) => i + 1));
     });
   }
 
-  // Metodo per cambiare la pagina
+
   changePage(page: number): void {
     console.log("Cambiando pagina a:", page);
     let pages = this.service._pages$.getValue();
     if (page >= 1 && page <= pages.length) {
-      this.service.page = page; // Imposta la pagina corrente
+      this.service.page = page;
       this.updatePagination();
-      this.service._search$.next(); // Esegui una nuova ricerca
+      this.service._search$.next();
       console.log("Pagina impostata:", this.service.page);
     }
   }
 
-  // Metodo per cambiare la dimensione della pagina
+
   changePageSize(event: any): void {
-    const pageSize = event.target.value;  // Ottieni il valore dalla selezione
-    this.service.pageSize = pageSize;  // Aggiorna la dimensione della pagina
-    this.service.page = 1;  // Resetta alla prima pagina
-    this.updatePagination();  // Ricalcola le pagine
-    this.service._search$.next();  // Esegui una nuova ricerca
+    const pageSize = event.target.value;
+    this.service.pageSize = pageSize;
+    this.service.page = 1;
+    this.updatePagination();
+    this.service._search$.next();
   }
 
   onToggle(event: Event){
@@ -82,7 +80,7 @@ export class UtentiComponent {
       this.service.deleteUser(id).subscribe({
         next: () => {
           alert("Utente eliminato con successo!");
-          this.service._search$.next(); // Aggiorna la lista
+          this.service._search$.next();
         },
         error: (err) => {
           alert("Errore nell'eliminazione dell'utente!");

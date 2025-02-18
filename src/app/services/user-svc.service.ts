@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, PipeTransform } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, debounceTime, delay, switchMap, tap, of } from 'rxjs';
 import { iUserPaged } from '../interfaces/i-user-paged';
 import { State } from '../interfaces/state';
-import { SortColumn, SortDirection } from '../directives/sortable.directive';
 import { Paged } from '../interfaces/paged';
+import { StateOnlyPagination } from '../interfaces/state-only-pagination';
 
 interface SearchResult {
 	users: iUserPaged[];
@@ -20,12 +20,10 @@ export class UserSvcService {
   _pages$ = new BehaviorSubject<number[]>([]);
   private sorted = true;
 
-  private _state: State = {
+  private _state: StateOnlyPagination = {
     page: 1,
-    pageSize: 15,
-    searchTerm: '',
-    sortColumn: '',
-    sortDirection: '',
+    pageSize: 9,
+    searchTerm: ''
   };
 
   constructor(private http: HttpClient) {
@@ -39,14 +37,11 @@ export class UserSvcService {
       )
       .subscribe((result) => {
         this._users$.next(result.users);
-       // this._total$.next(result.total);
       });
 
-    // Iniziamo la ricerca
     this._search$.next();
   }
 
-  // GETTER per lo stato reattivo
   get users$(): Observable<iUserPaged[]> {
     return this._users$.asObservable();
   }
@@ -65,11 +60,10 @@ export class UserSvcService {
   get searchTerm(): string {
     return this._state.searchTerm;
   }
-  get sorting():boolean {
+  get sorting(): boolean {
     return this.sorted;
   }
 
-  // SETTER per aggiornare lo stato
   set page(page: number) {
     this._set({ page });
   }
@@ -78,12 +72,6 @@ export class UserSvcService {
   }
   set searchTerm(searchTerm: string) {
     this._set({ searchTerm });
-  }
-  set sortColumn(sortColumn: SortColumn) {
-    this._set({ sortColumn });
-  }
-  set sortDirection(sortDirection: SortDirection) {
-    this._set({ sortDirection });
   }
   set sorting(sorting: boolean) {
     this.sorted = sorting;
@@ -94,24 +82,6 @@ export class UserSvcService {
     this._search$.next();
   }
 
-  // Funzione per ordinamento
-  private sort(users: iUserPaged[], column: SortColumn, direction: SortDirection): iUserPaged[] {
-    if (direction === '' || column === '') {
-      return users;
-    } else {
-      return [...users].sort((a, b) => {
-        const res = this.compare(a[column], b[column]);
-        return direction === 'asc' ? res : -res;
-      });
-    }
-  }
-
-  // Funzione di confronto
-  private compare(v1: string | number, v2: string | number): number {
-    return v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
-  }
-
-  // Funzione per filtrare i risultati
   private matches(user: iUserPaged, term: string): boolean {
     return (
       user.nome.toLowerCase().includes(term.toLowerCase()) ||
@@ -121,46 +91,24 @@ export class UserSvcService {
     );
   }
 
-  // Funzione per eseguire la ricerca, ordinamento e paginazione
   private _search(): Observable<SearchResult> {
-    const { sortColumn, sortDirection, pageSize, page, searchTerm } = this._state;
+    const { pageSize, page, searchTerm } = this._state;
+    const fetchUsers = this.sorted ? this.getAllUsers(page - 1, pageSize) : this.getUsers(page - 1, pageSize);
 
-    if(!this.sorted){
-      return this.getUsers(page - 1, pageSize).pipe(
-        switchMap((data) => {
-          let sortedUsers = this.sort(data.content, sortColumn, sortDirection); // Ordinamento
-
-          sortedUsers = sortedUsers.filter(user => this.matches(user, searchTerm)); // Filtraggio
-
-          const pages = Array.from({ length: data.totalPages }, (_, i) => i + 1);
-
-          this._pages$.next(pages);
-          this._total$.next(data.totalElements);
-
-          return of({ users: sortedUsers, total: this._total$.getValue() });
-        })
-      );
-    };
-
-    return this.getAllUsers(page - 1, pageSize).pipe(
+    return fetchUsers.pipe(
       switchMap((data) => {
-        let sortedUsers = this.sort(data.content, sortColumn, sortDirection); // Ordinamento
-
-        sortedUsers = sortedUsers.filter(user => this.matches(user, searchTerm)); // Filtraggio
+        let filteredUsers = data.content.filter(user => this.matches(user, searchTerm));
 
         const pages = Array.from({ length: data.totalPages }, (_, i) => i + 1);
 
         this._pages$.next(pages);
         this._total$.next(data.totalElements);
 
-        return of({ users: sortedUsers, total: this._total$.getValue() });
+        return of({ users: filteredUsers, total: this._total$.getValue() });
       })
     );
-
-
   }
 
-  // Ottieni gli utenti dalla API
   getUsers(page: number, size: number) {
     let url = `http://localhost:8080/api/utenti/paged/year?page=${page}&size=${size}`;
     return this.http.get<Paged>(url);
@@ -170,8 +118,8 @@ export class UserSvcService {
     return this.http.get<Paged>(url);
   }
 
-  deleteUser(id:number){
-    let url = `http://localhost:8080/api/utenti/${id}/delete`
-    return this.http.delete(url)
+  deleteUser(id: number) {
+    let url = `http://localhost:8080/api/utenti/${id}/delete`;
+    return this.http.delete(url);
   }
 }

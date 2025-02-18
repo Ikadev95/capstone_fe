@@ -45,8 +45,6 @@ export class GiudiciComponent {
         }
       });
 
-      this.service.sortColumn = column;
-      this.service.sortDirection = direction;
     }
 
     change(){

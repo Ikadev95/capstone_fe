@@ -39,11 +39,11 @@
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: #2F958D;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px #2F958D;
 }
 
 input:checked + .slider:before {
@@ -52,7 +52,6 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
-/* Rounded sliders */
 .slider.round {
   border-radius: 34px;
 }
@@ -64,3 +63,15 @@ input:checked + .slider:before {
 .dropdown-toggle::after {
   opacity: 0;
 }
+.card{
+  height: 100%;
+  border: 0;
+  background-color: #ecf6f5;
+  i{
+    color: #2F958D;
+  }
+  b{
+    color: #2F958D;
+  }
+}
+
