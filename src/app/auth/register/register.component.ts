@@ -20,7 +20,7 @@ export class RegisterComponent {
   selectedProvincia: boolean = false;
   comuniFiltrati: iComuneResponse[] = [];
   provinceFiltrate: iProvinciaRequest[] = [];
-
+  alertMessage: { type: string, message: string } | null = null;
   form: FormGroup
 
 
@@ -62,17 +62,29 @@ export class RegisterComponent {
       this.form.get('indirizzo.comune_id')?.setValue(this.form.value.indirizzo.comune_id.id);
       this.authSrv.register(this.form.value).subscribe({
         next: (data) => {
-          console.log('registrazione effettuata con successo');
+          console.log('Registrazione effettuata con successo');
           console.log('Risposta ricevuta:', data);
+
+          // Imposta il messaggio di successo
+          this.alertMessage = {
+            type: 'success',
+            message: 'Registrazione avvenuta con successo!'
+          };
+
           this.router.navigate(['auth']);
         },
         error: (error) => {
           console.error('Errore nella registrazione', error);
-          alert('Si è verificato un errore nella registrazione');
+
+          // Imposta il messaggio di errore
+          this.alertMessage = {
+            type: 'danger',
+            message: 'Si è verificato un errore nella registrazione.'
+          };
         }
       });
     }
- }
+  }
 
   onProvinciaChange(event: Event): void {
     const value = (event.target as HTMLInputElement).value;

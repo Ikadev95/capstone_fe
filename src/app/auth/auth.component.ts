@@ -25,32 +25,40 @@ export class AuthComponent {
     })
   }
 
-  login(){
-    if(this.form.valid){
-      const formData: iLoginRequest = this.form.value;
-      this.authSvc.login(formData) .pipe(
-        tap((res) =>
-          this.decodeToken.userRoles$.next(this.decodeToken.getRoles())
-        )
+  loginError: string | null = null;
+
+login() {
+  if (this.form.valid) {
+    this.loginError = null;
+
+    const formData: iLoginRequest = this.form.value;
+    this.authSvc.login(formData)
+      .pipe(
+        tap((res) => this.decodeToken.userRoles$.next(this.decodeToken.getRoles()))
       )
-      .subscribe((res) => {
-        console.log(res);
-        setTimeout(() => {
-          if (this.decodeToken.userRoles$.getValue().includes('ROLE_USER') || this.decodeToken.userRoles$.getValue().includes('ROLE_JUDGE')) {
-            this.ProfileSvcService.getMyDates();
-
-            this.router.navigate(['home']);
-          } else {
-            this.ProfileSvcService.getMyDates();
-            this.router.navigate(['utenti']);
-
-          }
-        }, 1000);
+      .subscribe({
+        next: (res) => {
+          setTimeout(() => {
+            if (this.decodeToken.userRoles$.getValue().includes('ROLE_USER') ||
+                this.decodeToken.userRoles$.getValue().includes('ROLE_JUDGE')) {
+              this.ProfileSvcService.getMyDates();
+              this.router.navigate(['home']);
+            } else {
+              this.ProfileSvcService.getMyDates();
+              this.router.navigate(['utenti']);
+            }
+          }, 1000);
+        },
+        error: (err) => {
+          this.loginError = 'Login fallito. Verifica le credenziali e riprova.';
+          console.error('Errore durante il login:', err);
+        }
       });
   } else {
-    console.log('form invalido');
+    this.loginError = 'Compila correttamente tutti i campi prima di procedere.';
   }
 }
+
 
 
 }
