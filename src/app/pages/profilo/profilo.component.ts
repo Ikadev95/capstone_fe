@@ -25,7 +25,7 @@ export class ProfiloComponent {
       avatar: new FormControl(null)
     });
 
-    // Ottieni i dati dell'utente dal servizio
+
     profileSrv.MyDatesSubject$.subscribe(data => {
       console.log(data)
       this.datiUtente = data;
@@ -41,7 +41,7 @@ export class ProfiloComponent {
     });
   }
 
-  // 📌 Funzione per gestire il cambio di file
+  //  Funzione per gestire il cambio di file
   onFileChange(event: any) {
     const file = event.target.files[0];
     if (file) {
@@ -53,8 +53,9 @@ export class ProfiloComponent {
     }
   }
 
-  // 📌 Funzione per inviare i dati al backend
+  //  Funzione per inviare i dati al backend
   onSubmit() {
+    console.log(this.profileForm)
     if (this.profileForm.valid) {
       const formData = new FormData();
       formData.append('nome', this.profileForm.get('nome')?.value);
@@ -65,6 +66,7 @@ export class ProfiloComponent {
       if (this.selectedFile) {
         formData.append('file', this.selectedFile);
       }
+      console.log(formData)
 
       this.profileSrv.updateUserProfile(formData).subscribe({
         next: (response) => {
@@ -79,6 +81,7 @@ export class ProfiloComponent {
         }
       });
     } else {
+
       alert('Compila correttamente tutti i campi!');
     }
   }
