@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { iComponimentoFullResponse } from '../../interfaces/i-componimento-full-response';
 
 @Component({
@@ -8,6 +8,12 @@ import { iComponimentoFullResponse } from '../../interfaces/i-componimento-full-
   templateUrl: './foto-card.component.html',
   styleUrl: './foto-card.component.scss'
 })
-export class FotoCardComponent {
+export class FotoCardComponent implements OnInit{
+ngOnInit(): void {
+  console.log(this.componiment.percorsoFile)
+}
 @Input() componiment!: iComponimentoFullResponse
+
+
+
 }

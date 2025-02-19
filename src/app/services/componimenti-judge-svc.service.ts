@@ -112,7 +112,15 @@ export class ComponimentiJudgeSvcService {
 
   getComponimentiBySezione(page: number, size: number) {
     return this.http.get<PagedComponimenti>(`http://localhost:8080/api/componimenti/sezione/?page=${page}&size=${size}`)
-      .pipe(tap(data => this.componimentiJudge$.next(data)));
+      .pipe(tap(data => {
+        data.content = data.content.map((componimento: iComponimentoFullResponse) => ({
+          ...componimento,
+          percorsoFile: componimento.percorsoFile
+            ? `http://localhost:8080/api/uploads/fotografie/${componimento.percorsoFile.split('/').pop()}`
+            : ''
+        }))
+        this.componimentiJudge$.next(data)
+      }));
   }
 
   vote(vote:iVotoRequest){
