@@ -48,11 +48,10 @@ form: FormGroup;
       this.Categorie = data
     })
 
-    console.log(this.img1);
-    console.log(this.img2);
-    console.log(this.img3);
 
     this.getFoto();
+
+
 
     this.pagamentiService.pagamentiSubject$.subscribe(data => {
       if (data) {
@@ -60,6 +59,7 @@ form: FormGroup;
         if(this.PagamentoFoto.length > 0){
         this.fotoPagate = this.PagamentoFoto[0].numero_foto_pagate;}
       }
+
 
       if (this.Fotografie.length >= this.fotoPagate) {
         this.sblocco = false}
@@ -166,11 +166,8 @@ form: FormGroup;
         this.img2 = data.length > 1 && !!data[1]?.percorsoFile;
         this.img3 = data.length > 2 && !!data[2]?.percorsoFile;
 
-        // Debugging per verificare i dati ricevuti
+
         console.log("Dati ricevuti:", data);
-        console.log("Foto 1:", this.img1, "Percorso:", data[0]?.percorsoFile);
-        console.log("Foto 2:", this.img2, "Percorso:", data[1]?.percorsoFile);
-        console.log("Foto 3:", this.img3, "Percorso:", data[2]?.percorsoFile);
       }
     });
   }
@@ -191,12 +188,22 @@ form: FormGroup;
 
 
 
-deletePhoto(id: number) {
-  if (confirm('Sei sicuro di voler eliminare questa foto?')) {
-    // Implementa la logica per eliminare la foto
-    console.log('Foto eliminata con ID:', id);
-  }
-}
+  deletePhoto(id: number) {
+    console.log(id);
+    if (confirm('Sei sicuro di voler eliminare questa foto?')) {
+      this.compService.deleteFoto(id).subscribe({
+        next: () => {
+          console.log('Foto eliminata con ID:', id);
+          this.compService.getFotoByUser().subscribe(
+            {
+              next: () => this.getFoto()
+            }
+          )
 
+        },
+        error: (err) => console.error('Errore durante l\'eliminazione', err)
+      });
+    }
+  }
 
 }

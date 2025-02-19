@@ -56,6 +56,10 @@ export class ComponimentiSvcService {
     (tap(data => this.poesiaSubject$.next(data)))
   }
 
+  deleteFoto(id:number){
+    return this.http.delete(`http://localhost:8080/api/fotografie/${id}`)
+  }
+
 
 
 }
