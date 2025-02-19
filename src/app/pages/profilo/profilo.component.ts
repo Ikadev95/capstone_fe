@@ -21,7 +21,7 @@ export class ProfiloComponent {
       nome: new FormControl('', Validators.required),
       cognome: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
-      telefono: new FormControl('', [Validators.pattern('^\\+?[0-9]{10,15}$')]),
+      telefono: new FormControl('', [Validators.pattern('^[\\+\\(\\)0-9\\-\\s]{10,20}$')]),
       avatar: new FormControl(null)
     });
 
@@ -30,10 +30,10 @@ export class ProfiloComponent {
       console.log(data)
       this.datiUtente = data;
       this.profileForm.patchValue({
-        nome: data.nome,
-        cognome: data.cognome,
-        email: data.email,
-        telefono: data.telefono
+        nome: data.nome || '',
+        cognome: data.cognome || '',
+        email: data.email || '',
+        telefono: data.telefono || ''
       });
       if (data.avatar) {
         this.avatarPreview = `http://localhost:8080/uploads/avatar/${data.avatar.split('/').pop()}`;
@@ -56,12 +56,12 @@ export class ProfiloComponent {
   //  Funzione per inviare i dati al backend
   onSubmit() {
     console.log(this.profileForm)
-    if (this.profileForm.valid) {
       const formData = new FormData();
       formData.append('nome', this.profileForm.get('nome')?.value);
       formData.append('cognome', this.profileForm.get('cognome')?.value);
       formData.append('email', this.profileForm.get('email')?.value);
       formData.append('numero_telefono', this.profileForm.get('telefono')?.value);
+      console.log(formData)
 
       if (this.selectedFile) {
         formData.append('file', this.selectedFile);
@@ -80,10 +80,7 @@ export class ProfiloComponent {
           alert('Si è verificato un errore durante l’aggiornamento del profilo.');
         }
       });
-    } else {
 
-      alert('Compila correttamente tutti i campi!');
-    }
   }
 
   modifyModeFunction() {

@@ -3,10 +3,12 @@ img{
 }
 .img1{
   position: absolute;
-  width: 540px;
-  height: 540px;
+  max-width: 560px;
+  max-height: 560px;
+  width: 35vw;
+  height: 35vw;
   border-radius: 50%;
-  left: 8%;
+  left: 9%;
   top:50px;
   z-index: -2;
   object-fit: cover;
@@ -15,8 +17,12 @@ img{
 }
 .img2{
   position: absolute;
-  width: 250px;
-  height: 250px;
+  max-width: 260px;
+  max-height: 260px;
+  min-width: 210px;
+  min-height: 210px;
+  width: 15vw;
+  height: 15vw;
   border-radius: 50%;
   right: 4%;
   top:30px;
@@ -25,13 +31,22 @@ img{
 }
 .circle{
   position: absolute;
-  width: 350px;
-  height: 350px;
+  max-width: 350px;
+  max-height: 350px;
+  width: 35vw;
+  height: 35vw;
   border-radius: 50%;
-  right: 30px;
-  bottom: 30px;
+  right: 20px;
+  bottom: 8vw;
   z-index: -3;
   object-fit: cover;
   border: 1px solid #2f958c58;
+
+}
+
+@media screen and (max-width: 1268px) {
+  .circle{
+    top: 10vw
+  }
 
 }
