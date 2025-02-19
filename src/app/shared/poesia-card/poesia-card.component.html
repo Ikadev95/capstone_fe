@@ -2,6 +2,7 @@
   <div class="card-body">
     <h5 class="card-title">{{componiment.titolo}}</h5>
     <p [style.white-space]="'pre-line'">{{ componiment.testo }}</p>
+    <p *ngIf="voto !== undefined">Voto: {{ voto }}</p>
     <ng-content></ng-content>
   </div>
 </div>
