@@ -1,3 +1,4 @@
+import { ComponimentiJudgeSvcService } from './../../services/componimenti-judge-svc.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { iComponimentoFullResponse } from '../../interfaces/i-componimento-full-response';
 
@@ -8,14 +9,30 @@ import { iComponimentoFullResponse } from '../../interfaces/i-componimento-full-
   templateUrl: './foto-card.component.html',
   styleUrl: './foto-card.component.scss'
 })
-export class FotoCardComponent implements OnInit{
-ngOnInit(): void {
-  console.log(this.componiment.percorsoFile)
-}
-@Input() componiment!: iComponimentoFullResponse
+  export class FotoCardComponent implements OnInit{
+  ngOnInit(): void {
+    this.getVoto()
+  }
 
-selectedImage: string = '';
+  constructor(private service: ComponimentiJudgeSvcService) { }
+  @Input() componiment!: iComponimentoFullResponse
+  voto?: number;
+  selectedImage: string = '';
   isLightboxOpen: boolean = false;
+
+  getVoto(){
+    this.service.getVoto(this.componiment.id).subscribe({
+      next: (response) => {
+        console.log(response)
+        this.voto = response.voto;
+      },
+      error: (err) => {
+        this.voto = 0;
+        console.log(err)
+      }
+    })
+  }
+
 
   showImage(imagePath: string) {
     this.selectedImage = imagePath;

@@ -3,10 +3,11 @@
        [src]="componiment.percorsoFile"
        alt="Card image cap"
        (click)="showImage(componiment.percorsoFile? componiment.percorsoFile : '')">
-  <div class="card-body">
-    <p class="card-text">{{ componiment.titolo }}</p>
-    <ng-content></ng-content>
-  </div>
+    <div class="card-body">
+      <p class="card-text">{{ componiment.titolo }}</p>
+      <p *ngIf="voto !== undefined">Voto: {{ voto }}</p>
+      <ng-content></ng-content>
+    </div>
 </div>
 
 

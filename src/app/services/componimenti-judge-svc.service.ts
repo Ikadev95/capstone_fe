@@ -130,4 +130,7 @@ export class ComponimentiJudgeSvcService {
   updateVote(vote:iVotoRequest){
     return this.http.patch<iVotoRequest>(`http://localhost:8080/api/voto/update`, vote)
   }
+  getVoto(id:number){
+    return this.http.get<iVotoRequest>(`http://localhost:8080/api/voto/${id}`)
+  }
 }

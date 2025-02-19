@@ -24,6 +24,7 @@ export class ComponimentiComponent {
     vote: number | null = null;
     comment: string = '';
     componimentToVote: any;
+    previousVote: number | null = null;
 
 
   constructor(public service: ComponimentiJudgeSvcService, private modalService: NgbModal) {
@@ -32,7 +33,20 @@ export class ComponimentiComponent {
     this.updatePagination();
     this.service._search$.next();
     this.pages$ = this.service._pages$;
-   }
+
+  }
+
+
+  getVoto(componiment: iComponimentoFullResponse) {
+    this.service.getVoto(componiment.id).subscribe({
+      next: (response) => {
+        this.previousVote = response.voto;
+      },
+      error: (err) => {
+  }
+ }
+    )
+  }
 
   changePage(page: number): void {
     console.log("Cambiando pagina a:", page);
@@ -52,6 +66,7 @@ export class ComponimentiComponent {
   }
 
   openModal(componiment: any) {
+    this.getVoto(componiment);
     this.componimentToVote = componiment;
     this.modalService.open(this.voteModal);
   }
@@ -62,47 +77,39 @@ export class ComponimentiComponent {
         id_componimento: this.componimentToVote.id
       };
 
-      console.log(vote);
-      this.service.vote(vote).subscribe({
-        next: (response) => {
-          console.log(`Voto inviato con successo: ${response}`);
-          alert(`Voto registrato con successo per: ${this.componimentToVote.titolo}`);
+      if(this.previousVote != null){
+        this.service.updateVote(vote).subscribe({
+          next:(response) => {
+            console.log(`Voto inviato con successo: ${response}`);
+            alert(`Voto registrato con successo per: ${this.componimentToVote.titolo}`);
+            this.previousVote = null
+            this.service._search$.next();
           this.modalService.dismissAll();
-        },
-        error: (err) => {
-          console.error("Errore durante l'invio del voto:", err);
+          },
+          error: (err) => {
+            console.error("Errore durante l'invio del voto:", err);
           alert("Si è verificato un errore durante l'invio del voto. Riprova.");
-        }
-      });
+          }
+        })
+      } else{
+        this.service.vote(vote).subscribe({
+          next: (response) => {
+            console.log(`Voto inviato con successo: ${response}`);
+            alert(`Voto registrato con successo per: ${this.componimentToVote.titolo}`);
+            this.previousVote = null
+            this.service._search$.next();
+            this.modalService.dismissAll();
+          },
+          error: (err) => {
+            console.error("Errore durante l'invio del voto:", err);
+            alert("Si è verificato un errore durante l'invio del voto. Riprova.");
+          }
+        });
+      }
 
-      console.log(`Voto per: ${this.componimentToVote.titolo}, Voto: ${this.vote}, Commento: ${this.comment}`);
     }
   }
 
-  updateVote() {
 
-    if (this.vote && this.componimentToVote) {
-      let vote: iVotoRequest = {
-        voto: this.vote,
-        id_componimento: this.componimentToVote.id
-      };
-
-      console.log(vote);
-      this.service.updateVote(vote).subscribe({
-        next: (response) => {
-          console.log(`Voto inviato con successo: ${response}`);
-          alert(`Voto registrato con successo per: ${this.componimentToVote.titolo}`);
-          this.modalService.dismissAll();
-        },
-        error: (err) => {
-          console.error("Errore durante l'invio del voto:", err);
-          alert("Si è verificato un errore durante l'invio del voto. Riprova.");
-        }
-      });
-
-      console.log(`Voto per: ${this.componimentToVote.titolo}, Voto: ${this.vote}, Commento: ${this.comment}`);
-    }
-
-  }
 
 }
