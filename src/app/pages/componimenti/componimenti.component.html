@@ -1,5 +1,5 @@
 <div class="container">
-  <h2>Componimenti</h2>
+  <h2 class="mt-3">Componimenti</h2>
 
   <div class="row">
     <div class="col" *ngFor="let componiment of componiments$ | async">
@@ -31,14 +31,14 @@
 </ng-template>
 
 
-  <div class="d-flex justify-content-between p-2">
+  <div class="d-flex justify-content-between p-2 mt-3">
     <!-- Paginazione personalizzata -->
     <button
       class="btn btn-primary"
       [disabled]="service.page <= 1"
       (click)="changePage(service.page - 1)"
     >
-      Precedente
+    <i class="fa-solid fa-arrow-left"></i>
     </button>
 
     <!-- Numeri delle pagine -->
@@ -47,7 +47,7 @@
       @for (page of pages$ | async; track page) {
       <button
         [class.active]="page === service.page"
-        class="btn btn-outline-primary"
+        class="btn border-0"
         (click)="changePage(page)"
       >
         {{ page }}
@@ -61,7 +61,7 @@
       [disabled]="service.page >= service._pages$.value .length"
       (click)="changePage(service.page + 1)"
     >
-      Successivo
+    <i class="fa-solid fa-arrow-right"></i>
     </button>
 
   </div>
