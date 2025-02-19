@@ -14,6 +14,13 @@ ngOnInit(): void {
 }
 @Input() componiment!: iComponimentoFullResponse
 
+selectedImage: string = '';
+  isLightboxOpen: boolean = false;
+
+  showImage(imagePath: string) {
+    this.selectedImage = imagePath;
+    this.isLightboxOpen = true;
+  }
 
 
 }

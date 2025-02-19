@@ -1,6 +1,14 @@
-<div class="card" >
-  <img class="card-img-top" [src]= "componiment.percorsoFile" alt="Card image cap">
+<div class="card">
+  <img class="card-img-top img-clickable"
+       [src]="componiment.percorsoFile"
+       alt="Card image cap"
+       (click)="showImage(componiment.percorsoFile? componiment.percorsoFile : '')">
   <div class="card-body">
-    <p class="card-text">{{componiment.titolo}}</p>
+    <p class="card-text">{{ componiment.titolo }}</p>
   </div>
+</div>
+
+<!-- Lightbox -->
+<div *ngIf="isLightboxOpen" class="lightbox" (click)="isLightboxOpen = false">
+  <img [src]="selectedImage" class="lightbox-img">
 </div>
