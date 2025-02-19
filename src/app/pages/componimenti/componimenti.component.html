@@ -1,8 +1,9 @@
 <div class="container">
   <h2 class="mt-3">Componimenti</h2>
 
-  <div class="row">
+  <div class="row row-gap-3">
     <div class="col" *ngFor="let componiment of componiments$ | async">
+
       <app-poesia-card *ngIf="componiment.categoriaId <= 4" [componiment]="componiment">
         <button class="btn btn-primary" (click)="openModal(componiment)">Vota</button>
       </app-poesia-card>
