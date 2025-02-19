@@ -126,4 +126,8 @@ export class ComponimentiJudgeSvcService {
   vote(vote:iVotoRequest){
     return this.http.post<iVotoRequest>(`http://localhost:8080/api/voto/create`, vote)
   }
+
+  updateVote(vote:iVotoRequest){
+    return this.http.patch<iVotoRequest>(`http://localhost:8080/api/voto/update`, vote)
+  }
 }

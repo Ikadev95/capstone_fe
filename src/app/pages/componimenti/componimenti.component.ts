@@ -79,4 +79,30 @@ export class ComponimentiComponent {
     }
   }
 
+  updateVote() {
+
+    if (this.vote && this.componimentToVote) {
+      let vote: iVotoRequest = {
+        voto: this.vote,
+        id_componimento: this.componimentToVote.id
+      };
+
+      console.log(vote);
+      this.service.updateVote(vote).subscribe({
+        next: (response) => {
+          console.log(`Voto inviato con successo: ${response}`);
+          alert(`Voto registrato con successo per: ${this.componimentToVote.titolo}`);
+          this.modalService.dismissAll();
+        },
+        error: (err) => {
+          console.error("Errore durante l'invio del voto:", err);
+          alert("Si è verificato un errore durante l'invio del voto. Riprova.");
+        }
+      });
+
+      console.log(`Voto per: ${this.componimentToVote.titolo}, Voto: ${this.vote}, Commento: ${this.comment}`);
+    }
+
+  }
+
 }
