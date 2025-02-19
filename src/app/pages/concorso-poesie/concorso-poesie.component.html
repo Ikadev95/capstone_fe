@@ -8,14 +8,16 @@
     <p class="m-0"><i class="fa-solid fa-circle-info mx-2"></i> Per caricare le tue opere procedi prima con il pagamento </p>
   </div>
 
-  <div class="col-12 col-md-6" *ngFor="let poesia of Poesie">
-    <div class="card mb-3 border-0 shadow">
-      <div class="card-body">
-        <h5 class="card-title">{{ poesia.titolo }}</h5>
-        <p [style.white-space]="'pre-line'">{{ poesia.testo }}</p>
+<div class="row">
+    <div class="col-12 col-md-6 col-lg-4" *ngFor="let poesia of Poesie">
+      <div class="card mb-3 border-0 shadow">
+        <div class="card-body">
+          <h5 class="card-title">{{ poesia.titolo }}</h5>
+          <p [style.white-space]="'pre-line'">{{ poesia.testo }}</p>
+        </div>
       </div>
     </div>
-  </div>
+</div>
 
   <h3 class="mt-4" *ngIf="sblocco">Carica le tue Poesie</h3>
   <form  *ngIf="sblocco" [formGroup]="form" (submit)="uploadPoesia()">

@@ -44,12 +44,43 @@ export class ProfiloComponent {
   //  Funzione per gestire il cambio di file
   onFileChange(event: any) {
     const file = event.target.files[0];
+
     if (file) {
-      this.selectedFile = file;
+      if (!file.type.startsWith('image/')) {
+        alert('Il file selezionato non è un\'immagine valida.');
+        return;
+      }
+
+      if (file.size > 5 * 1024 * 1024) {
+        alert('Il file è troppo grande! La dimensione massima consentita è di 5MB.');
+        return;
+      }
+
       const reader = new FileReader();
-      reader.onload = (e) => this.avatarPreview = reader.result;
       reader.readAsDataURL(file);
-      this.profileForm.patchValue({ avatar: file });
+
+      reader.onload = (e: any) => {
+        const img = new Image();
+        img.src = e.target.result;
+
+        img.onload = () => {
+          const width = img.width;
+          const height = img.height;
+
+          console.log(`Risoluzione immagine: ${width}x${height}`);
+
+          // Controllo risoluzione massima
+          if (width > 4000 || height > 3000) {
+            alert(`La risoluzione dell'immagine è troppo alta (${width}x${height}). Il massimo consentito è 4000x3000.`);
+            return;
+          }
+
+          // Se i controlli passano, aggiorna l'anteprima e il form
+          this.selectedFile = file;
+          this.avatarPreview = e.target.result;
+          this.profileForm.patchValue({ avatar: file });
+        };
+      };
     }
   }
 

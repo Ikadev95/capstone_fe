@@ -72,26 +72,40 @@ form: FormGroup;
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
 
-      // Controllo tipo di file
       if (!file.type.startsWith('image/')) {
         alert('Il file selezionato non è un\'immagine valida.');
         return;
       }
 
-      // Controllo dimensione file (5MB)
       if (file.size > 5 * 1024 * 1024) {
         alert('Il file è troppo grande! La dimensione massima consentita è di 5MB.');
         return;
       }
 
-      this.selectedFile = file;
-
-      // Anteprima immagine
       const reader = new FileReader();
-      reader.onload = () => {
-        this.previewUrl = reader.result;
+      reader.readAsDataURL(file);
+
+      reader.onload = (event: any) => {
+        const img = new Image();
+        img.src = event.target.result;
+
+        img.onload = () => {
+          const width = img.width;
+          const height = img.height;
+
+          console.log(`Risoluzione immagine: ${width}x${height}`);
+
+          // Controllo risoluzione massima
+          if (width > 4000 || height > 3000) {
+            alert(`La risoluzione dell'immagine è troppo alta (${width}x${height}). Il massimo consentito è 4000x3000.`);
+            return;
+          }
+
+          // Se la risoluzione è accettata, procedi con la preview o il caricamento
+          this.selectedFile = file;
+          this.previewUrl = event.target.result;
+        };
       };
-      reader.readAsDataURL(this.selectedFile);
     }
   }
   uploadFile() {
