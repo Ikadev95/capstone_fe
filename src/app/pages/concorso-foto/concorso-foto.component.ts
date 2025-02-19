@@ -31,6 +31,8 @@ form: FormGroup;
   img3 = false;
   sblocco: boolean = false;
 
+  hovered: boolean[] = [];
+
 
   constructor(private http: HttpClient, private categoriaSrv: CategoriaSrvService, private decoder: DecodeTokenService,
     private compService: ComponimentiSvcService, private pagamentiService: PagamentiSvcService) {
@@ -187,6 +189,14 @@ form: FormGroup;
     return !this.isValid(fieldName) && this.isTouched(fieldName);
   }
 
+
+
+deletePhoto(id: number) {
+  if (confirm('Sei sicuro di voler eliminare questa foto?')) {
+    // Implementa la logica per eliminare la foto
+    console.log('Foto eliminata con ID:', id);
+  }
+}
 
 
 }
