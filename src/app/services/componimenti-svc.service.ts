@@ -60,6 +60,10 @@ export class ComponimentiSvcService {
     return this.http.delete(`http://localhost:8080/api/fotografie/${id}`)
   }
 
+  deletePoesia(id:number){
+    return this.http.delete(`http://localhost:8080/api/poesie/${id}`)
+  }
+
 
 
 }

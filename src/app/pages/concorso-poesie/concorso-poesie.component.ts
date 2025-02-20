@@ -97,4 +97,20 @@ export class ConcorsoPoesieComponent {
     })
   }
 
+  eliminaPoesia(id: number) {
+    if (confirm('Sei sicuro di voler eliminare questa poesia?')) {
+      this.compService.deletePoesia(id).subscribe({
+        next: () => {
+          alert('Poesia eliminata con successo!');
+          this.compService.getPoesieByUser().subscribe();
+        },
+        error: (err) => {
+          alert('Errore nell\'eliminazione della poesia!');
+          console.error(err);
+        }
+      });
+    }
+  }
+
+
 }
