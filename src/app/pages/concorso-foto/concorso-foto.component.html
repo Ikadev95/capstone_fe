@@ -15,7 +15,7 @@
             <h5 class="text-center">{{ Fotografie[0]? Fotografie[0].titolo : 'Nessun titolo' }}</h5>
 
             <div class="image-container" (mouseenter)="hovered[0] = true" (mouseleave)="hovered[0] = false">
-              <img [src]="img1 && Fotografie[0] ? Fotografie[0].percorsoFile : defaultImage"
+              <img [src]=" Fotografie[0] ? Fotografie[0].percorsoFile : defaultImage"
                    alt="Foto"
                    class="foto hover-effect" />
 

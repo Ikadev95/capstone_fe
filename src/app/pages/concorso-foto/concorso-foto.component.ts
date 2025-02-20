@@ -30,6 +30,8 @@ form: FormGroup;
   img2 = false;
   img3 = false;
   sblocco: boolean = false;
+  errorMessage: string | null = null;
+  successMessage: string | null = null;
 
   hovered: boolean[] = [];
 
@@ -192,7 +194,8 @@ form: FormGroup;
     console.log(id);
     if (confirm('Sei sicuro di voler eliminare questa foto?')) {
       this.compService.deleteFoto(id).subscribe({
-        next: () => {
+        next: (response) => {
+          this.successMessage = response.toString() || "Foto eliminata con successo!";
           console.log('Foto eliminata con ID:', id);
           this.compService.getFotoByUser().subscribe(
             {
@@ -201,7 +204,13 @@ form: FormGroup;
           )
 
         },
-        error: (err) => console.error('Errore durante l\'eliminazione', err)
+        error: (err) =>{
+          console.log(err.error.error)
+          if(err.error.error === "L'elemento è collegato ad altri record e non può essere eliminato."){
+            this.errorMessage = "la fotografia è già stata votata da un giudice, non puoi eliminarla"
+          }
+           alert(this.errorMessage)
+        }
       });
     }
   }
