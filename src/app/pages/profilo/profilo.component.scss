@@ -7,18 +7,37 @@
 }
 .imgTub{
   border-radius: 50%;
-  width: 150px;
-  height: 150px;
+  width: 380px;
+  height: 380px;
   object-fit: cover;
 
 }
 
 .avatarCont{
 
-  i{
+  .fa-user{
     bottom: 0;
     left: 0;
     font-size: 260px;
     color: #ECF6F5;
+    z-index: -1;
   }
+}
+.custom-file-upload {
+
+  top:0;
+  right: 3vw;
+
+  label {
+  display: inline-block;
+  cursor: pointer;
+  font-size: 24px;
+  padding: 10px;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+}
+
+.custom-file-upload label:hover {
+  color: #2F958D;
 }
