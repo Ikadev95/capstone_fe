@@ -25,8 +25,11 @@ export class GiudiciSrcService {
   }
 
   getGiudici(page: number, size: number) {
-    let url = `${this.baseUrl}utenti/paged/judge?page=${page}&size=${size}`;
-    return this.http.get<PagedGiudice>(url);
+    return this.http.get<PagedGiudice>(`${this.baseUrl}utenti/paged/judge?page=${page}&size=${size}`);
+  }
+
+  assegnaGiudice(selectedUserId : number, selectedCategoryId: number) {
+    return this.http.post(`${this.baseUrl}categorie/${selectedCategoryId}/giudice/${selectedUserId}`, {})
   }
 
   private _loading$ = new BehaviorSubject<boolean>(true);
