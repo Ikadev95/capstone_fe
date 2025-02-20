@@ -1,59 +1,46 @@
 # CapstoneFe
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.5.
+Questo progetto è stato generato utilizzando Angular CLI versione 19.0.5.
 
-## Development server
+## Avvio del server di sviluppo
 
-To start a local development server, run:
+Per avviare un server di sviluppo locale, eseguire:
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Una volta avviato il server, aprire il browser e navigare su http://localhost:4200/. L'applicazione si ricaricherà automaticamente ogni volta che si modifica uno dei file sorgente.
 
-## Code scaffolding
+## Generazione del codice
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Angular CLI include strumenti di scaffolding per generare codice rapidamente. Per creare un nuovo componente, eseguire:
 
 ```bash
-ng generate component component-name
+ng generate component nome-componente
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Per un elenco completo degli schemi disponibili (come components, directives o pipes), eseguire:
 
 ```bash
 ng generate --help
 ```
 
-## Building
+## Compilazione
 
-To build the project run:
+Per compilare il progetto, eseguire:
 
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Questo comando compilerà il progetto e salverà gli artefatti di build nella directory dist/. Per impostazione predefinita, la build di produzione ottimizza l'applicazione per prestazioni e velocità.
 
-## Running unit tests
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## Note aggiuntive
 
-```bash
-ng test
-```
+Il progetto frontend si interfaccia con il backend sviluppato in Java Spring Boot e PostgreSQL.
 
-## Running end-to-end tests
+Non sono previsti test automatici per questa applicazione.
 
-For end-to-end (e2e) testing, run:
 
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
