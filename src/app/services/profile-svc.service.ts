@@ -3,11 +3,14 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { iUtenteResponse } from '../interfaces/i-utente-response';
 import { DecodeTokenService } from './decode-token.service';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileSvcService {
+
+  baseUrl:string = environment.baseUrl;
 
   MyDatesSubject$ = new BehaviorSubject<iUtenteResponse>({
     nome: '',
@@ -35,7 +38,7 @@ export class ProfileSvcService {
   }
 
   getMyDates(){
-    let url = `http://localhost:8080/api/utenti/me`
+    let url = `${this.baseUrl}utenti/me`
     return this.http.get<iUtenteResponse>(url).subscribe(
       dates => {
         console.log('Dati ottenuti:', dates);
@@ -50,7 +53,7 @@ export class ProfileSvcService {
 
 
   updateUserProfile(formData: FormData): Observable<any> {
-    let apiUrl = 'http://localhost:8080/api/utenti/upload/avatar';
+    let apiUrl = `${this.baseUrl}utenti/upload/avatar`;
     return this.http.post(`${apiUrl}`, formData);
   }
 

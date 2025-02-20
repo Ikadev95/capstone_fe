@@ -1,9 +1,11 @@
+
 import { iPoesiaRequest } from './../interfaces/i-poesia-request';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, tap } from 'rxjs';
 import { iFotografiaResponse } from '../interfaces/i-fotografia-response';
 import { iPoesiaResponse } from '../interfaces/i-poesia-response';
+import { environment } from '../../environments/environment.development';
 
 
 @Injectable({
@@ -18,13 +20,13 @@ export class ComponimentiSvcService {
 
   fotoSubject$ = new BehaviorSubject<iFotografiaResponse[] | null>(null);
   poesiaSubject$ = new BehaviorSubject<iPoesiaResponse[] | null>(null);
-
+  baseUrl:string = environment.baseUrl;
 
 
 
 
   uploadFoto(formData:FormData){ {
-    return this.http.post('http://localhost:8080/api/fotografie/upload', formData)
+    return this.http.post(`${this.baseUrl}fotografie/upload`, formData)
     .pipe(
       tap(() => {
         this.getFotoByUser().subscribe();
@@ -34,7 +36,7 @@ export class ComponimentiSvcService {
   }
 
   uploadPoesia( dati: iPoesiaRequest){ {
-    return this.http.post('http://localhost:8080/api/poesie/create',dati)
+    return this.http.post(`${this.baseUrl}poesie/create`,dati)
     .pipe(
       tap(() => {
         this.getPoesieByUser().subscribe();
@@ -44,24 +46,24 @@ export class ComponimentiSvcService {
   }
 
   getFotoByUser(){
-    return this.http.get<iFotografiaResponse[]>('http://localhost:8080/api/fotografie/user').pipe
+    return this.http.get<iFotografiaResponse[]>(`${this.baseUrl}fotografie/user`).pipe
     (tap(data => this.fotoSubject$.next(data.map(foto => ({
       ...foto,
-       percorsoFile: `http://localhost:8080/api/uploads/fotografie/${foto.percorsoFile.split('/').pop()}`
+       percorsoFile: `${this.baseUrl}uploads/fotografie/${foto.percorsoFile.split('/').pop()}`
     })))))
   }
 
   getPoesieByUser(){
-    return this.http.get<iPoesiaResponse[]>('http://localhost:8080/api/poesie/user').pipe
+    return this.http.get<iPoesiaResponse[]>(`${this.baseUrl}poesie/user`).pipe
     (tap(data => this.poesiaSubject$.next(data)))
   }
 
   deleteFoto(id:number){
-    return this.http.delete(`http://localhost:8080/api/fotografie/${id}`)
+    return this.http.delete(`${this.baseUrl}fotografie/${id}`)
   }
 
   deletePoesia(id:number){
-    return this.http.delete(`http://localhost:8080/api/poesie/${id}`)
+    return this.http.delete(`${this.baseUrl}api/poesie/${id}`)
   }
 
 

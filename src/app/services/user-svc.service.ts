@@ -5,6 +5,7 @@ import { iUserPaged } from '../interfaces/i-user-paged';
 import { State } from '../interfaces/state';
 import { Paged } from '../interfaces/paged';
 import { StateOnlyPagination } from '../interfaces/state-only-pagination';
+import { environment } from '../../environments/environment.development';
 
 interface SearchResult {
 	users: iUserPaged[];
@@ -19,6 +20,7 @@ export class UserSvcService {
   private _total$ = new BehaviorSubject<number>(0);
   _pages$ = new BehaviorSubject<number[]>([]);
   private sorted = true;
+  baseUrl:string = environment.baseUrl;
 
   private _state: StateOnlyPagination = {
     page: 1,
@@ -110,16 +112,16 @@ export class UserSvcService {
   }
 
   getUsers(page: number, size: number) {
-    let url = `http://localhost:8080/api/utenti/paged/year?page=${page}&size=${size}`;
+    let url = `${this.baseUrl}utenti/paged/year?page=${page}&size=${size}`;
     return this.http.get<Paged>(url);
   }
   getAllUsers(page: number, size: number) {
-    let url = `http://localhost:8080/api/utenti/paged?page=${page}&size=${size}`;
+    let url = `${this.baseUrl}utenti/paged?page=${page}&size=${size}`;
     return this.http.get<Paged>(url);
   }
 
   deleteUser(id: number) {
-    let url = `http://localhost:8080/api/utenti/${id}/delete`;
+    let url = `${this.baseUrl}utenti/${id}/delete`;
     return this.http.delete(url);
   }
 }

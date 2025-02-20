@@ -5,23 +5,27 @@ import { iGiudiceRegister } from '../interfaces/i-giudice-register';
 import { BehaviorSubject, debounceTime, delay, Observable, of, Subject, switchMap, tap } from 'rxjs';
 import { iGiudiceResponse } from '../interfaces/i-giudice-response';
 import { PagedGiudice } from '../interfaces/paged-giudice';
+import { environment } from '../../environments/environment.development';
 
 interface SearchResult {
   users: iGiudiceResponse[];
   total: number;
 }
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class GiudiciSrcService {
 
+  baseUrl:string = environment.baseUrl;
+
   registerGiudice(giudice: Partial<iGiudiceRegister>) {
-    return this.http.post('http://localhost:8080/api/auth/registerJudge', giudice);
+    return this.http.post(`${this.baseUrl}auth/registerJudge`, giudice);
   }
 
   getGiudici(page: number, size: number) {
-    let url = `http://localhost:8080/api/utenti/paged/judge?page=${page}&size=${size}`;
+    let url = `${this.baseUrl}utenti/paged/judge?page=${page}&size=${size}`;
     return this.http.get<PagedGiudice>(url);
   }
 

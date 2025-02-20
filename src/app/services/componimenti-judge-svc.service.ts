@@ -6,6 +6,7 @@ import { PagedComponimenti } from '../interfaces/paged-componimenti';
 import { State } from '../interfaces/state';
 import { StateOnlyPagination } from '../interfaces/state-only-pagination';
 import { iVotoRequest } from '../interfaces/i-voto-request';
+import { environment } from '../../environments/environment.development';
 
 interface SearchResult {
   componimenti: iComponimentoFullResponse[];
@@ -21,6 +22,7 @@ export class ComponimentiJudgeSvcService {
   private _componimenti$ = new BehaviorSubject<iComponimentoFullResponse[]>([]);
   private _total$ = new BehaviorSubject<number>(0);
   _pages$ = new BehaviorSubject<number[]>([]);
+  baseUrl:string = environment.baseUrl;
 
   private _state: StateOnlyPagination = {
     page: 1,
@@ -111,12 +113,12 @@ export class ComponimentiJudgeSvcService {
   }
 
   getComponimentiBySezione(page: number, size: number) {
-    return this.http.get<PagedComponimenti>(`http://localhost:8080/api/componimenti/sezione/?page=${page}&size=${size}`)
+    return this.http.get<PagedComponimenti>(`${this.baseUrl}componimenti/sezione/?page=${page}&size=${size}`)
       .pipe(tap(data => {
         data.content = data.content.map((componimento: iComponimentoFullResponse) => ({
           ...componimento,
           percorsoFile: componimento.percorsoFile
-            ? `http://localhost:8080/api/uploads/fotografie/${componimento.percorsoFile.split('/').pop()}`
+            ? `${this.baseUrl}uploads/fotografie/${componimento.percorsoFile.split('/').pop()}`
             : ''
         }))
         this.componimentiJudge$.next(data)
@@ -124,13 +126,13 @@ export class ComponimentiJudgeSvcService {
   }
 
   vote(vote:iVotoRequest){
-    return this.http.post<iVotoRequest>(`http://localhost:8080/api/voto/create`, vote)
+    return this.http.post<iVotoRequest>(`${this.baseUrl}voto/create`, vote)
   }
 
   updateVote(vote:iVotoRequest){
-    return this.http.patch<iVotoRequest>(`http://localhost:8080/api/voto/update`, vote)
+    return this.http.patch<iVotoRequest>(`${this.baseUrl}voto/update`, vote)
   }
   getVoto(id:number){
-    return this.http.get<iVotoRequest>(`http://localhost:8080/api/voto/${id}`)
+    return this.http.get<iVotoRequest>(`${this.baseUrl}voto/${id}`)
   }
 }
