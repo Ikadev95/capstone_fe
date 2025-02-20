@@ -48,7 +48,6 @@ export class RegisterComponent {
     this.comuneSvc.getProvince().subscribe({
       next: (data) => {
         this.province = data;
-        console.log(this.province);
       },
       error: (err) => {
         console.log(err);

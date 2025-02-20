@@ -10,6 +10,7 @@ import { NavbarComponent } from './main-components/navbar/navbar.component';
 import { errorInterceptor } from './auth/error.interceptor';
 import { FormsModule } from '@angular/forms';
 import { FooterComponent } from './main-components/footer/footer.component';
+import { IMAGE_CONFIG } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,14 @@ import { FooterComponent } from './main-components/footer/footer.component';
   ],
   providers: [
     provideHttpClient( withInterceptors([tokenInterceptor])),
-    provideHttpClient(withInterceptors([errorInterceptor]))
+    provideHttpClient(withInterceptors([errorInterceptor])),
+    {
+      provide: IMAGE_CONFIG,
+      useValue: {
+        disableImageSizeWarning: true,
+        disableImageLazyLoadWarning: true
+      }
+    },
   ],
   bootstrap: [AppComponent]
 })

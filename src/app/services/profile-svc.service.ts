@@ -41,7 +41,6 @@ export class ProfileSvcService {
     let url = `${this.baseUrl}utenti/me`
     return this.http.get<iUtenteResponse>(url).subscribe(
       dates => {
-        console.log('Dati ottenuti:', dates);
         this.MyDatesSubject$.next(dates);
       },
       error => {

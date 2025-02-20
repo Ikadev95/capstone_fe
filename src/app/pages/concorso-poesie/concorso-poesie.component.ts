@@ -79,7 +79,6 @@ export class ConcorsoPoesieComponent {
     }
     this.compService.uploadPoesia(data).subscribe(
       (response) => {
-        console.log('Poesia caricata con successo:', response);
       },
       (error) => {
         console.error('Errore durante il caricamento della poesia:', error);

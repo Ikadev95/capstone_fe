@@ -27,7 +27,7 @@ export class NavbarComponent {
       this.rolesSubscription = this.decodeToken.userRoles$.subscribe((roles) => {
         this.roles = roles || [];
       });
-     console.log(this.ProfileSvcService.MyDatesSubject$.value.avatar)
+
      this.ProfileSvcService.MyDatesSubject$.subscribe(data => data.avatar? this.avatar = `http://localhost:8080/uploads/avatar/${data.avatar.split('/').pop()}` : this.avatar = 'user.png')
     }
     logout() {

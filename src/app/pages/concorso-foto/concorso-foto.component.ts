@@ -99,13 +99,11 @@ form: FormGroup;
 
           console.log(`Risoluzione immagine: ${width}x${height}`);
 
-          // Controllo risoluzione massima
           if (width > 4000 || height > 3000) {
             alert(`La risoluzione dell'immagine è troppo alta (${width}x${height}). Il massimo consentito è 4000x3000.`);
             return;
           }
 
-          // Se la risoluzione è accettata, procedi con la preview o il caricamento
           this.selectedFile = file;
           this.previewUrl = event.target.result;
         };
@@ -168,8 +166,6 @@ form: FormGroup;
         this.img2 = data.length > 1 && !!data[1]?.percorsoFile;
         this.img3 = data.length > 2 && !!data[2]?.percorsoFile;
 
-
-        console.log("Dati ricevuti:", data);
       }
     });
   }
@@ -196,7 +192,6 @@ form: FormGroup;
       this.compService.deleteFoto(id).subscribe({
         next: (response) => {
           this.successMessage = response.toString() || "Foto eliminata con successo!";
-          console.log('Foto eliminata con ID:', id);
           this.compService.getFotoByUser().subscribe(
             {
               next: () => this.getFoto()

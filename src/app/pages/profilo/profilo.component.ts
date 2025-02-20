@@ -27,7 +27,6 @@ export class ProfiloComponent {
 
 
     profileSrv.MyDatesSubject$.subscribe(data => {
-      console.log(data)
       this.datiUtente = data;
       this.profileForm.patchValue({
         nome: data.nome || '',

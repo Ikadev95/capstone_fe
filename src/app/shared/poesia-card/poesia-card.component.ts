@@ -25,12 +25,11 @@ export class PoesiaCardComponent {
   getVoto(){
     this.service.getVoto(this.componiment.id).subscribe({
       next: (response) => {
-        console.log(response)
         this.voto = response.voto;
       },
       error: (err) => {
         this.voto = 0;
-        console.log(err)
+
       }
     })
   }
