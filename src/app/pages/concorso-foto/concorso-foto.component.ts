@@ -205,9 +205,8 @@ form: FormGroup;
 
         },
         error: (err) =>{
-          console.log(err.error.error)
           if(err.error.error === "L'elemento è collegato ad altri record e non può essere eliminato."){
-            this.errorMessage = "la fotografia è già stata votata da un giudice, non puoi eliminarla"
+            this.errorMessage = "la fotografia selezionata è già stata votata da un giudice, non puoi eliminarla"
           }
            alert(this.errorMessage)
         }

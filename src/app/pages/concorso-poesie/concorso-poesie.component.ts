@@ -24,6 +24,9 @@ export class ConcorsoPoesieComponent {
    PagamentoPoesie: iPagamentoResponse[] = []
    poesiePagate: number = 0
    sblocco: boolean = false
+   errorMessage: string | null = null;
+   successMessage: string | null = null;
+
 
   constructor(private http: HttpClient, private categoriaSrv: CategoriaSrvService,private decoder: DecodeTokenService,
      private compService: ComponimentiSvcService, private pagamentiService: PagamentiSvcService) {
@@ -105,8 +108,10 @@ export class ConcorsoPoesieComponent {
           this.compService.getPoesieByUser().subscribe();
         },
         error: (err) => {
-          alert('Errore nell\'eliminazione della poesia!');
-          console.error(err);
+          if(err.error.error === "L'elemento è collegato ad altri record e non può essere eliminato."){
+            this.errorMessage = "la poesia selezionata è già stata votata da un giudice, non puoi eliminarla"
+          }
+           alert(this.errorMessage)
         }
       });
     }
