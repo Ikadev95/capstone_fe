@@ -63,7 +63,7 @@ export class ComponimentiSvcService {
   }
 
   deletePoesia(id:number){
-    return this.http.delete(`${this.baseUrl}api/poesie/${id}`)
+    return this.http.delete(`${this.baseUrl}poesie/${id}`)
   }
 
 

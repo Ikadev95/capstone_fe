@@ -104,7 +104,8 @@ export class ConcorsoPoesieComponent {
       this.compService.deletePoesia(id).subscribe({
         next: () => {
           alert('Poesia eliminata con successo!');
-          this.compService.getPoesieByUser().subscribe();
+          window.location.reload();
+
         },
         error: (err) => {
           if(err.error.error === "L'elemento è collegato ad altri record e non può essere eliminato."){

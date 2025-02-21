@@ -97,7 +97,7 @@ form: FormGroup;
           const width = img.width;
           const height = img.height;
 
-          console.log(`Risoluzione immagine: ${width}x${height}`);
+         // console.log(`Risoluzione immagine: ${width}x${height}`);
 
           if (width > 4000 || height > 3000) {
             alert(`La risoluzione dell'immagine è troppo alta (${width}x${height}). Il massimo consentito è 4000x3000.`);
@@ -134,7 +134,7 @@ form: FormGroup;
 
       this.compService.uploadFoto(formData).subscribe(
         (response) => {
-          console.log('Immagine caricata con successo:', response);
+        //  console.log('Immagine caricata con successo:', response);
         },
         (error) => {
           console.error('Errore durante il caricamento dell\'immagine:', error);
@@ -187,7 +187,7 @@ form: FormGroup;
 
 
   deletePhoto(id: number) {
-    console.log(id);
+
     if (confirm('Sei sicuro di voler eliminare questa foto?')) {
       this.compService.deleteFoto(id).subscribe({
         next: (response) => {
