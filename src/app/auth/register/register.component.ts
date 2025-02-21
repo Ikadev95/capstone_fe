@@ -57,25 +57,29 @@ export class RegisterComponent {
 
   register(){
     if(this.form.valid){
-      console.log(this.form.value);
-      this.form.get('indirizzo.comune_id')?.setValue(this.form.value.indirizzo.comune_id.id);
+
+      this.form.get('indirizzo.comune_id')?.setValue(this.comuniFiltrati[0].id);
+
       this.authSrv.register(this.form.value).subscribe({
         next: (data) => {
           console.log('Registrazione effettuata con successo');
           console.log('Risposta ricevuta:', data);
 
-          // Imposta il messaggio di successo
+
           this.alertMessage = {
             type: 'success',
             message: 'Registrazione avvenuta con successo!'
           };
 
-          this.router.navigate(['auth']);
+          setTimeout(() => {
+            this.router.navigate(['auth']);
+          },2000)
+
         },
         error: (error) => {
           console.error('Errore nella registrazione', error);
 
-          // Imposta il messaggio di errore
+
           this.alertMessage = {
             type: 'danger',
             message: 'Si è verificato un errore nella registrazione.'
@@ -112,6 +116,7 @@ export class RegisterComponent {
     this.comuniFiltrati = this.comuni.filter(comune =>
       comune.nome_comune.toLowerCase().includes(value.toLowerCase())
     );
+    console.log(this.comuniFiltrati);
   }
 
   filterProvince(event: Event): void {
