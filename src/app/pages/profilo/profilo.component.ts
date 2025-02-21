@@ -15,6 +15,7 @@ export class ProfiloComponent {
   modifyMode = false;
   datiUtente!: iUtenteResponse;
   selectedFile: File | null = null;
+  alertMessage: { type: string, message: string } | null = null;
 
   constructor(private profileSrv: ProfileSvcService) {
     this.profileForm = new FormGroup({
@@ -66,15 +67,15 @@ export class ProfiloComponent {
           const width = img.width;
           const height = img.height;
 
-          console.log(`Risoluzione immagine: ${width}x${height}`);
+        //  console.log(`Risoluzione immagine: ${width}x${height}`);
 
-          // Controllo risoluzione massima
+
           if (width > 4000 || height > 3000) {
             alert(`La risoluzione dell'immagine è troppo alta (${width}x${height}). Il massimo consentito è 4000x3000.`);
             return;
           }
 
-          // Se i controlli passano, aggiorna l'anteprima e il form
+
           this.selectedFile = file;
           this.avatarPreview = e.target.result;
           this.profileForm.patchValue({ avatar: file });
@@ -83,34 +84,44 @@ export class ProfiloComponent {
     }
   }
 
-  //  Funzione per inviare i dati al backend
+
   onSubmit() {
-    console.log(this.profileForm)
       const formData = new FormData();
       formData.append('nome', this.profileForm.get('nome')?.value);
       formData.append('cognome', this.profileForm.get('cognome')?.value);
       formData.append('email', this.profileForm.get('email')?.value);
       formData.append('numero_telefono', this.profileForm.get('telefono')?.value);
-      console.log(formData)
+
 
       if (this.selectedFile) {
         formData.append('file', this.selectedFile);
       }
-      console.log(formData)
+
 
       this.profileSrv.updateUserProfile(formData).subscribe({
         next: (response) => {
-          console.log('Profilo aggiornato:', response);
-          alert('Profilo aggiornato con successo!');
+          this.alertMessage = {
+            type: 'success',
+            message: 'Profilo aggiornato con successo!'
+          }
+
           this.profileSrv.getMyDates()
           this.modifyMode = false;
+
+          setTimeout(() => {
+            this.alertMessage = null;
+          }, 2000);
         },
         error: (error) => {
           console.error('Errore durante l’aggiornamento:', error);
-          alert('Si è verificato un errore durante l’aggiornamento del profilo.');
+          this.alertMessage = {
+            type: 'danger',
+            message: 'Si è verificato un errore nell/' + 'aggiornamento!'
+          }
         }
-      });
 
+      });
+      this.modifyMode = false;
   }
 
   modifyModeFunction() {

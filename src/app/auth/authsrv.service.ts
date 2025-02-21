@@ -29,7 +29,7 @@ export class AuthsrvService {
   autoLogoutTimer:any
 
   register(user:Partial<iUser>){
-    console.log(user)
+   // console.log(user)
     return this.http.post<iAccess>(this.registerUrl,user)
   }
 

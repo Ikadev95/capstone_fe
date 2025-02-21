@@ -116,7 +116,7 @@ export class RegisterComponent {
     this.comuniFiltrati = this.comuni.filter(comune =>
       comune.nome_comune.toLowerCase().includes(value.toLowerCase())
     );
-    console.log(this.comuniFiltrati);
+   // console.log(this.comuniFiltrati);
   }
 
   filterProvince(event: Event): void {
@@ -141,7 +141,7 @@ export class RegisterComponent {
   updateComune(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
     const comuneSelezionato = this.comuni.find(c => c.nome_comune === value);
-    console.log(comuneSelezionato);
+    //console.log(comuneSelezionato);
 
     if (comuneSelezionato) {
       this.form.get('indirizzo.comune_id')?.setValue(comuneSelezionato.nome_comune);

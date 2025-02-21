@@ -16,7 +16,13 @@
       <div class="col col-12 col-md-6 py-3 text-center
       text-md-start">
 
+
+      <div *ngIf="alertMessage" class="alert mt-2" [ngClass]="'alert-' + alertMessage.type">
+        {{ alertMessage.message }}
+      </div>
+
           <h4 class="mb-4">Dati personali:</h4>
+
 
           <p>Username: <b>{{datiUtente.appUser.username}}</b></p>
           <p>Nome: <b>{{datiUtente.nome}}</b></p>
@@ -54,6 +60,8 @@
 
     <div class="col-md-6">
           <div class="mb-3">
+
+
             <label class="form-label m-0">Nome</label>
             <input type="text" class="form-control" formControlName="nome">
           </div>
