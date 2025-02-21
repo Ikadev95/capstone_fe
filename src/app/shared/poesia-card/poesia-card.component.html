@@ -1,8 +1,12 @@
 <div class="card border-0 shadow" >
   <div class="card-body">
-    <h5 class="card-title">{{componiment.titolo}}</h5>
+<div class="d-flex justify-content-between">
+      <h4 class="card-title">{{componiment.titolo}}</h4>
+      <h5 class="voto" *ngIf="voto !== undefined">{{ voto }}</h5>
+</div>
+
     <p [style.white-space]="'pre-line'">{{ componiment.testo }}</p>
-    <p *ngIf="voto !== undefined">Voto: {{ voto }}</p>
+
     <ng-content></ng-content>
   </div>
 </div>

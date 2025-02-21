@@ -81,7 +81,6 @@ export class ComponimentiComponent {
         this.service.updateVote(vote).subscribe({
           next:(response) => {
             console.log(`Voto inviato con successo: ${response}`);
-            alert(`Voto registrato con successo per: ${this.componimentToVote.titolo}`);
             this.previousVote = null
             this.service._search$.next();
           this.modalService.dismissAll();
@@ -95,7 +94,6 @@ export class ComponimentiComponent {
         this.service.vote(vote).subscribe({
           next: (response) => {
             console.log(`Voto inviato con successo: ${response}`);
-            alert(`Voto registrato con successo per: ${this.componimentToVote.titolo}`);
             this.previousVote = null
             this.service._search$.next();
             this.modalService.dismissAll();

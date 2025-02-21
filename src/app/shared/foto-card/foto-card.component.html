@@ -4,8 +4,10 @@
        alt="Card image cap"
        (click)="showImage(componiment.percorsoFile? componiment.percorsoFile : '')">
     <div class="card-body">
-      <p class="card-text">{{ componiment.titolo }}</p>
-      <p *ngIf="voto !== undefined">Voto: {{ voto }}</p>
+  <div class="d-flex justify-content-between">
+        <h4 class="card-text">{{ componiment.titolo }}</h4>
+        <h4 *ngIf="voto !== undefined">{{ voto }}</h4>
+  </div>
       <ng-content></ng-content>
     </div>
 </div>
