@@ -1,10 +1,38 @@
 <div class="container py-3">
   <h2>Classifica</h2>
 
-  <select class="form-select" aria-label="Default select example">
-    <option *ngFor="let categoria of Categorie">
+  <select class="form-select" (change)="onCategoriaChange($event)" aria-label="Seleziona categoria">
+    <option *ngFor="let categoria of Categorie" [value]="categoria.nome_categoria">
       {{ categoria.nome_categoria }}
     </option>
   </select>
+
+
+  <div class="row mt-4" *ngIf="!sblocco">
+    <div class="col-12 col-md-6 col-lg-4" *ngFor="let poesia of Poesie$ | async">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ poesia.titolo }}</h5>
+          <p [style.white-space]="'pre-line'">{{ poesia.nome }} {{ poesia.cognome }}</p>
+          <p>{{poesia.voto}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row mt-4"*ngIf="sblocco">
+    <div class="col-12 col-md-6 col-lg-4" *ngFor="let foto of Foto$ | async">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ foto.titolo }}</h5>
+          <p [style.white-space]="'pre-line'">{{ foto.nome }} {{ foto.cognome }}</p>
+          <p>{{foto.voto}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 
 </div>

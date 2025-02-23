@@ -22,6 +22,7 @@ export class ClassificaComponent {
   pages$: Observable<number[]> = new Observable;
   currentPage: number = 1;
   total$!: Observable<number>;
+  sblocco: boolean = false
 
 
   constructor(private ComponimentiSvcService : ComponimentiSvcService, private CategoriaSrvService: CategoriaSrvService, private service: ClassificaSvcService) {
@@ -40,6 +41,7 @@ export class ClassificaComponent {
     this.Foto$ = this.service._foto$;
     console.log(this.service._foto$)
     console.log(this.service._poesie$)
+    this.Poesie$ = this.service._poesie$
    }
 
 
@@ -67,6 +69,22 @@ export class ClassificaComponent {
     this.service.pageSize = pageSize;
     this.service.page = 1;
     this.updatePagination();
+    this.service._search$.next();
+  }
+
+  onCategoriaChange(event: Event) {
+    console.log('ok')
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    console.log(selectedValue);
+    if (selectedValue.includes("Poesia")) {
+    this.service.switch = "poesia"
+    this.sblocco = false
+  } else{
+    this.service.switch = "fotografia"
+    this.sblocco = true
+  }
+    this.service.categoria = selectedValue;
+    console.log(this.service.categoria)
     this.service._search$.next();
   }
 

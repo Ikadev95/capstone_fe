@@ -20,7 +20,8 @@ export class ClassificaSvcService {
   _pages$ = new BehaviorSubject<number[]>([]);
   _search$ = new Subject<void>();
     baseUrl:string = environment.baseUrl;
-    switch = 'Poesia';
+    switch = 'poesia';
+    categoria = "Poesia in ITALIANO a tema fisso"
 
     private _state: StateOnlyPagination = {
       page: 1,
@@ -33,7 +34,7 @@ export class ClassificaSvcService {
     .pipe(
       tap(() => this._loading$.next(true)),
       debounceTime(200),
-      switchMap(() => this._search('Poesia in ITALIANO a tema fisso')),
+      switchMap(() => this._search(this.categoria)),
       delay(200),
       tap(() => this._loading$.next(false)),
     )
@@ -69,10 +70,10 @@ export class ClassificaSvcService {
       this._search$.next();
     }
 
-    public _search(nomeCategoria: string): Observable<{ total: number }> {
+    private _search(nomeCategoria: string): Observable<{ total: number }> {
       const { pageSize, page } = this._state;
 
-      if( this.switch !== 'Poesia') {
+      if( this.switch === 'fotografia') {
          return this.getFoto(nomeCategoria,page - 1, pageSize).pipe(
         tap((data) => {
           const pages = Array.from({ length: data.totalPages }, (_, i) => i + 1);
@@ -82,6 +83,7 @@ export class ClassificaSvcService {
         }),
         switchMap(() => of({ total: this._total$.getValue() }))
       );}
+
       else {
         return this.getPoesie(nomeCategoria,page - 1, pageSize).pipe(
         tap((data) => {
