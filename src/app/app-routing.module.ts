@@ -16,7 +16,8 @@ const routes: Routes = [
   { path: 'profilo', loadChildren: () => import('./pages/profilo/profilo.module').then(m => m.ProfiloModule), canActivate: [LoggedGuard]},
   { path: 'utenti', loadChildren: () => import('./pages/utenti/utenti.module').then(m => m.UtentiModule), canActivate: [AdminGuard] },
   { path: 'giudici', loadChildren: () => import('./pages/giudici/giudici.module').then(m => m.GiudiciModule), canActivate: [AdminGuard]},
-  { path: 'componimenti', loadChildren: () => import('./pages/componimenti/componimenti.module').then(m => m.ComponimentiModule), canActivate: [GiudiceGuard] }
+  { path: 'componimenti', loadChildren: () => import('./pages/componimenti/componimenti.module').then(m => m.ComponimentiModule), canActivate: [GiudiceGuard] },
+  { path: 'classifica', loadChildren: () => import('./pages/classifica/classifica.module').then(m => m.ClassificaModule), canActivate: [AdminGuard]}
 ];
 
 @NgModule({
