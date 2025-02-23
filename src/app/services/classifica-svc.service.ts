@@ -20,7 +20,7 @@ export class ClassificaSvcService {
   _pages$ = new BehaviorSubject<number[]>([]);
   _search$ = new Subject<void>();
     baseUrl:string = environment.baseUrl;
-    switch = 'Foto';
+    switch = 'Poesia';
 
     private _state: StateOnlyPagination = {
       page: 1,
@@ -33,7 +33,7 @@ export class ClassificaSvcService {
     .pipe(
       tap(() => this._loading$.next(true)),
       debounceTime(200),
-      switchMap(() => this._search('Fotografia a tema fisso')),
+      switchMap(() => this._search('Poesia in ITALIANO a tema fisso')),
       delay(200),
       tap(() => this._loading$.next(false)),
     )

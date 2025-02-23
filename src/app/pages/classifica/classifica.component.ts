@@ -16,8 +16,7 @@ import { Component } from '@angular/core';
 })
 export class ClassificaComponent {
 
-  CategorieFoto: iCategoriaResponse[] = []
-  CategoriePoesie: iCategoriaResponse[] = []
+  Categorie: iCategoriaResponse[] = []
   Poesie$!:Observable<iPoesiaClassifica[]>
   Foto$!:Observable<iFotografiaClassifica[]>
   pages$: Observable<number[]> = new Observable;
@@ -26,16 +25,11 @@ export class ClassificaComponent {
 
 
   constructor(private ComponimentiSvcService : ComponimentiSvcService, private CategoriaSrvService: CategoriaSrvService, private service: ClassificaSvcService) {
-    this.CategoriaSrvService.getCategorieBySezioneFotografia().subscribe(data => {
-      this.CategorieFoto = data
 
-    console.log(this.CategorieFoto)
-    })
+    this.CategoriaSrvService.getAllCategorie().subscribe(data => {
+      this.Categorie = data
 
-    this.CategoriaSrvService.getCategrieBySezionePoesia().subscribe(data => {
-      this.CategoriePoesie = data
-
-    console.log(this.CategoriePoesie)
+    console.log(this.Categorie)
 
     })
 
@@ -45,6 +39,7 @@ export class ClassificaComponent {
     this.pages$ = this.service._pages$;
     this.Foto$ = this.service._foto$;
     console.log(this.service._foto$)
+    console.log(this.service._poesie$)
    }
 
 
