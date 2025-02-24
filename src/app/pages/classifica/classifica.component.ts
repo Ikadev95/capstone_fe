@@ -33,8 +33,6 @@ export class ClassificaComponent {
     this.CategoriaSrvService.getAllCategorie().subscribe(data => {
       this.Categorie = data
 
-    console.log(this.Categorie)
-
     })
 
     this.total$ = this.service.total$;
@@ -42,8 +40,6 @@ export class ClassificaComponent {
     this.service._search$.next();
     this.pages$ = this.service._pages$;
     this.Foto$ = this.service._foto$;
-    console.log(this.service._foto$)
-    console.log(this.service._poesie$)
     this.Poesie$ = this.service._poesie$
    }
 
@@ -56,13 +52,13 @@ export class ClassificaComponent {
   }
 
   changePage(page: number): void {
-    console.log("Cambiando pagina a:", page);
+   // console.log("Cambiando pagina a:", page);
     let pages = this.service._pages$.getValue();
     if (page >= 1 && page <= pages.length) {
       this.service.page = page;
       this.updatePagination();
       this.service._search$.next();
-      console.log("Pagina impostata:", this.service.page);
+    //  console.log("Pagina impostata:", this.service.page);
     }
   }
 
@@ -76,9 +72,7 @@ export class ClassificaComponent {
   }
 
   onCategoriaChange(event: Event) {
-    console.log('ok')
     const selectedValue = (event.target as HTMLSelectElement).value;
-    console.log(selectedValue);
     if (selectedValue.includes("Poesia")) {
     this.service.switch = "poesia"
     this.sblocco = false
@@ -87,7 +81,6 @@ export class ClassificaComponent {
     this.sblocco = true
   }
     this.service.categoria = selectedValue;
-    console.log(this.service.categoria)
     this.service._search$.next();
   }
 
