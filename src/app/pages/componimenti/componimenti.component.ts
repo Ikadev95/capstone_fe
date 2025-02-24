@@ -71,7 +71,12 @@ export class ComponimentiComponent {
     this.modalService.open(this.voteModal);
   }
   submitVote() {
+
     if (this.vote && this.componimentToVote) {
+      if(this.vote > 10 || this.vote < 1){
+        alert("Il voto deve essere compreso tra 1 e 10");
+        return
+      }
       let vote: iVotoRequest = {
         voto: this.vote,
         id_componimento: this.componimentToVote.id

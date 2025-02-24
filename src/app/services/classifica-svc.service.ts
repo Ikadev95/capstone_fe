@@ -25,7 +25,7 @@ export class ClassificaSvcService {
 
     private _state: StateOnlyPagination = {
       page: 1,
-      pageSize: 9,
+      pageSize: 20,
       searchTerm: ''
     };
 

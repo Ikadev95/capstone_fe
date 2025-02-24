@@ -6,6 +6,9 @@ import { iPoesiaClassifica } from '../../interfaces/i-poesia-classifica';
 import { CategoriaSrvService } from './../../services/categoria-srv.service';
 import { ComponimentiSvcService } from './../../services/componimenti-svc.service';
 import { Component } from '@angular/core';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+
 
 @Component({
   selector: 'app-classifica',
@@ -25,7 +28,7 @@ export class ClassificaComponent {
   sblocco: boolean = false
 
 
-  constructor(private ComponimentiSvcService : ComponimentiSvcService, private CategoriaSrvService: CategoriaSrvService, private service: ClassificaSvcService) {
+  constructor(private ComponimentiSvcService : ComponimentiSvcService, private CategoriaSrvService: CategoriaSrvService, public service: ClassificaSvcService) {
 
     this.CategoriaSrvService.getAllCategorie().subscribe(data => {
       this.Categorie = data
@@ -87,6 +90,19 @@ export class ClassificaComponent {
     console.log(this.service.categoria)
     this.service._search$.next();
   }
+
+  scaricaPDF() {
+    const data = document.getElementById('classifica')!;
+    html2canvas(data).then((canvas) => {
+      const imgWidth = 210;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const imgData = canvas.toDataURL('image/png');
+      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+      pdf.save('classifica.pdf');
+    });
+  }
+
 
 
 }

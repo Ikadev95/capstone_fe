@@ -1,7 +1,7 @@
 export interface iPoesiaClassifica {
   titolo: string;
   testo: string;
-  voto: number;
+  mediaVoti: number;
   nome: string;
   cognome: string;
   nomeCategoria: string;

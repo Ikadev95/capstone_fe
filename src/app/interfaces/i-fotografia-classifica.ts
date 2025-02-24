@@ -1,7 +1,7 @@
 export interface iFotografiaClassifica {
   titolo: string;
   percorsoFile: string;
-  voto: number
+  mediaVoti: number
   nome: string;
   cognome: string;
   nomeCategoria: string
