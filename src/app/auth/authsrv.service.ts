@@ -62,22 +62,22 @@ export class AuthsrvService {
     const userJson: string | null = localStorage.getItem('dati');
     if (!userJson) {
       console.log("Non ci sono dati nel localStorage");
-      this.router.navigate(['/auth']);
-      return;
+
+      // this.router.navigate(['/auth']);
+      // return;
     }
     else{
       const accessData: any = JSON.parse(userJson);
 
       try {
-        const decodedToken: any = jwtDecode(accessData.token); // Decodifica il token
+        const decodedToken: any = jwtDecode(accessData.token);
       } catch (error) {
         console.log("Errore nel decodificare il token", error);
         return;
       }
 
-      //aggiorna il BehaviorSubject
       this.userAuthSubject$.next(accessData);
-      //console.log("Utente ripristinato con successo", this.userAuthSubject$.getValue());
+
     }
 
 

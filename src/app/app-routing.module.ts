@@ -5,6 +5,7 @@ import { AdminGuard } from './guards/admin.guard';
 import { LoggedGuard } from './guards/logged-user.guard';
 import { GiudiceGuard } from './guards/giudice.guard';
 
+
 const routes: Routes = [
   { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) },
   { path: '', redirectTo: 'auth', pathMatch: "full"},
@@ -17,7 +18,7 @@ const routes: Routes = [
   { path: 'utenti', loadChildren: () => import('./pages/utenti/utenti.module').then(m => m.UtentiModule), canActivate: [AdminGuard] },
   { path: 'giudici', loadChildren: () => import('./pages/giudici/giudici.module').then(m => m.GiudiciModule), canActivate: [AdminGuard]},
   { path: 'componimenti', loadChildren: () => import('./pages/componimenti/componimenti.module').then(m => m.ComponimentiModule), canActivate: [GiudiceGuard] },
-  { path: 'classifica', loadChildren: () => import('./pages/classifica/classifica.module').then(m => m.ClassificaModule), canActivate: [AdminGuard]},
+  { path: 'classifica', loadChildren: () => import('./pages/classifica/classifica.module').then(m => m.ClassificaModule), canActivate: [AdminGuard]}
 
 ];
 

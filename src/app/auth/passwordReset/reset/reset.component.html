@@ -1,1 +1,17 @@
-<p>reset works!</p>
+<div class="container">
+  <h2>Reimposta la tua password</h2>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <form  [formGroup]="form" (submit)="resetPassword()"  class="form-group">
+    <label for="newPassword">Nuova password:</label>
+    <input type="password" id="newPassword" class="form-control" name="newPassword" formControlName="newPassword" />
+
+    <label for="confirmPassword">Conferma password:</label>
+    <input type="password" id="confirmPassword" class="form-control" name="confirmPassword" formControlName="confirmPassword" />
+
+    <button type="submit" class="btn btn-primary mt-3">Reimposta Password</button>
+  </form>
+</div>

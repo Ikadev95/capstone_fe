@@ -14,10 +14,9 @@ export class RequestComponent {
     form: FormGroup;
 
   constructor(private authSvc: AuthsrvService) {
- this.form = new FormGroup({
+  this.form = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
     })
-
   }
 
   request(){
