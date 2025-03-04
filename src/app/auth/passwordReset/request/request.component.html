@@ -1,0 +1,9 @@
+<div class="container">
+  <form [formGroup]="form" (ngSubmit)="request()">
+    <div class="form-group" >
+      <label for="email">Email</label>
+      <input type="email" class="form-control" id="email" name="email" formControlName="email" placeholder="Inserisci la tua email">
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Invia</button>
+  </form>
+</div>

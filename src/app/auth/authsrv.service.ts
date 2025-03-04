@@ -1,3 +1,4 @@
+import { iPasswordResetRequest } from './../interfaces/i-password-reset-request';
 import { DecodeTokenService } from './../services/decode-token.service';
 import { iAccess } from './interfaces/i-access';
 import { HttpClient } from '@angular/common/http';
@@ -81,6 +82,11 @@ export class AuthsrvService {
 
 
 
+  }
+  requestResetPassword(email: string) {
+    console.log(email)
+    const emailReq: iPasswordResetRequest = { email };
+    return this.http.post<string>(`${environment.baseUrl}auth/reset-password`, emailReq);
   }
 
 }
