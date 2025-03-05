@@ -103,4 +103,23 @@ export class GiudiciComponent {
     });
   }
 
+  eliminaGiudice(user_id: number) {
+    const conferma = confirm('Sei sicuro di voler eliminare questo giudice?');
+
+    if (!conferma) {
+      return;
+    }
+
+    this.service.eliminaGiudice(user_id).subscribe({
+      next: () => {
+        this.service._search$.next();
+        console.log('ok');
+      },
+      error: (err) => {
+        alert("Errore nell'eliminazione");
+        console.error(err);
+      }
+    });
+  }
+
 }

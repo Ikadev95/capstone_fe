@@ -37,7 +37,10 @@
                 </button>
                 <div ngbDropdownMenu>
                   <button class="dropdown-item" (click)="openModal(user.id)">
-                    <i class="fa-solid fa-pen-to-square"></i> Assegna
+                    <i class="fa-solid fa-pen-to-square"></i> Assegna categoria
+                  </button>
+                  <button class="dropdown-item" (click)="eliminaGiudice(user.id)" >
+                    <i class="fa-solid fa-trash-can" ></i> Elimina Giudice
                   </button>
                 </div>
               </div>

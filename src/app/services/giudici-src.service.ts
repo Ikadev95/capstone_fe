@@ -32,6 +32,11 @@ export class GiudiciSrcService {
     return this.http.post(`${this.baseUrl}categorie/${selectedCategoryId}/giudice/${selectedUserId}`, {})
   }
 
+  eliminaGiudice(id: number) {
+    let url = `${this.baseUrl}utenti/${id}/delete`;
+    return this.http.delete(url);
+  }
+
   private _loading$ = new BehaviorSubject<boolean>(true);
   _search$ = new Subject<void>();
   private _users$ = new BehaviorSubject<iGiudiceResponse[]>([]);
