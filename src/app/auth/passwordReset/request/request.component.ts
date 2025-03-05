@@ -12,6 +12,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class RequestComponent {
 
     form: FormGroup;
+    successMessage: string | null = null;
+    errorMessage: string | null = null;
 
   constructor(private authSvc: AuthsrvService) {
   this.form = new FormGroup({
@@ -23,10 +25,12 @@ export class RequestComponent {
     console.log(this.form.value)
     this.authSvc.requestResetPassword(this.form.value.email).subscribe({
       next: (res) => {
-        console.log(res)
+        this.successMessage = 'Se l\'email è registrata, riceverai un link per reimpostare la password.';
+        this.errorMessage = null;
+        this.form.reset();
       },
       error: (err) => {
-        console.log(err)
+        this.errorMessage = 'Errore nell\'invio della richiesta. Riprova.';
       }
   })
   }

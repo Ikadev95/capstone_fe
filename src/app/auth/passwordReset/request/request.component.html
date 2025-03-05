@@ -1,9 +1,32 @@
-<div class="container">
+<div class="container mt-4">
+  <h2>Recupero Password</h2>
+  <p>Inserisci la tua email per ricevere le istruzioni su come reimpostare la tua password.</p>
+
+  <div *ngIf="successMessage" class="alert alert-success" role="alert">
+    {{ successMessage }}
+  </div>
+  <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+    {{ errorMessage }}
+  </div>
+
   <form [formGroup]="form" (ngSubmit)="request()">
-    <div class="form-group" >
-      <label for="email">Email</label>
-      <input type="email" class="form-control" id="email" name="email" formControlName="email" placeholder="Inserisci la tua email">
+    <div class="form-group">
+      <label for="email" class="form-label">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        name="email"
+        formControlName="email"
+        placeholder="Inserisci la tua email"
+        aria-describedby="emailHelp"
+        [class.is-invalid]="form.get('email')?.invalid && form.get('email')?.touched"
+      >
+      <div *ngIf="form.get('email')?.invalid && form.get('email')?.touched" class="invalid-feedback">
+        Inserisci un'email valida.
+      </div>
     </div>
-    <button type="submit" class="btn btn-primary mt-2">Invia</button>
+
+    <button type="submit" class="btn btn-primary mt-2" [disabled]="form.invalid">Invia</button>
   </form>
 </div>

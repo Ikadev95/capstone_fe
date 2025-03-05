@@ -15,6 +15,7 @@ import { iPasswordResetConfirmRequest } from '../../../interfaces/i-password-res
 export class ResetComponent {
   token: string | null = null;
   errorMessage: string = '';
+  successMessage: string = '';
   form: FormGroup;
   email: string | null = '';
 
@@ -48,7 +49,7 @@ export class ResetComponent {
       this.http.post('http://localhost:8080/api/auth/reset-password/confirm', resetRequest)
         .subscribe({
           next: (response) => {
-            alert('Password aggiornata con successo!');
+            this.successMessage = 'Password reimpostata con successo';
             this.router.navigate(['/login']);
           },
           error: (err) => {

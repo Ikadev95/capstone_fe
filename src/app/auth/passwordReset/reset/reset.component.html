@@ -1,17 +1,54 @@
 <div class="container">
   <h2>Reimposta la tua password</h2>
 
-  <div *ngIf="errorMessage" class="error-message">
+  <div *ngIf="successMessage" class="alert alert-success" role="alert">
+    {{ successMessage }}
+  </div>
+  <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
     {{ errorMessage }}
   </div>
 
-  <form  [formGroup]="form" (submit)="resetPassword()"  class="form-group">
-    <label for="newPassword">Nuova password:</label>
-    <input type="password" id="newPassword" class="form-control" name="newPassword" formControlName="newPassword" />
+  <form [formGroup]="form" (ngSubmit)="resetPassword()" class="form-group">
 
-    <label for="confirmPassword">Conferma password:</label>
-    <input type="password" id="confirmPassword" class="form-control" name="confirmPassword" formControlName="confirmPassword" />
+    <div class="mb-3">
+      <label for="newPassword" class="form-label">Nuova password:</label>
+      <input
+        type="password"
+        id="newPassword"
+        class="form-control"
+        name="newPassword"
+        formControlName="newPassword"
+        aria-describedby="passwordHelp newPasswordError"
+      />
+      <div id="passwordHelp" class="form-text">
+        La password deve contenere almeno 8 caratteri, una lettera maiuscola e un numero.
+      </div>
+      <div *ngIf="form.controls['newPassword'].invalid && form.controls['newPassword'].touched"
+           id="newPasswordError" class="text-danger">
+        Inserisci una password valida.
+      </div>
+    </div>
 
-    <button type="submit" class="btn btn-primary mt-3">Reimposta Password</button>
+
+    <div class="mb-3">
+      <label for="confirmPassword" class="form-label">Conferma password:</label>
+      <input
+        type="password"
+        id="confirmPassword"
+        class="form-control"
+        name="confirmPassword"
+        formControlName="confirmPassword"
+        aria-describedby="confirmPasswordError"
+      />
+      <div *ngIf="form.controls['confirmPassword'].invalid && form.controls['confirmPassword'].touched"
+           id="confirmPasswordError" class="text-danger">
+        Le password non coincidono.
+      </div>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary mt-3" [disabled]="form.invalid">
+      Reimposta Password
+    </button>
   </form>
 </div>
