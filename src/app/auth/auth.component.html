@@ -16,12 +16,24 @@
 
           <form [formGroup]="form" (ngSubmit)="login()">
             <div class="form-group">
+              <label for="username" class="mt-2">Username</label>
               <input type="text" name="username" placeholder="mariorossi" class="form-control" formControlName="username">
-              <input type="password" name="password" placeholder="********" class="form-control mt-3" formControlName="password">
-              <p class="mt-2">Hai dimenticato la password? <a routerLink="request">Clicca qui</a></p>
+                <label for="password" class="mt-2">Password</label>
+              <div class="input-group">
+                <input
+                  [type]="showPassword ? 'text' : 'password'"
+                  class="form-control input-pass"
+                  formControlName="password"
+                  placeholder="********"
+                  id="password">
+                <button type="button" class="btn outline input-group-text" (click)="togglePasswordVisibility()">
+                  <i [class]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                </button>
+              </div>
+              <small class="mt-2">Hai dimenticato la password? <a routerLink="request">Clicca qui</a></small>
             </div>
             <button type="submit" class="btn btn-primary mt-3" [disabled]="form.invalid">Login</button>
-            <p class="mt-4">Non hai ancora un account? <a routerLink="register">Registrati</a> </p>
+            <p class="mt-5">Non hai ancora un account? <a routerLink="register">Registrati</a> </p>
           </form>
         </div>
         <div *ngIf="loginError" class="alert alert-danger mt-3 mx-2" role="alert">

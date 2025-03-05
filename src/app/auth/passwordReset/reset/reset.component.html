@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container mt-3">
   <h2>Reimposta la tua password</h2>
 
   <div *ngIf="successMessage" class="alert alert-success" role="alert">
@@ -10,16 +10,19 @@
 
   <form [formGroup]="form" (ngSubmit)="resetPassword()" class="form-group">
 
-    <div class="mb-3">
+    <div class="mb-3 mt-3">
       <label for="newPassword" class="form-label">Nuova password:</label>
-      <input
-        type="password"
-        id="newPassword"
-        class="form-control"
-        name="newPassword"
-        formControlName="newPassword"
-        aria-describedby="passwordHelp newPasswordError"
-      />
+      <div class="input-group">
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          class="form-control input-pass"
+          formControlName="password"
+          placeholder="********"
+          id="password">
+        <button type="button" class="btn outline input-group-text" (click)="togglePasswordVisibility()">
+          <i [class]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+        </button>
+      </div>
       <div id="passwordHelp" class="form-text">
         La password deve contenere almeno 8 caratteri, una lettera maiuscola e un numero.
       </div>
@@ -47,7 +50,7 @@
     </div>
 
 
-    <button type="submit" class="btn btn-primary mt-3" [disabled]="form.invalid">
+    <button type="submit" class="btn btn-primary mt-2" [disabled]="form.invalid">
       Reimposta Password
     </button>
   </form>

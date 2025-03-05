@@ -29,14 +29,13 @@
                 <div class="input-group">
                   <input
                     [type]="showPassword ? 'text' : 'password'"
-                    class="form-control"
+                    class="form-control input-pass"
                     formControlName="password"
-                    placeholder="********">
-                  <div class="input-group-append">
-                    <button type="button" class="btn btn-outline-primary" (click)="togglePasswordVisibility()">
-                      <i [class]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
-                    </button>
-                  </div>
+                    placeholder="********"
+                    id="password">
+                  <button type="button" class="btn outline input-group-text" (click)="togglePasswordVisibility()">
+                    <i [class]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                  </button>
                 </div>
 
                 <label for="username" class="mt-3">Username</label>

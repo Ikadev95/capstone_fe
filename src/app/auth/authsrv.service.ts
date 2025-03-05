@@ -30,7 +30,6 @@ export class AuthsrvService {
   autoLogoutTimer:any
 
   register(user:Partial<iUser>){
-   // console.log(user)
     return this.http.post<iAccess>(this.registerUrl,user)
   }
 
@@ -38,7 +37,6 @@ export class AuthsrvService {
     return this.http.post<iAccess>(this.loginUrl,userDates).pipe(
       tap( dati => {
           this.userAuthSubject$.next(dati)
-        //  console.log(this.userAuthSubject$.getValue())
 
           localStorage.setItem('dati',JSON.stringify(dati))
           this.decodeToken.getRoles()

@@ -16,6 +16,8 @@ import { DecodeTokenService } from '../services/decode-token.service';
 export class AuthComponent {
 
   form: FormGroup;
+  showPassword = false;
+
 
   constructor(private authSvc: AuthsrvService,private router: Router,
     private decodeToken: DecodeTokenService, private ProfileSvcService: ProfileSvcService) {
@@ -57,6 +59,10 @@ login() {
   } else {
     this.loginError = 'Compila correttamente tutti i campi prima di procedere.';
   }
+}
+
+togglePasswordVisibility() {
+  this.showPassword = !this.showPassword;
 }
 
 

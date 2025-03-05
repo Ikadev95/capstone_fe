@@ -18,6 +18,7 @@ export class ResetComponent {
   successMessage: string = '';
   form: FormGroup;
   email: string | null = '';
+  showPassword: boolean = false;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {
   this.form = new FormGroup({
@@ -57,5 +58,9 @@ export class ResetComponent {
           }
         });
     }
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }
