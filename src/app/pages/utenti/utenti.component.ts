@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { UserSvcService } from '../../services/user-svc.service';
 import { iUserPaged } from '../../interfaces/i-user-paged';
@@ -20,7 +21,7 @@ export class UtentiComponent {
   total$!: Observable<number>;
   @ViewChildren(NgbdSortableHeader) headers!: QueryList<NgbdSortableHeader>;
 
-  constructor(public service: UserSvcService) {
+  constructor(public service: UserSvcService, private router: Router) {
     this.user$ = this.service.users$;
     this.total$ = this.service.total$;
     this.updatePagination();
@@ -88,6 +89,11 @@ export class UtentiComponent {
         }
       });
     }
+  }
+
+  visualizzaPagamenti(id: number) {
+    this.service.user_id = id;
+    this.router.navigate(['pagamentiUser']);
   }
 
 }

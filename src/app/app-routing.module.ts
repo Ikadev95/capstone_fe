@@ -18,7 +18,8 @@ const routes: Routes = [
   { path: 'utenti', loadChildren: () => import('./pages/utenti/utenti.module').then(m => m.UtentiModule), canActivate: [AdminGuard] },
   { path: 'giudici', loadChildren: () => import('./pages/giudici/giudici.module').then(m => m.GiudiciModule), canActivate: [AdminGuard]},
   { path: 'componimenti', loadChildren: () => import('./pages/componimenti/componimenti.module').then(m => m.ComponimentiModule), canActivate: [GiudiceGuard] },
-  { path: 'classifica', loadChildren: () => import('./pages/classifica/classifica.module').then(m => m.ClassificaModule), canActivate: [AdminGuard]}
+  { path: 'classifica', loadChildren: () => import('./pages/classifica/classifica.module').then(m => m.ClassificaModule), canActivate: [AdminGuard]},
+  { path: 'pagamentiUser', loadChildren: () => import('./pages/pagamenti-user/pagamenti-user.module').then(m => m.PagamentiUserModule) }
 
 ];
 

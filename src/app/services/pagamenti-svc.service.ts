@@ -23,4 +23,9 @@ export class PagamentiSvcService {
       })
     );
   }
+
+  getPagamentiUserId(id: number) {
+    return this.http.get<iPagamentoResponse[]>(`${this.baseUrl}pagamenti/userFromAdmin?id=${id}`)
+
+  }
 }
