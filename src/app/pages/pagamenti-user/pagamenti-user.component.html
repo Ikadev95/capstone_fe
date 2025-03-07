@@ -12,12 +12,15 @@
     <div class="card-body">
       <div *ngIf="pagamenti.length > 0; else noPagamenti">
         <div *ngFor="let pagamento of pagamenti" class="pagamento">
-          <p><strong>Data:</strong> {{ pagamento.data_pagamento | date:'dd/MM/yyyy' }}</p>
-          <p><strong>Importo:</strong> {{ pagamento.importo }} €</p>
-          <p><strong>Metodo di pagamento:</strong> {{ pagamento.metodo_pagamento }}</p>
-          <p><strong>Numero foto pagate:</strong> {{ pagamento.numero_foto_pagate }}</p>
-          <p><strong>Numero poesie pagate:</strong> {{ pagamento.numero_poesie_pagate }}</p>
-          <p><strong>Ragione del pagamento:</strong> {{ pagamento.ragione_pagamento }}</p>
+          <div class="d-flex justify-content-between">
+            <h5><strong>{{ pagamento.importo }} € </strong> </h5>
+            <p><strong>{{ pagamento.data_pagamento | date:'dd/MM/yyyy' }}</strong> </p>
+          </div>
+          <p class="mb-1">Ragione del pagamento: <strong >{{ pagamento.ragione_pagamento }}</strong></p>
+          <p class="mb-1">Metodo di pagamento: <strong class="text-muted">{{ pagamento.metodo_pagamento }}</strong> </p>
+          <p *ngIf="pagamento.numero_foto_pagate > 0">Numero foto pagate: <strong class="text-muted">{{ pagamento.numero_foto_pagate }}</strong></p>
+          <p *ngIf="pagamento.numero_poesie_pagate > 0">Numero poesie pagate: <strong class="text-muted">{{ pagamento.numero_poesie_pagate }}</strong ></p>
+
         </div>
       </div>
       <ng-template #noPagamenti>
