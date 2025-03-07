@@ -91,9 +91,8 @@ export class UtentiComponent {
     }
   }
 
-  visualizzaPagamenti(id: number) {
-    this.service.user_id = id;
-    this.router.navigate(['pagamentiUser']);
+  visualizzaPagamenti(id: number, username:string) {
+    this.router.navigate(['pagamentiUser', id , username]);
   }
 
 }

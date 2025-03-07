@@ -1,5 +1,5 @@
-export interface iPagamentoResponse {
-  data_pagamento: string,
+export interface iPagamentoResponseWithDate {
+  data_pagamento: Date,
   metodo_pagamento: string,
   importo: number,
   stato_pagamento: string,
@@ -7,5 +7,4 @@ export interface iPagamentoResponse {
   numero_poesie_pagate: number,
   numero_foto_pagate: number,
   id_user: number
-
 }

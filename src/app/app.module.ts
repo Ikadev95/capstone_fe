@@ -16,7 +16,7 @@ import { IMAGE_CONFIG } from '@angular/common';
   declarations: [
     AppComponent,
     NavbarComponent,
-    FooterComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { PagamentiUserRoutingModule } from './pagamenti-user-routing.module';
 import { PagamentiUserComponent } from './pagamenti-user.component';
+import { PagamentoContantiComponent } from './pagamento-contanti/pagamento-contanti.component';
 
 
 @NgModule({
   declarations: [
-    PagamentiUserComponent
+    PagamentiUserComponent,
+    PagamentoContantiComponent
   ],
   imports: [
     CommonModule,

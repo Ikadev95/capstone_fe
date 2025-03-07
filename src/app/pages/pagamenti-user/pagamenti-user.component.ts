@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { UserSvcService } from '../../services/user-svc.service';
 import { PagamentiSvcService } from '../../services/pagamenti-svc.service';
 import { iPagamentoResponse } from '../../interfaces/i-pagamento-response';
+import { ActivatedRoute } from '@angular/router';
+import { iPagamentoResponseWithDate } from '../../interfaces/i-pagamento-response-with-date';
 
 @Component({
   selector: 'app-pagamenti-user',
@@ -11,11 +13,17 @@ import { iPagamentoResponse } from '../../interfaces/i-pagamento-response';
 })
 export class PagamentiUserComponent {
 
-  pagamenti: iPagamentoResponse[] = []
+  pagamenti: iPagamentoResponseWithDate[] = []
+  username : string = ""
 
-  constructor(public service : UserSvcService, private pagamentiService: PagamentiSvcService) {
+  constructor(public service : UserSvcService, private pagamentiService: PagamentiSvcService, private route: ActivatedRoute) {
+
+    const userId : number | null = Number(this.route.snapshot.paramMap.get('id'));
+    this.username = this.route.snapshot.paramMap.get('username') || ""
+
+    if(userId) {
     this.pagamentiService.getPagamentiUserId(
-      this.service.user_id
+      userId
     ).subscribe(
       (result) => {
         this.pagamenti = result
@@ -23,5 +31,6 @@ export class PagamentiUserComponent {
       }
     );
    }
+  }
 
 }

@@ -1,12 +1,18 @@
 <div class="container py-3">
-  <h2>Pagamenti </h2>
+  <div class="d-flex justify-content-between align-items-center">
+    <h2>Pagamenti {{username}}</h2>
+    <div>
+      <button class="btn btn-primary" [routerLink]="['contanti']"><i class="fa-solid fa-hand-holding-dollar"></i> + Pagamento in Contanti </button>
+    </div>
+  </div>
 
-  <div class="card">
+
+  <div class="card mt-3">
 
     <div class="card-body">
       <div *ngIf="pagamenti.length > 0; else noPagamenti">
         <div *ngFor="let pagamento of pagamenti" class="pagamento">
-          <p><strong>Data:</strong> {{ pagamento.data_pagemento | date:'dd/MM/yyyy' }}</p>
+          <p><strong>Data:</strong> {{ pagamento.data_pagamento | date:'dd/MM/yyyy' }}</p>
           <p><strong>Importo:</strong> {{ pagamento.importo }} €</p>
           <p><strong>Metodo di pagamento:</strong> {{ pagamento.metodo_pagamento }}</p>
           <p><strong>Numero foto pagate:</strong> {{ pagamento.numero_foto_pagate }}</p>

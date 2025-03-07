@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { iPagamentoResponse } from '../interfaces/i-pagamento-response';
 import { environment } from '../../environments/environment.development';
+import { iPagamentoResponseWithDate } from '../interfaces/i-pagamento-response-with-date';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,13 @@ export class PagamentiSvcService {
   }
 
   getPagamentiUserId(id: number) {
-    return this.http.get<iPagamentoResponse[]>(`${this.baseUrl}pagamenti/userFromAdmin?id=${id}`)
+    return this.http.get<iPagamentoResponseWithDate[]>(`${this.baseUrl}pagamenti/userFromAdmin?id=${id}`).pipe(
+      tap(data => {
+        data.forEach(pagamento => {
+          pagamento.data_pagamento = new Date(pagamento.data_pagamento);
+        })
+      })
+    )
 
   }
 }

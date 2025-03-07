@@ -21,8 +21,6 @@ export class UserSvcService {
   _pages$ = new BehaviorSubject<number[]>([]);
   private sorted = true;
   baseUrl:string = environment.baseUrl;
-  user_id = 0;
-  user_name = '';
 
   private _state: StateOnlyPagination = {
     page: 1,
