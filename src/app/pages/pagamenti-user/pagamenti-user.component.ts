@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { UserSvcService } from '../../services/user-svc.service';
 import { PagamentiSvcService } from '../../services/pagamenti-svc.service';
-import { iPagamentoResponse } from '../../interfaces/i-pagamento-response';
 import { ActivatedRoute } from '@angular/router';
 import { iPagamentoResponseWithDate } from '../../interfaces/i-pagamento-response-with-date';
 

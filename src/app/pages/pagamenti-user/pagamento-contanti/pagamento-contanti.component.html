@@ -1,1 +1,63 @@
-<p>pagamento-contanti works!</p>
+<div class="container mt-3">
+  <h2>Pagamento in contanti</h2>
+
+
+
+  <h4 class="mt-4" >Sezione Poesia</h4>
+
+  <div class="row"[ngClass]="{ 'disabledCard': poesieBlocco }">
+
+    <div class="col">
+      <div class="card shadow">
+        <div class="d-flex justify-content-between">
+          <span class="price">€ 10</span>
+          <div class="cont">
+              <input [disabled]="poesieBlocco" type="radio" name="sezione"  value="poesia-singolo" (change)="onSelectAmount(10, 'singolo-poesia')" />
+          </div>
+        </div>
+        <p>Partecipazione con<b> 1 POESIA</b> </p>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card shadow">
+        <div class="d-flex justify-content-between">
+          <span class="price">€ 20</span>
+          <div class="cont">
+            <input type="radio" [disabled]="poesieBlocco" name="sezione" value="poesia-tre" (change)="onSelectAmount(20, 'tre-poesia')" />
+          </div>
+        </div>
+        <p>Partecipazione con <b>3 POESIE</b> (sezioni A, B, C, D) </p>
+      </div>
+    </div>
+
+
+  </div>
+
+
+
+  <h4 class="mt-4" >Sezione Fotografia</h4>
+
+  <div class="card shadow" [ngClass]="{ 'disabledCard': fotoBlocco }">
+    <div class="d-flex justify-content-between">
+      <span class="price">€ 10</span>
+      <div class="cont">
+        <input
+          type="radio"
+          name="sezione"
+          value="fotografia"
+          (change)="onSelectAmount(10, 'fotografia')"
+          [disabled]="fotoBlocco" />
+      </div>
+    </div>
+    <p>Partecipazione con un <b>massimo</b> di <b>3 FOTOGRAFIE</b> (sezioni E, F)</p>
+  </div>
+
+
+
+  <div class="payment-info" >
+   <button class="btn btn-primary">Paga in contanti {{ selectedAmount }} €</button>
+  </div>
+
+</div>
+

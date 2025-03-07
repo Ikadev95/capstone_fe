@@ -34,7 +34,7 @@ li{
 ul{
   padding-left: 0px;
 }
-/* Create a custom radio button */
+
 
 .card{
   border-radius: 20px;
@@ -42,4 +42,8 @@ ul{
   background-color: white;
   border: 0px;
   padding: 20px;
+}
+.disabledCard{
+  background-color: #f0f0f0bd ;
+  box-shadow: none !important;
 }

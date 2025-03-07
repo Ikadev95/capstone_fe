@@ -1,0 +1,50 @@
+
+.payment-details {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+.price {
+  font-size: 1.5rem;
+  color: #55B2AA;
+  font-weight: bold;
+}
+.payment-info {
+  margin-top: 30px;
+
+}
+.icon-info {
+  font-size: 100px;
+  color: #55B2AA
+}
+.img-thumbnail {
+  max-width: 100px;
+  margin: 20px 0;
+}
+li{
+  text-decoration: none;
+  list-style: none;
+}
+.info{
+  padding: 12px;
+  background-color: #55b2aa1f;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+ul{
+  padding-left: 0px;
+}
+
+
+.card{
+  border-radius: 20px;
+  height: 100%;
+  background-color: white;
+  border: 0px;
+  padding: 20px;
+}
+
+.disabledCard{
+  background-color: #f0f0f0bd ;
+  box-shadow: none !important;
+}
