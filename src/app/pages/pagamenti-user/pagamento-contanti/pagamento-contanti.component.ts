@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PagamentiSvcService } from '../../../services/pagamenti-svc.service';
 import { iPagamentoResponseWithDate } from '../../../interfaces/i-pagamento-response-with-date';
 import { iItemPaymentCash,  } from '../../../interfaces/i-pagamento-cash';
@@ -25,7 +25,7 @@ export class PagamentoContantiComponent {
   poesieBlocco: boolean = false;
   fotoBlocco: boolean = false;
 
-  constructor(private route: ActivatedRoute, private pagamentiService : PagamentiSvcService) {
+  constructor(private route: ActivatedRoute, private pagamentiService : PagamentiSvcService, private router: Router) {
     this.id = Number(this.route.snapshot.paramMap.get('id'))
     this.username = this.route.snapshot.paramMap.get('username') || ""
   }
@@ -89,7 +89,8 @@ export class PagamentoContantiComponent {
           } else if(item.ragione === 'CONCORSO_FOTOGRAFIA'){
             this.fotoBlocco = true;
           }
-          this.selectedAmount = 0
+          this.selectedAmount = 0;
+          this.router.navigate(['pagamentiUser', this.id, this.username]);
         }
       })
 
