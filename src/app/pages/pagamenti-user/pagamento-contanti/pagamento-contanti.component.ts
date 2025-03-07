@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PagamentiSvcService } from '../../../services/pagamenti-svc.service';
 import { iPagamentoResponseWithDate } from '../../../interfaces/i-pagamento-response-with-date';
+import { iItemPaymentCash,  } from '../../../interfaces/i-pagamento-cash';
 
 @Component({
   selector: 'app-pagamento-contanti',
@@ -43,6 +44,8 @@ export class PagamentoContantiComponent {
               }
             });
 
+            console.log(this.id)
+
       }
 
       onSelectAmount(amount: number, tipo:string) {
@@ -62,6 +65,34 @@ export class PagamentoContantiComponent {
         this.numeroComponimenti = 3;
         this.ragione = 'CONCORSO_FOTOGRAFIA';
       }
+    }
+
+    checkout() {
+
+      const item : iItemPaymentCash = {
+        name: this.username,
+        amount: this.selectedAmount,
+        sezione: this.sezione,
+        numeroComponimenti: this.numeroComponimenti,
+        ragione: this.ragione,
+        id: this.id
+      }
+      console.log(item)
+
+      this.pagamentiService.pagamentoInContanti(
+        item
+      ).subscribe(data => {
+        if (data) {
+          console.log(data);
+          if(item.ragione === 'CONCORSO_POESIA'){
+            this.poesieBlocco = true;
+          } else if(item.ragione === 'CONCORSO_FOTOGRAFIA'){
+            this.fotoBlocco = true;
+          }
+          this.selectedAmount = 0
+        }
+      })
+
     }
 
 

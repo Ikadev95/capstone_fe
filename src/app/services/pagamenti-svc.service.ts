@@ -1,3 +1,4 @@
+import { iItemPaymentCash } from './../interfaces/i-pagamento-cash';
 import { BehaviorSubject, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -34,5 +35,10 @@ export class PagamentiSvcService {
       })
     )
 
+  }
+
+  pagamentoInContanti(item: iItemPaymentCash){
+    console.log(item)
+    return this.http.post(`${this.baseUrl}payments/pagamento-in-contanti`, item);
   }
 }

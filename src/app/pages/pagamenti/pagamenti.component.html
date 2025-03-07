@@ -12,10 +12,10 @@
 
   <h4 class="mt-4" >Sezione Poesia</h4>
 
-  <div class="row" [ngClass]="{ 'disabledCard': poesieBlocco }" >
+  <div class="row" >
 
     <div class="col">
-      <div class="card shadow">
+      <div class="card shadow" [ngClass]="{ 'disabledCard': poesieBlocco }">
         <div class="d-flex justify-content-between">
           <span class="price">€ 10</span>
           <div class="cont">
@@ -27,7 +27,7 @@
     </div>
 
     <div class="col">
-      <div class="card shadow">
+      <div class="card shadow" [ngClass]="{ 'disabledCard': poesieBlocco }">
         <div class="d-flex justify-content-between">
           <span class="price">€ 20</span>
           <div class="cont">
