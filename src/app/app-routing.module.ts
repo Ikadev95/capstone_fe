@@ -19,7 +19,8 @@ const routes: Routes = [
   { path: 'giudici', loadChildren: () => import('./pages/giudici/giudici.module').then(m => m.GiudiciModule), canActivate: [AdminGuard]},
   { path: 'componimenti', loadChildren: () => import('./pages/componimenti/componimenti.module').then(m => m.ComponimentiModule), canActivate: [GiudiceGuard] },
   { path: 'classifica', loadChildren: () => import('./pages/classifica/classifica.module').then(m => m.ClassificaModule), canActivate: [AdminGuard]},
-  { path: 'pagamentiUser/:id/:username', loadChildren: () => import('./pages/pagamenti-user/pagamenti-user.module').then(m => m.PagamentiUserModule) }
+  { path: 'pagamentiUser/:id/:username', loadChildren: () => import('./pages/pagamenti-user/pagamenti-user.module').then(m => m.PagamentiUserModule) , canActivate: [AdminGuard] },
+  { path: 'modificaConcorso', loadChildren: () => import('./pages/modifica-concorso/modifica-concorso.module').then(m => m.ModificaConcorsoModule) , canActivate: [AdminGuard] }
 
 ];
 

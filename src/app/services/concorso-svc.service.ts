@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { iConcorsoResponse } from '../interfaces/i-concorso-response';
 
 @Injectable({
@@ -27,5 +27,10 @@ export class ConcorsoSvcService {
         data.data_invio_opere = new Date(data.data_invio_opere)
       })
     );
+  }
+
+  updateDatiConcorso(formData: FormData): Observable<any> {
+    let url = `${environment.baseUrl}concorso/upload/files`
+    return this.http.post(`${url}`, formData)
   }
 }

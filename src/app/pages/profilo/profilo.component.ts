@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { iUtenteResponse } from '../../interfaces/i-utente-response';
 import { ProfileSvcService } from '../../services/profile-svc.service';
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-profilo',
@@ -36,7 +37,7 @@ export class ProfiloComponent {
         telefono: data.telefono || ''
       });
       if (data.avatar) {
-        this.avatarPreview = `http://localhost:8080/uploads/avatar/${data.avatar.split('/').pop()}`;
+        this.avatarPreview = `${environment.uploadUrl}uploads/avatar/${data.avatar.split('/').pop()}`;
       }
     });
   }
