@@ -10,9 +10,9 @@
     <div class="col">
       <div class="card shadow" [ngClass]="{ 'disabledCard': poesieBlocco }">
         <div class="d-flex justify-content-between">
-          <span class="price">€ 10</span>
+          <span class="price">€ {{datiConcorso.prezzo_singolo}}</span>
           <div class="cont">
-              <input [disabled]="poesieBlocco" type="radio" name="sezione"  value="poesia-singolo" (change)="onSelectAmount(10, 'singolo-poesia')" />
+              <input [disabled]="poesieBlocco" type="radio" name="sezione"  value="poesia-singolo" (change)="onSelectAmount(datiConcorso.prezzo_singolo , 'singolo-poesia')" />
           </div>
         </div>
         <p>Partecipazione con<b> 1 POESIA</b> </p>
@@ -22,9 +22,9 @@
     <div class="col">
       <div class="card shadow" [ngClass]="{ 'disabledCard': poesieBlocco }">
         <div class="d-flex justify-content-between">
-          <span class="price">€ 20</span>
+          <span class="price">€ {{datiConcorso.prezzo_tre}}</span>
           <div class="cont">
-            <input type="radio" [disabled]="poesieBlocco" name="sezione" value="poesia-tre" (change)="onSelectAmount(20, 'tre-poesia')" />
+            <input type="radio" [disabled]="poesieBlocco" name="sezione" value="poesia-tre" (change)="onSelectAmount(datiConcorso.prezzo_tre, 'tre-poesia')"  />
           </div>
         </div>
         <p>Partecipazione con <b>3 POESIE</b> (sezioni A, B, C, D) </p>
@@ -40,13 +40,13 @@
 
   <div class="card shadow" [ngClass]="{ 'disabledCard': fotoBlocco }">
     <div class="d-flex justify-content-between">
-      <span class="price">€ 10</span>
+      <span class="price">€ {{datiConcorso.prezzo_singolo}}</span>
       <div class="cont">
         <input
           type="radio"
           name="sezione"
           value="fotografia"
-          (change)="onSelectAmount(10, 'fotografia')"
+          (change)="onSelectAmount(datiConcorso.prezzo_singolo, 'fotografia')"
           [disabled]="fotoBlocco" />
       </div>
     </div>

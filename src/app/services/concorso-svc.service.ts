@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, tap } from 'rxjs';
+import { iConcorsoResponse } from '../interfaces/i-concorso-response';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,11 @@ export class ConcorsoSvcService {
    }
 
   getDatiConcorso() {
-    return this.http.get(`${this.baseUrl}concorso`);
+    return this.http.get <iConcorsoResponse>(`${this.baseUrl}concorso`).pipe(
+      tap(data =>{
+        data.data_premiazione = new Date(data.data_premiazione)
+        data.data_invio_opere = new Date(data.data_invio_opere)
+      })
+    );
   }
 }

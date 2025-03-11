@@ -6,5 +6,7 @@ export interface iConcorsoResponse {
   data_premiazione: Date;
   anno: string;
   bando:string;
+  prezzo_singolo: number;
+  prezzo_tre: number;
 
 }

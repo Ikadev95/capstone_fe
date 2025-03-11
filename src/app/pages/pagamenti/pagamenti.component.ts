@@ -1,6 +1,8 @@
+import { ConcorsoSvcService } from './../../services/concorso-svc.service';
 import { Component } from '@angular/core';
 import { PagamentiSvcService } from '../../services/pagamenti-svc.service';
 import { iPagamentoResponse } from '../../interfaces/i-pagamento-response';
+import { iConcorsoResponse } from '../../interfaces/i-concorso-response';
 
 @Component({
   selector: 'app-pagamenti',
@@ -20,8 +22,13 @@ export class PagamentiComponent {
   pagamentoFoto: iPagamentoResponse[] = [];
   poesieBlocco: boolean = false;
   fotoBlocco: boolean = false;
+  datiConcorso!: iConcorsoResponse;
 
-  constructor(private pagamentiService: PagamentiSvcService){}
+  constructor(private pagamentiService: PagamentiSvcService, private ConcorsoSvcService: ConcorsoSvcService){
+    this.ConcorsoSvcService.$concorsoSubject$.subscribe((data) => {
+      this.datiConcorso = data
+    })
+  }
 
   ngOnInit() {
 

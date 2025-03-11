@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PagamentiSvcService } from '../../../services/pagamenti-svc.service';
 import { iPagamentoResponseWithDate } from '../../../interfaces/i-pagamento-response-with-date';
 import { iItemPaymentCash,  } from '../../../interfaces/i-pagamento-cash';
+import { iConcorsoResponse } from '../../../interfaces/i-concorso-response';
+import { ConcorsoSvcService } from '../../../services/concorso-svc.service';
 
 @Component({
   selector: 'app-pagamento-contanti',
@@ -24,10 +26,15 @@ export class PagamentoContantiComponent {
   pagamentoFoto: iPagamentoResponseWithDate[] = [];
   poesieBlocco: boolean = false;
   fotoBlocco: boolean = false;
+  datiConcorso!: iConcorsoResponse;
 
-  constructor(private route: ActivatedRoute, private pagamentiService : PagamentiSvcService, private router: Router) {
+  constructor(private route: ActivatedRoute, private pagamentiService : PagamentiSvcService, private router: Router, private ConcorsoSvcService: ConcorsoSvcService) {
     this.id = Number(this.route.snapshot.paramMap.get('id'))
     this.username = this.route.snapshot.paramMap.get('username') || ""
+
+    this.ConcorsoSvcService.$concorsoSubject$.subscribe((data) => {
+      this.datiConcorso = data
+    })
   }
 
     ngOnInit() {

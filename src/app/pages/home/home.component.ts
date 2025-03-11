@@ -17,7 +17,7 @@ export class HomeComponent {
   constructor(private http: HttpClient, private ConcorsoSvcService: ConcorsoSvcService) {
     this.ConcorsoSvcService.$concorsoSubject$.subscribe((data) => {
       this.datiConcorso = data
-      console.log(this.datiConcorso);
+
     })
   }
 
