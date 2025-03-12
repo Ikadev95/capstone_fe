@@ -1,4 +1,4 @@
-import { Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, QueryList, TemplateRef, ViewChild, ViewChildren } from '@angular/core';
 import { GiudiciSrcService } from '../../services/giudici-src.service';
 import { Observable } from 'rxjs';
 import { NgbdSortableHeader, SortEvent } from '../../directives/sortable.directive';
@@ -24,6 +24,12 @@ export class GiudiciComponent {
   selectedCategoryId!: number;
   selectedUserId!: number;
   categorie$!: Observable<iCategoriaResponse[]>;
+  resultMessage: string = '';
+
+    @ViewChild('confirmDelete') confirmDelete!: TemplateRef<any>;
+    @ViewChild('resultModal') resultModal!: TemplateRef<any>;
+
+    userIdToDelete!: number;
 
   @ViewChild('modalContent') modalContent: any;
 
@@ -87,7 +93,7 @@ export class GiudiciComponent {
 
   assignCategory() {
     if (!this.selectedCategoryId || !this.selectedUserId) {
-      alert('Seleziona una categoria prima di assegnare!');
+      this.openResultModal('Seleziona una categoria prima di assegnare!');
       return;
     }
 
@@ -97,29 +103,39 @@ export class GiudiciComponent {
         this.service._search$.next();
       },
       error: (err) => {
-        alert('Errore nell\'assegnazione');
+        this.openResultModal('Errore nell\'assegnazione');
         console.error(err);
       }
     });
   }
 
-  eliminaGiudice(user_id: number) {
-    const conferma = confirm('Sei sicuro di voler eliminare questo giudice?');
+  openDeleteModal(id: number) {
+    this.userIdToDelete = id;
+    const modalRef = this.modalService.open(this.confirmDelete);
+    modalRef.result.then((result) => {
+      if (result === 'confirm') {
+        this.eliminaGiudice(this.userIdToDelete);
+      }
+    }).catch(() => {});
+  }
 
-    if (!conferma) {
-      return;
-    }
+  eliminaGiudice(user_id: number) {
 
     this.service.eliminaGiudice(user_id).subscribe({
       next: () => {
+        this.openResultModal('Giudice eliminato con successo!');
         this.service._search$.next();
-        console.log('ok');
       },
       error: (err) => {
-        alert("Errore nell'eliminazione");
+        this.openResultModal('Errore nell\'eliminazione dell giudice!');
         console.error(err);
       }
     });
+  }
+
+  openResultModal(message: string) {
+    this.resultMessage = message;
+    this.modalService.open(this.resultModal);
   }
 
 }

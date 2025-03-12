@@ -1,9 +1,10 @@
 import { Router } from '@angular/router';
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit, QueryList, TemplateRef, ViewChild, ViewChildren } from '@angular/core';
 import { UserSvcService } from '../../services/user-svc.service';
 import { iUserPaged } from '../../interfaces/i-user-paged';
 import { NgbdSortableHeader, SortEvent } from '../../directives/sortable.directive';
 import { Observable } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-utenti',
@@ -20,8 +21,13 @@ export class UtentiComponent {
   user$!: Observable<iUserPaged[]>;
   total$!: Observable<number>;
   @ViewChildren(NgbdSortableHeader) headers!: QueryList<NgbdSortableHeader>;
+  @ViewChild('confirmDelete') confirmDelete!: TemplateRef<any>;
+  @ViewChild('resultModal') resultModal!: TemplateRef<any>;
 
-  constructor(public service: UserSvcService, private router: Router) {
+  userIdToDelete!: number;
+  resultMessage: string = '';
+
+  constructor(public service: UserSvcService, private router: Router, private modalService: NgbModal) {
     this.user$ = this.service.users$;
     this.total$ = this.service.total$;
     this.updatePagination();
@@ -76,20 +82,34 @@ export class UtentiComponent {
     this.service._search$.next();
   }
 
-  deleteUser(id: number) {
-    if (confirm("Sei sicuro di voler eliminare questo utente?")) {
-      this.service.deleteUser(id).subscribe({
-        next: () => {
-          alert("Utente eliminato con successo!");
-          this.service._search$.next();
-        },
-        error: (err) => {
-          alert("Errore nell'eliminazione dell'utente!");
-          console.error(err);
-        }
-      });
-    }
+  openDeleteModal(id: number) {
+    this.userIdToDelete = id;
+    const modalRef = this.modalService.open(this.confirmDelete);
+    modalRef.result.then((result) => {
+      if (result === 'confirm') {
+        this.deleteUser(this.userIdToDelete);
+      }
+    }).catch(() => {});
   }
+
+  deleteUser(id: number) {
+    this.service.deleteUser(id).subscribe({
+      next: () => {
+        this.openResultModal('Utente eliminato con successo!');
+        this.service._search$.next();
+      },
+      error: (err) => {
+        this.openResultModal('Errore nell\'eliminazione dell\'utente!');
+        console.error(err);
+      }
+    });
+  }
+
+  openResultModal(message: string) {
+    this.resultMessage = message;
+    this.modalService.open(this.resultModal);
+  }
+
 
   visualizzaPagamenti(id: number, username:string) {
     this.router.navigate(['pagamentiUser', id , username]);

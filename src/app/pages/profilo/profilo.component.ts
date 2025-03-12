@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { iUtenteResponse } from '../../interfaces/i-utente-response';
 import { ProfileSvcService } from '../../services/profile-svc.service';
 import { environment } from '../../../environments/environment.development';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-profilo',
@@ -17,8 +18,13 @@ export class ProfiloComponent {
   datiUtente!: iUtenteResponse;
   selectedFile: File | null = null;
   alertMessage: { type: string, message: string } | null = null;
+      @ViewChild('confirmDelete') confirmDelete!: TemplateRef<any>;
+      @ViewChild('resultModal') resultModal!: TemplateRef<any>;
+      resultMessage: string = '';
+      userIdToDelete!: number;
 
-  constructor(private profileSrv: ProfileSvcService) {
+
+  constructor(private profileSrv: ProfileSvcService, private modalService: NgbModal) {
     this.profileForm = new FormGroup({
       nome: new FormControl('', Validators.required),
       cognome: new FormControl('', Validators.required),
@@ -48,12 +54,12 @@ export class ProfiloComponent {
 
     if (file) {
       if (!file.type.startsWith('image/')) {
-        alert('Il file selezionato non è un\'immagine valida.');
+        this.openResultModal('Il file selezionato non è un\'immagine valida.');
         return;
       }
 
       if (file.size > 5 * 1024 * 1024) {
-        alert('Il file è troppo grande! La dimensione massima consentita è di 5MB.');
+        this.openResultModal('Il file è troppo grande! La dimensione massima consentita è di 5MB.')
         return;
       }
 
@@ -68,11 +74,9 @@ export class ProfiloComponent {
           const width = img.width;
           const height = img.height;
 
-        //  console.log(`Risoluzione immagine: ${width}x${height}`);
-
 
           if (width > 4000 || height > 3000) {
-            alert(`La risoluzione dell'immagine è troppo alta (${width}x${height}). Il massimo consentito è 4000x3000.`);
+            this.openResultModal(`La risoluzione dell'immagine è troppo alta (${width}x${height}). Il massimo consentito è 4000x3000.`)
             return;
           }
 
@@ -128,4 +132,10 @@ export class ProfiloComponent {
   modifyModeFunction() {
     this.modifyMode = !this.modifyMode;
   }
+
+  openResultModal(message: string) {
+    this.resultMessage = message;
+    this.modalService.open(this.resultModal);
+  }
+
 }

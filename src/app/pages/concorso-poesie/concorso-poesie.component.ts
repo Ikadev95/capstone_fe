@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { Form, FormControl, FormGroup, Validators } from '@angular/forms';
 import { iCategoriaResponse } from '../../interfaces/i-categoria-response';
 import { HttpClient } from '@angular/common/http';
@@ -9,6 +9,7 @@ import { iPoesiaRequest } from '../../interfaces/i-poesia-request';
 import { iPoesiaResponse } from '../../interfaces/i-poesia-response';
 import { PagamentiSvcService } from '../../services/pagamenti-svc.service';
 import { iPagamentoResponse } from '../../interfaces/i-pagamento-response';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-concorso-poesie',
@@ -26,10 +27,14 @@ export class ConcorsoPoesieComponent {
    sblocco: boolean = false
    errorMessage: string | null = null;
    successMessage: string | null = null;
+       @ViewChild('confirmDelete') confirmDelete!: TemplateRef<any>;
+       @ViewChild('resultModal') resultModal!: TemplateRef<any>;
+       resultMessage: string = '';
+       userIdToDelete!: number;
 
 
   constructor(private http: HttpClient, private categoriaSrv: CategoriaSrvService,private decoder: DecodeTokenService,
-     private compService: ComponimentiSvcService, private pagamentiService: PagamentiSvcService) {
+     private compService: ComponimentiSvcService, private pagamentiService: PagamentiSvcService, private modalService: NgbModal) {
     this.form = new FormGroup({
        titolo: new FormControl('', [Validators.required]),
        id_categoria: new FormControl('',[Validators.required]),
@@ -100,10 +105,10 @@ export class ConcorsoPoesieComponent {
   }
 
   eliminaPoesia(id: number) {
-    if (confirm('Sei sicuro di voler eliminare questa poesia?')) {
+
       this.compService.deletePoesia(id).subscribe({
         next: () => {
-          alert('Poesia eliminata con successo!');
+          this.openResultModal('Poesia eliminata con successo!');
           window.location.reload();
 
         },
@@ -111,10 +116,25 @@ export class ConcorsoPoesieComponent {
           if(err.error.error === "L'elemento è collegato ad altri record e non può essere eliminato."){
             this.errorMessage = "la poesia selezionata è già stata votata da un giudice, non puoi eliminarla"
           }
-           alert(this.errorMessage)
+           this.openResultModal("la poesia selezionata è già stata votata da un giudice, non puoi eliminarla");
         }
       });
-    }
+
+  }
+
+  openResultModal(message: string) {
+    this.resultMessage = message;
+    this.modalService.open(this.resultModal);
+  }
+
+  openConfirmModal(id: number) {
+    this.userIdToDelete = id;
+    const modalRef = this.modalService.open(this.confirmDelete);
+    modalRef.result.then((result) => {
+      if (result === 'confirm') {
+        this.eliminaPoesia(this.userIdToDelete);
+      }
+    }).catch(() => {});
   }
 
 

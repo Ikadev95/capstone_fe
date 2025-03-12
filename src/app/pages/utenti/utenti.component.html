@@ -36,7 +36,7 @@
                     <i class="fa-solid fa-ellipsis-vertical"></i>
                   </button>
                   <div ngbDropdownMenu>
-                    <button class="dropdown-item" (click)="deleteUser(user.id)"><i class="fa-solid fa-trash-can"></i> Elimina</button>
+                    <button class="dropdown-item" (click)="openDeleteModal(user.id)"><i class="fa-solid fa-trash-can"></i> Elimina</button>
                     <button class="dropdown-item" (click)="visualizzaPagamenti(user.id, user.username)" > <i class="fa-solid fa-credit-card"></i> Pagamenti</button>
                   </div>
                 </div>
@@ -81,4 +81,37 @@
       </button>
     </div>
   </form>
+
+
+
+
+  <!-- MODALE DI CONFERMA ELIMINAZIONE -->
+<ng-template #confirmDelete let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Conferma eliminazione</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('cancel')"></button>
+  </div>
+  <div class="modal-body">
+    <p>Sei sicuro di voler eliminare questo utente?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel')">Annulla</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close('confirm')">Elimina</button>
+  </div>
+</ng-template>
+
+<!-- MODALE DI NOTIFICA SUCCESSO/ERRORE -->
+<ng-template #resultModal let-modal >
+  <div class="modal-header">
+    <h5 class="modal-title">Messaggio</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    <p>{{ resultMessage }}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="modal.close()">Chiudi</button>
+  </div>
+</ng-template>
+
 </div>

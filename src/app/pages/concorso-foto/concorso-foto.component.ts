@@ -1,13 +1,14 @@
 import { iPagamentoResponse } from './../../interfaces/i-pagamento-response';
 import { iFotografiaResponse } from './../../interfaces/i-fotografia-response';
 import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CategoriaSrvService } from '../../services/categoria-srv.service';
 import { iCategoriaResponse } from '../../interfaces/i-categoria-response';
 import { DecodeTokenService } from '../../services/decode-token.service';
 import { ComponimentiSvcService } from '../../services/componimenti-svc.service';
 import { PagamentiSvcService } from '../../services/pagamenti-svc.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -32,12 +33,16 @@ form: FormGroup;
   sblocco: boolean = false;
   errorMessage: string | null = null;
   successMessage: string | null = null;
-
+  resultMessage: string = '';
   hovered: boolean[] = [];
+    @ViewChild('confirmDelete') confirmDelete!: TemplateRef<any>;
+    @ViewChild('resultModal') resultModal!: TemplateRef<any>;
+
+    userIdToDelete!: number;
 
 
   constructor(private http: HttpClient, private categoriaSrv: CategoriaSrvService, private decoder: DecodeTokenService,
-    private compService: ComponimentiSvcService, private pagamentiService: PagamentiSvcService) {
+    private compService: ComponimentiSvcService, private pagamentiService: PagamentiSvcService, private modalService: NgbModal) {
     this.form = new FormGroup({
       file: new FormControl(null),
       titolo: new FormControl('', [Validators.required]),
@@ -77,12 +82,12 @@ form: FormGroup;
       const file = input.files[0];
 
       if (!file.type.startsWith('image/')) {
-        alert('Il file selezionato non è un\'immagine valida.');
+        this.openResultModal('Il file selezionato non è un\'immagine valida.');
         return;
       }
 
       if (file.size > 5 * 1024 * 1024) {
-        alert('Il file è troppo grande! La dimensione massima consentita è di 5MB.');
+        this.openResultModal('Il file è troppo grande! La dimensione massima consentita è di 5MB.');
         return;
       }
 
@@ -100,7 +105,7 @@ form: FormGroup;
          // console.log(`Risoluzione immagine: ${width}x${height}`);
 
           if (width > 4000 || height > 3000) {
-            alert(`La risoluzione dell'immagine è troppo alta (${width}x${height}). Il massimo consentito è 4000x3000.`);
+            this.openResultModal(`La risoluzione dell'immagine è troppo alta (${width}x${height}). Il massimo consentito è 4000x3000.`);
             return;
           }
 
@@ -114,7 +119,8 @@ form: FormGroup;
 
     if (this.Fotografie.length >= this.fotoPagate) {
       this.sblocco = false
-      alert("Hai raggiunto il numero massimo di foto che puoi caricare!");
+      this.openResultModal("Hai raggiunto il numero massimo di foto che puoi caricare!");
+
       return;
     }
     this.sblocco = true
@@ -138,6 +144,7 @@ form: FormGroup;
         },
         (error) => {
           console.error('Errore durante il caricamento dell\'immagine:', error);
+          this.openResultModal("Errore durante il caricamento dell\'immagine:");
         }
       )
       this.resetFile();
@@ -188,7 +195,7 @@ form: FormGroup;
 
   deletePhoto(id: number) {
 
-    if (confirm('Sei sicuro di voler eliminare questa foto?')) {
+
       this.compService.deleteFoto(id).subscribe({
         next: (response) => {
           this.successMessage = response.toString() || "Foto eliminata con successo!";
@@ -203,10 +210,26 @@ form: FormGroup;
           if(err.error.error === "L'elemento è collegato ad altri record e non può essere eliminato."){
             this.errorMessage = "la fotografia selezionata è già stata votata da un giudice, non puoi eliminarla"
           }
-           alert(this.errorMessage)
+          this.openResultModal("la fotografia selezionata è già stata votata da un giudice, non puoi eliminarla");
         }
       });
-    }
+
+  }
+
+
+  openResultModal(message: string) {
+    this.resultMessage = message;
+    this.modalService.open(this.resultModal);
+  }
+
+  openConfirmModal(id: number) {
+    this.userIdToDelete = id;
+    const modalRef = this.modalService.open(this.confirmDelete);
+    modalRef.result.then((result) => {
+      if (result === 'confirm') {
+        this.deletePhoto(this.userIdToDelete);
+      }
+    }).catch(() => {});
   }
 
 

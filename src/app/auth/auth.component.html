@@ -1,49 +1,79 @@
 <div class="container-fluid container-xl cover">
   <div class="row">
-    <!-- colonna sx-->
+    <!-- Colonna sinistra con immagini -->
     <div class="col-12 col-md-7 position-relative py-5 d-none d-md-block">
-      <img src="poesia.jpg" class="fluid-img img1">
-      <img src="fotografia.jpg" class="fluid-img img2">
+      <img src="poesia.jpg" class="fluid-img img1" alt="Immagine poesia">
+      <img src="fotografia.jpg" class="fluid-img img2" alt="Immagine fotografia">
       <div class="circle"></div>
     </div>
-     <!-- colonna login-->
-    <div class=" col-12 col-md-5 py-md-5 px-3 ">
-      <div class="form-container p-4 pt-0 ">
+
+    <!-- Colonna destra con form login -->
+    <div class="col-12 col-md-5 py-md-5 px-3">
+      <div class="form-container p-4 pt-0">
         <div class="p-3">
           <h2>Bentornato! 👋🏻</h2>
-
-          <p>Da qui potrai accedere alla tua area riservata per partecipare al concorso del Circolo Airali!</p>
+          <p>Accedi alla tua area riservata per partecipare al concorso del Circolo Airali.</p>
 
           <form [formGroup]="form" (ngSubmit)="login()">
             <div class="form-group">
-              <label for="username" class="mt-2">Username</label>
-              <input type="text" name="username" placeholder="mariorossi" class="form-control" formControlName="username">
-                <label for="password" class="mt-2">Password</label>
+              <!-- Username -->
+              <label for="username" class="mt-3">Username <span class="text-danger">*</span></label>
+              <input
+                type="text"
+                name="username"
+                id="username"
+                placeholder="mariorossi"
+                class="form-control"
+                formControlName="username"
+                required
+                [class.is-invalid]="form.get('username')?.invalid && form.get('username')?.touched">
+              <div class="invalid-feedback" *ngIf="form.get('username')?.invalid && form.get('username')?.touched">
+                Inserisci il tuo username.
+              </div>
+
+              <!-- Password -->
+              <label for="password" class="mt-3">Password <span class="text-danger">*</span></label>
               <div class="input-group">
                 <input
                   [type]="showPassword ? 'text' : 'password'"
                   class="form-control input-pass"
                   formControlName="password"
+                  id="password"
                   placeholder="********"
-                  id="password">
-                <button type="button" class="btn outline input-group-text" (click)="togglePasswordVisibility()">
+                  required
+                  [class.is-invalid]="form.get('password')?.invalid && form.get('password')?.touched">
+                <button type="button" class="btn outline input-group-text" (click)="togglePasswordVisibility()" aria-label="Mostra/Nascondi password">
                   <i [class]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
                 </button>
               </div>
-              <small class="mt-2">Hai dimenticato la password? <a routerLink="request">Clicca qui</a></small>
+              <div class="invalid-feedback" *ngIf="form.get('password')?.invalid && form.get('password')?.touched">
+                Inserisci la tua password.
+              </div>
+
+              <!-- Recupero password -->
+              <small class="mt-2 d-block">
+                Hai dimenticato la password? <a routerLink="request">Clicca qui</a>
+              </small>
             </div>
-            <button type="submit" class="btn btn-primary mt-3" [disabled]="form.invalid">Login</button>
-            <p class="mt-5">Non hai ancora un account? <a routerLink="register">Registrati</a> </p>
+
+            <!-- Pulsante Login -->
+            <button type="submit" class="btn btn-primary mt-4 w-100" [disabled]="form.invalid">
+              Accedi
+            </button>
+
+            <!-- Link registrazione -->
+            <p class="mt-4 ">
+              Non hai ancora un account? <a routerLink="register">Registrati</a>
+            </p>
+
+            <!-- Messaggio di errore login -->
+            <div *ngIf="loginError" class="alert alert-danger mt-3" role="alert">
+              {{ loginError }}
+            </div>
+
           </form>
         </div>
-        <div *ngIf="loginError" class="alert alert-danger mt-3 mx-2" role="alert">
-          {{ loginError }}
-        </div>
-
-   </div>
-
       </div>
-
+    </div>
   </div>
-
 </div>
