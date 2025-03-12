@@ -1,11 +1,11 @@
 <div class="container mt-3">
-  <h2>Dati Concorso</h2>
+  <h2>🖋️ Dati Concorso</h2>
 
-  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="p-4">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="py-4">
 
     <!-- Tema -->
     <div class="mb-3">
-      <label for="tema" class="form-label">Tema</label>
+      <label for="tema" class="form-label m-0">Tema</label>
       <input id="tema" type="text" class="form-control" formControlName="tema"
         [class.is-invalid]="form.get('tema')?.invalid && form.get('tema')?.touched">
       <div class="invalid-feedback" *ngIf="form.get('tema')?.invalid && form.get('tema')?.touched">
@@ -15,7 +15,7 @@
 
     <!-- Data Invio Opere -->
     <div class="mb-3">
-      <label for="data_invio_opere" class="form-label">Data invio opere</label>
+      <label for="data_invio_opere" class="form-label m-0">Data invio opere</label>
       <input id="data_invio_opere" type="date" class="form-control" formControlName="data_invio_opere"
         [class.is-invalid]="form.get('data_invio_opere')?.invalid && form.get('data_invio_opere')?.touched">
       <div class="invalid-feedback" *ngIf="form.get('data_invio_opere')?.invalid && form.get('data_invio_opere')?.touched">
@@ -25,7 +25,7 @@
 
     <!-- Data Premiazione -->
     <div class="mb-3">
-      <label for="data_premiazione" class="form-label">Data premiazione</label>
+      <label for="data_premiazione" class="form-label m-0">Data premiazione</label>
       <input id="data_premiazione" type="datetime-local" class="form-control" formControlName="data_premiazione"
         [class.is-invalid]="form.get('data_premiazione')?.invalid && form.get('data_premiazione')?.touched">
       <div class="invalid-feedback" *ngIf="form.get('data_premiazione')?.invalid && form.get('data_premiazione')?.touched">
@@ -35,7 +35,7 @@
 
     <!-- Anno -->
     <div class="mb-3">
-      <label for="anno" class="form-label">Anno</label>
+      <label for="anno" class="form-label m-0">Anno</label>
       <input id="anno" type="text" class="form-control" formControlName="anno"
         [class.is-invalid]="form.get('anno')?.invalid && form.get('anno')?.touched">
       <div class="invalid-feedback" *ngIf="form.get('anno')?.invalid && form.get('anno')?.touched">
@@ -45,7 +45,7 @@
 
     <!-- Prezzo Singolo -->
     <div class="mb-3">
-      <label for="prezzo_singolo" class="form-label">Prezzo singolo</label>
+      <label for="prezzo_singolo" class="form-label m-0">Prezzo singolo</label>
       <input id="prezzo_singolo" type="number" step="0.01" class="form-control" formControlName="prezzo_singolo"
         [class.is-invalid]="form.get('prezzo_singolo')?.invalid && form.get('prezzo_singolo')?.touched">
       <div class="invalid-feedback" *ngIf="form.get('prezzo_singolo')?.invalid && form.get('prezzo_singolo')?.touched">
@@ -55,7 +55,7 @@
 
     <!-- Prezzo Tre -->
     <div class="mb-3">
-      <label for="prezzo_tre" class="form-label">Prezzo per tre opere</label>
+      <label for="prezzo_tre" class="form-label m-0">Prezzo per tre opere</label>
       <input id="prezzo_tre" type="number" step="0.01" class="form-control" formControlName="prezzo_tre"
         [class.is-invalid]="form.get('prezzo_tre')?.invalid && form.get('prezzo_tre')?.touched">
       <div class="invalid-feedback" *ngIf="form.get('prezzo_tre')?.invalid && form.get('prezzo_tre')?.touched">
@@ -65,7 +65,7 @@
 
     <!-- Caricamento Bando -->
     <div class="mb-3">
-      <label for="bando" class="form-label">Carica bando (PDF)</label>
+      <label for="bando" class="form-label m-0">Carica bando (PDF)</label>
       <input id="bando" type="file" accept="application/pdf" class="form-control" (change)="onFileChange($event)">
       <div class="form-text">Puoi caricare un file PDF aggiornato del bando.</div>
     </div>

@@ -8,7 +8,7 @@ import { GiudiceGuard } from './guards/giudice.guard';
 
 const routes: Routes = [
   { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) },
-  { path: '', redirectTo: 'auth', pathMatch: "full"},
+  { path: '', redirectTo: 'home', pathMatch: "full"},
   { path: 'home', loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule) },
   { path: 'pagamenti', loadChildren: () => import('./pages/pagamenti/pagamenti.module').then(m => m.PagamentiModule), canActivate: [UserGuard] },
   { path: 'concorsoFoto', loadChildren: () => import('./pages/concorso-foto/concorso-foto.module').then(m => m.ConcorsoFotoModule), canActivate: [UserGuard] },

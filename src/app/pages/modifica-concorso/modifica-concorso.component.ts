@@ -86,6 +86,8 @@ export class ModificaConcorsoComponent {
       next: (response) => {
         console.log('Concorso aggiornato con successo!', response);
 
+        this.ConcorsoSvcService.getDatiConcorso()
+
       },
       error: (err) => {
         console.error('Errore durante l\'aggiornamento del concorso', err);

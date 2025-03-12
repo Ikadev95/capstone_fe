@@ -13,11 +13,7 @@ export class ConcorsoSvcService {
   $concorsoSubject$ = new BehaviorSubject<any | null>(null);
 
   constructor(private http:HttpClient) {
-    this.getDatiConcorso().subscribe(
-      (data) => {
-        this.$concorsoSubject$.next(data);
-      }
-    );
+    this.getDatiConcorso()
    }
 
   getDatiConcorso() {
@@ -26,7 +22,11 @@ export class ConcorsoSvcService {
         data.data_premiazione = new Date(data.data_premiazione)
         data.data_invio_opere = new Date(data.data_invio_opere)
       })
-    );
+    ).subscribe(
+      (data) => {
+        this.$concorsoSubject$.next(data);
+      }
+    );;
   }
 
   updateDatiConcorso(formData: FormData): Observable<any> {

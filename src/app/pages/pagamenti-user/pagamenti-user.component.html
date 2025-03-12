@@ -7,11 +7,11 @@
   </div>
 
 
-  <div class="card mt-3">
+  <div class="card mt-3"  *ngFor="let pagamento of pagamenti"  >
 
-    <div class="card-body">
+    <div class="card-body ">
       <div *ngIf="pagamenti.length > 0; else noPagamenti">
-        <div *ngFor="let pagamento of pagamenti" class="pagamento">
+        <div >
           <div class="d-flex justify-content-between">
             <h5><strong>{{ pagamento.importo }} € </strong> </h5>
             <p><strong>{{ pagamento.data_pagamento | date:'dd/MM/yyyy' }}</strong> </p>
