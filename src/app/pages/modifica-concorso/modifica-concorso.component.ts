@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators, ValueChangeEvent } from '@angular/forms';
 import { ConcorsoSvcService } from './../../services/concorso-svc.service';
 import { Component } from '@angular/core';
@@ -13,8 +14,9 @@ import { iConcorsoResponse } from '../../interfaces/i-concorso-response';
 export class ModificaConcorsoComponent {
   form!: FormGroup;
   datiConcorso!: iConcorsoResponse;
+  errore:boolean =  false;
 
-  constructor(private ConcorsoSvcService: ConcorsoSvcService) {
+  constructor(private ConcorsoSvcService: ConcorsoSvcService, private Router: Router) {
 
 
     this.form = new FormGroup({
@@ -22,7 +24,7 @@ export class ModificaConcorsoComponent {
       data_invio_opere: new FormControl('', Validators.required),
       data_premiazione: new FormControl('', Validators.required),
       anno: new FormControl('', Validators.required),
-      bando: new FormControl(null), // file opzionale
+      bando: new FormControl(null),
       prezzo_singolo: new FormControl('', Validators.required),
       prezzo_tre: new FormControl('', Validators.required)
     });
@@ -40,7 +42,7 @@ export class ModificaConcorsoComponent {
         ? new Date(data.data_premiazione).toISOString().slice(0, 16)  // per input type="datetime-local"
         : '';
 
-      // Patch del form con valori formattati
+
       this.form.patchValue({
         tema: data.tema || '',
         data_invio_opere: dataInvioOpere,
@@ -84,13 +86,17 @@ export class ModificaConcorsoComponent {
 
     this.ConcorsoSvcService.updateDatiConcorso(formData).subscribe({
       next: (response) => {
-        console.log('Concorso aggiornato con successo!', response);
 
         this.ConcorsoSvcService.getDatiConcorso()
+
+        this.Router.navigate(['home']);
+
 
       },
       error: (err) => {
         console.error('Errore durante l\'aggiornamento del concorso', err);
+
+        this.errore = true
 
       }
     });

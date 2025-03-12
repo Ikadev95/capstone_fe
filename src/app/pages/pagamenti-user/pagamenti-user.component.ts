@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { UserSvcService } from '../../services/user-svc.service';
 import { PagamentiSvcService } from '../../services/pagamenti-svc.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { iPagamentoResponseWithDate } from '../../interfaces/i-pagamento-response-with-date';
 
 @Component({
@@ -15,7 +15,7 @@ export class PagamentiUserComponent {
   pagamenti: iPagamentoResponseWithDate[] = []
   username : string = ""
 
-  constructor(public service : UserSvcService, private pagamentiService: PagamentiSvcService, private route: ActivatedRoute) {
+  constructor(public service : UserSvcService, private pagamentiService: PagamentiSvcService, private route: ActivatedRoute, private router : Router) {
 
     const userId : number | null = Number(this.route.snapshot.paramMap.get('id'));
     this.username = this.route.snapshot.paramMap.get('username') || ""
@@ -30,6 +30,10 @@ export class PagamentiUserComponent {
       }
     );
    }
+  }
+
+  goback(){
+    this.router.navigate(['utenti'])
   }
 
 }

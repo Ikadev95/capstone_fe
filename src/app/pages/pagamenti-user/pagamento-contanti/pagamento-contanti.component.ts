@@ -27,6 +27,7 @@ export class PagamentoContantiComponent {
   poesieBlocco: boolean = false;
   fotoBlocco: boolean = false;
   datiConcorso!: iConcorsoResponse;
+  link: string = ""
 
   constructor(private route: ActivatedRoute, private pagamentiService : PagamentiSvcService, private router: Router, private ConcorsoSvcService: ConcorsoSvcService) {
     this.id = Number(this.route.snapshot.paramMap.get('id'))
@@ -52,6 +53,9 @@ export class PagamentoContantiComponent {
             });
 
             console.log(this.id)
+
+            this.link = "pagamentiUser/" + this.id + "/" + this.username
+            console.log(this.link)
 
       }
 
@@ -102,6 +106,10 @@ export class PagamentoContantiComponent {
       })
 
     }
+
+    goBack() {
+      this.router.navigate(['pagamentiUser', this.id, this.username]);
+     }
 
 
 }

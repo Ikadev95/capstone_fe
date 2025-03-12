@@ -1,8 +1,13 @@
 <div class="container py-3">
-  <div class="d-flex justify-content-between align-items-center">
-    <h2>Pagamenti {{username}}</h2>
+
+  <a class="btn link mx-0 px-0" (click)="goback()">
+    <i class="fa-solid fa-arrow-left"></i> Torna agli utenti
+  </a>
+
+  <div class="d-flex justify-content-between align-items-center mt-2">
+    <h2>💰 Pagamenti <span class="light">{{username}}</span></h2>
     <div>
-      <button class="btn btn-primary" [routerLink]="['contanti']"><i class="fa-solid fa-hand-holding-dollar"></i> + Pagamento in Contanti </button>
+      <button class="btn btn-primary" [routerLink]="['contanti']"><i class="fa-solid fa-hand-holding-dollar"></i> Pagamento in Contanti </button>
     </div>
   </div>
 
@@ -13,10 +18,10 @@
       <div *ngIf="pagamenti.length > 0; else noPagamenti">
         <div >
           <div class="d-flex justify-content-between">
-            <h5><strong>{{ pagamento.importo }} € </strong> </h5>
-            <p><strong>{{ pagamento.data_pagamento | date:'dd/MM/yyyy' }}</strong> </p>
+            <h6><strong>{{ pagamento.ragione_pagamento }} </strong>  </h6>
+            <h5><strong>{{ pagamento.importo }}€ </strong> </h5>
           </div>
-          <p class="mb-1">Ragione del pagamento: <strong >{{ pagamento.ragione_pagamento }}</strong></p>
+          <p class="mb-1">Data del pagamento: <strong >{{ pagamento.data_pagamento | date:'dd/MM/yyyy'}}</strong></p>
           <p class="mb-1">Metodo di pagamento: <strong class="text-muted">{{ pagamento.metodo_pagamento }}</strong> </p>
           <p *ngIf="pagamento.numero_foto_pagate > 0">Numero foto pagate: <strong class="text-muted">{{ pagamento.numero_foto_pagate }}</strong></p>
           <p *ngIf="pagamento.numero_poesie_pagate > 0">Numero poesie pagate: <strong class="text-muted">{{ pagamento.numero_poesie_pagate }}</strong ></p>
