@@ -5,11 +5,11 @@
     <div class="col-12 col-md-6 col-lg-4" *ngFor="let componiment of componiments$ | async">
 
       <app-poesia-card *ngIf="componiment.categoriaId <= 4" [componiment]="componiment">
-        <button class="btn btn-primary" (click)="openModal(componiment)">Vota</button>
+        <button *ngIf="!bloccoData" class="btn btn-primary" (click)="openModal(componiment)">Vota</button>
       </app-poesia-card>
 
       <app-foto-card *ngIf="componiment.categoriaId > 4" [componiment]="componiment">
-        <button class="btn btn-primary" (click)="openModal(componiment)">Vota</button>
+        <button  *ngIf="!bloccoData" class="btn btn-primary" (click)="openModal(componiment)">Vota</button>
       </app-foto-card>
 
     </div>

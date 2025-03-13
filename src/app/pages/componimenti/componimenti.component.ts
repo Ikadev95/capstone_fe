@@ -5,6 +5,7 @@ import { ComponimentiJudgeSvcService } from '../../services/componimenti-judge-s
 import { Observable } from 'rxjs';
 import { iComponimentoFullResponse } from '../../interfaces/i-componimento-full-response';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConcorsoSvcService } from '../../services/concorso-svc.service';
 
 @Component({
   selector: 'app-componimenti',
@@ -25,14 +26,23 @@ export class ComponimentiComponent {
     comment: string = '';
     componimentToVote: any;
     previousVote: number | null = null;
+    dataBlocco!: Date;
+    bloccoData =  true;
 
 
-  constructor(public service: ComponimentiJudgeSvcService, private modalService: NgbModal) {
+  constructor(public service: ComponimentiJudgeSvcService, private modalService: NgbModal, private ConcorsoSvcService: ConcorsoSvcService) {
     this.componiments$ = this.service.componimenti$;
     this.total$ = this.service.total$;
     this.updatePagination();
     this.service._search$.next();
     this.pages$ = this.service._pages$;
+
+    this.ConcorsoSvcService.$concorsoSubject$.subscribe((data) => {
+      this.dataBlocco = new Date(data.data_invio_opere);
+      if(this.dataBlocco < new Date() && data.data_premiazione > new Date()){
+        this.bloccoData = false;
+      }
+    })
 
   }
 
