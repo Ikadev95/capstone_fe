@@ -1,6 +1,10 @@
 <div class="container mt-3">
-  <h2>{{ !service.sorting ? '📸 🪶Partecipanti al concorso' : '👩🏻‍💼👨🏽‍💼 Utenti' }}</h2>
+<div class="d-flex justify-content-between">
+    <h2>{{ !service.sorting ? '📸 🪶Partecipanti al concorso' : '👩🏻‍💼👨🏽‍💼 Utenti' }}</h2>
 
+   <div class="d-flex align-items-center"> <button class="btn btn-primary" (click)="onToggle()">{{ service.sorting ? '📸 🪶Partecipanti al concorso' : '👩🏻‍💼👨🏽‍💼 Utenti' }}</button></div>
+
+</div>
   <form class="my-3">
     <div class="d-flex justify-content-between align-items-center mb-3 ">
       <div class="row">
@@ -18,10 +22,8 @@
           <span class="col col-form-label">Caricamento...</span>
         }
       </div>
-      <label class="switch">
-        <input type="checkbox" (change)="onToggle($event)">
-        <span class="slider round"></span>
-      </label>
+
+
     </div>
 
     <div class="row mt-4">

@@ -77,7 +77,7 @@ export class UtentiComponent {
     this.service._search$.next();
   }
 
-  onToggle(event: Event){
+  onToggle(){
     this.service.sorting = !this.service.sorting
     this.service._search$.next();
   }
