@@ -202,8 +202,10 @@ form: FormGroup;
           this.compService.getFotoByUser().subscribe(
             {
               next: () => this.getFoto()
+
             }
           )
+          this.sblocco = true;
 
         },
         error: (err) =>{

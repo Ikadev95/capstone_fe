@@ -19,7 +19,13 @@
 
       <div class="mb-3">
         <label for="password" class="form-label my-0">Password</label>
-        <input id="password" formControlName="password" type="password" class="form-control" />
+        <div class="input-group">
+          <input [type]="showPassword ? 'text' : 'password'" class="form-control input-pass"
+            formControlName="password"  id="password">
+          <button type="button" class="btn outline input-group-text" (click)="togglePasswordVisibility()">
+            <i [class]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+          </button>
+        </div>
         <div *ngIf="form.get('password')?.invalid && form.get('password')?.touched" class="text-danger">
           Il campo Password è obbligatorio.
         </div>

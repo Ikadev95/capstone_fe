@@ -41,4 +41,10 @@ form: FormGroup
 
     }
   }
+
+  showPassword = false;
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
 }
