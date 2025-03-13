@@ -3,9 +3,13 @@
 
     <h2 class="mt-3" >📸 Foto Caricate</h2>
 
-    <div class="void mt-3 px-3 py-4"  *ngIf="!sblocco && Fotografie.length == 0">
+    <div class="void mt-3 px-3 py-4"  *ngIf="!sblocco && Fotografie.length == 0 &&!bloccoData">
       <p class="m-0"><i class="fa-solid fa-circle-info mx-2"></i>  Per caricare le tue fotografie procedi prima con il pagamento </p>
     </div>
+
+    <div class="void mt-3 px-3 py-4" *ngIf="bloccoData  ">
+       <p class="m-0"><i class="fa-solid fa-circle-info mx-2"></i> Il concorso è terminato, non puoi caricare o eliminare le fotografie  </p>
+      </div>
 
     <div class="row mt-4"  *ngIf="sblocco || Fotografie.length > 0">
 
@@ -71,13 +75,13 @@
 
 
 
-      <h3 *ngIf="sblocco">Carica le tue foto</h3>
+      <h3 *ngIf="sblocco && !bloccoData">Carica le tue foto</h3>
 
       <div *ngIf="previewUrl">
         <img [src]="previewUrl" alt="Anteprima" class="preview" />
       </div>
 
-      <form *ngIf="sblocco" [formGroup]="form" (submit)="uploadFile()">
+      <form *ngIf="sblocco && !bloccoData" [formGroup]="form" (submit)="uploadFile()">
 
         <div *ngIf="!selectedFile" class="upload-container mt-3">
           <input

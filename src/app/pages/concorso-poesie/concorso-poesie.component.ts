@@ -10,6 +10,7 @@ import { iPoesiaResponse } from '../../interfaces/i-poesia-response';
 import { PagamentiSvcService } from '../../services/pagamenti-svc.service';
 import { iPagamentoResponse } from '../../interfaces/i-pagamento-response';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConcorsoSvcService } from '../../services/concorso-svc.service';
 
 @Component({
   selector: 'app-concorso-poesie',
@@ -27,18 +28,28 @@ export class ConcorsoPoesieComponent {
    sblocco: boolean = false
    errorMessage: string | null = null;
    successMessage: string | null = null;
-       @ViewChild('confirmDelete') confirmDelete!: TemplateRef<any>;
-       @ViewChild('resultModal') resultModal!: TemplateRef<any>;
-       resultMessage: string = '';
-       userIdToDelete!: number;
+  @ViewChild('confirmDelete') confirmDelete!: TemplateRef<any>;
+  @ViewChild('resultModal') resultModal!: TemplateRef<any>;
+  resultMessage: string = '';
+  userIdToDelete!: number;
+  dataBlocco!: Date;
+  bloccoData =  false;
 
 
   constructor(private http: HttpClient, private categoriaSrv: CategoriaSrvService,private decoder: DecodeTokenService,
-     private compService: ComponimentiSvcService, private pagamentiService: PagamentiSvcService, private modalService: NgbModal) {
+     private compService: ComponimentiSvcService, private pagamentiService: PagamentiSvcService, private modalService: NgbModal,
+     private ConcorsoSvcService: ConcorsoSvcService) {
     this.form = new FormGroup({
        titolo: new FormControl('', [Validators.required]),
        id_categoria: new FormControl('',[Validators.required]),
        testo: new FormControl('',[Validators.required])
+    })
+
+    this.ConcorsoSvcService.$concorsoSubject$.subscribe((data) => {
+      this.dataBlocco = new Date(data.data_invio_opere);
+      if(this.dataBlocco < new Date()){
+        this.bloccoData = true;
+      }
     })
 
   }
@@ -128,6 +139,11 @@ export class ConcorsoPoesieComponent {
   }
 
   openConfirmModal(id: number) {
+
+    if(this.bloccoData){
+      this.openResultModal("Il concorso è terminato, non è possibile eliminare la poesia");
+      return
+    }
     this.userIdToDelete = id;
     const modalRef = this.modalService.open(this.confirmDelete);
     modalRef.result.then((result) => {

@@ -4,11 +4,15 @@
   <div class="void mt-3 px-3 py-4" *ngIf="Poesie.length == 0 && sblocco" >
     <p class="m-0"><i class="fa-solid fa-circle-info mx-2"></i> Non ci sono poesie caricate </p>
   </div>
-  <div class="void mt-3 px-3 py-4" *ngIf="!sblocco && Poesie.length == 0">
+  <div class="void mt-3 px-3 py-4" *ngIf="!sblocco && Poesie.length == 0 && !bloccoData">
     <p class="m-0"><i class="fa-solid fa-circle-info mx-2"></i> Per caricare le tue opere procedi prima con il pagamento </p>
   </div>
 
-  <div class="row row-gap-3">
+  <div class="void mt-3 px-3 py-4" *ngIf="bloccoData">
+    <p class="m-0"><i class="fa-solid fa-circle-info mx-2"></i> Il concorso è terminato, non puoi caricare o eliminare le poesie  </p>
+   </div>
+
+  <div class="row row-gap-3 mt-4">
       <div class="col-12 col-md-6 col-lg-4" *ngFor="let poesia of Poesie">
         <div class="card mb-3 border-0 shadow">
           <div class="card-body d-flex flex-column">

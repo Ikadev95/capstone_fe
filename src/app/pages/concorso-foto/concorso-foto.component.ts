@@ -1,3 +1,4 @@
+import { ConcorsoSvcService } from './../../services/concorso-svc.service';
 import { iPagamentoResponse } from './../../interfaces/i-pagamento-response';
 import { iFotografiaResponse } from './../../interfaces/i-fotografia-response';
 import { HttpClient } from '@angular/common/http';
@@ -35,19 +36,27 @@ form: FormGroup;
   successMessage: string | null = null;
   resultMessage: string = '';
   hovered: boolean[] = [];
-    @ViewChild('confirmDelete') confirmDelete!: TemplateRef<any>;
-    @ViewChild('resultModal') resultModal!: TemplateRef<any>;
-
-    userIdToDelete!: number;
+  @ViewChild('confirmDelete') confirmDelete!: TemplateRef<any>;
+  @ViewChild('resultModal') resultModal!: TemplateRef<any>;
+  dataBlocco!: Date;
+  userIdToDelete!: number;
+  bloccoData =  false;
 
 
   constructor(private http: HttpClient, private categoriaSrv: CategoriaSrvService, private decoder: DecodeTokenService,
-    private compService: ComponimentiSvcService, private pagamentiService: PagamentiSvcService, private modalService: NgbModal) {
+    private compService: ComponimentiSvcService, private pagamentiService: PagamentiSvcService, private modalService: NgbModal,
+    private ConcorsoSvcService: ConcorsoSvcService) {
     this.form = new FormGroup({
       file: new FormControl(null),
       titolo: new FormControl('', [Validators.required]),
       id_categoria: new FormControl('',[Validators.required])
     });
+    this.ConcorsoSvcService.$concorsoSubject$.subscribe((data) => {
+      this.dataBlocco = new Date(data.data_invio_opere);
+      if(this.dataBlocco < new Date()){
+        this.bloccoData = true;
+      }
+    })
   }
 
   ngOnInit() {
@@ -196,6 +205,7 @@ form: FormGroup;
   deletePhoto(id: number) {
 
 
+
       this.compService.deleteFoto(id).subscribe({
         next: (response) => {
           this.successMessage = response.toString() || "Foto eliminata con successo!";
@@ -225,6 +235,11 @@ form: FormGroup;
   }
 
   openConfirmModal(id: number) {
+    if(this.bloccoData){
+      this.openResultModal("Il concorso è terminato, non è possibile eliminare la foto");
+      return
+    }
+
     this.userIdToDelete = id;
     const modalRef = this.modalService.open(this.confirmDelete);
     modalRef.result.then((result) => {

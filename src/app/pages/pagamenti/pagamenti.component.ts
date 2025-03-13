@@ -23,11 +23,20 @@ export class PagamentiComponent {
   poesieBlocco: boolean = false;
   fotoBlocco: boolean = false;
   datiConcorso!: iConcorsoResponse;
+  bloccoData =  false;
+  dataBlocco!: Date;
 
   constructor(private pagamentiService: PagamentiSvcService, private ConcorsoSvcService: ConcorsoSvcService){
     this.ConcorsoSvcService.$concorsoSubject$.subscribe((data) => {
       this.datiConcorso = data
+      this.dataBlocco = this.datiConcorso.data_invio_opere;
+      if(this.dataBlocco < new Date()){
+        this.bloccoData = true;
+        this.poesieBlocco = true;
+        this.fotoBlocco = true;
+      }
     })
+
   }
 
   ngOnInit() {

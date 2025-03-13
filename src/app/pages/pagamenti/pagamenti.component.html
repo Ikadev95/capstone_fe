@@ -5,8 +5,11 @@
     <p>A sostegno delle spese organizzative, è richiesto un contributo di partecipazione per il concorso. Scegli la sezione a cui desideri partecipare e procedi con il pagamento.</p>
   </div>
 
-  <div class="info">
+  <div class="info" *ngIf="!bloccoData">
     <p class="m-0"> <i class="fa-solid fa-circle-info mx-2"></i> {{fotoBlocco && poesieBlocco ? 'Grazie per aver partecipato al concorso!' : 'Per completare il pagamento, seleziona la tua quota e procedi con il pagamento online.'}} </p>
+  </div>
+  <div class="info" *ngIf="bloccoData">
+    <p class="m-0"> <i class="fa-solid fa-circle-info mx-2"></i> Il concorso è terminato </p>
   </div>
 
 
