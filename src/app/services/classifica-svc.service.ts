@@ -102,4 +102,7 @@ export class ClassificaSvcService {
   getFoto(nomeCategoria: string, page:number, size: number) {
     return this.http.get<PagedClassificaFoto>(`${this.baseUrl}fotografie/categoria?nomeCategoria=${nomeCategoria}&page=${page}&size=${size}`)
   }
+  getPoesia(id: number) {
+    return this.http.get<iPoesiaClassifica>(`${this.baseUrl}poesie/${id}`)
+  }
 }

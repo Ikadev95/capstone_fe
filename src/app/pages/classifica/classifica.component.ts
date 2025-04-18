@@ -33,6 +33,7 @@ export class ClassificaComponent {
   @ViewChild('fotoModal', { static: true }) fotoModal: any;
   @ViewChild('poesiaModal', { static: true }) poesiaModal: any;
   baseUrl:string = environment.baseUrl;
+  testoPoesiaSelezionata: string = ''
 
 
   constructor(private ComponimentiSvcService : ComponimentiSvcService, private CategoriaSrvService: CategoriaSrvService, public service: ClassificaSvcService, private modalService: NgbModal) {
@@ -51,6 +52,9 @@ export class ClassificaComponent {
    }
 
    apriModale(poesia: any) {
+    this.service.getPoesia(poesia.id).subscribe(data => {
+      this.testoPoesiaSelezionata = data.testo
+    })
     console.log('poesia.id:', poesia.id);
     this.poesiaSelezionata = poesia;
     this.modalService.open(this.poesiaModal, { centered: true, size: 'lg' });
