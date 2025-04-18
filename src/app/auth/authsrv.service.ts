@@ -49,7 +49,7 @@ export class AuthsrvService {
     this.userAuthSubject$.next(null)
     this.decodeToken.userRoles$.next([]);
     localStorage.removeItem('dati')
-    this.router.navigate(['/auth'])
+    this.router.navigate([''])
     .then(() => {
       window.location.reload();
     });

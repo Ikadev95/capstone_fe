@@ -5,9 +5,11 @@ import { iFotografiaClassifica } from '../../interfaces/i-fotografia-classifica'
 import { iPoesiaClassifica } from '../../interfaces/i-poesia-classifica';
 import { CategoriaSrvService } from './../../services/categoria-srv.service';
 import { ComponimentiSvcService } from './../../services/componimenti-svc.service';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { environment } from '../../../environments/environment';
 
 
 @Component({
@@ -26,9 +28,14 @@ export class ClassificaComponent {
   currentPage: number = 1;
   total$!: Observable<number>;
   sblocco: boolean = false
+  poesiaSelezionata!: iPoesiaClassifica
+  fotoSelezionata!: iFotografiaClassifica;
+  @ViewChild('fotoModal', { static: true }) fotoModal: any;
+  @ViewChild('poesiaModal', { static: true }) poesiaModal: any;
+  baseUrl:string = environment.baseUrl;
 
 
-  constructor(private ComponimentiSvcService : ComponimentiSvcService, private CategoriaSrvService: CategoriaSrvService, public service: ClassificaSvcService) {
+  constructor(private ComponimentiSvcService : ComponimentiSvcService, private CategoriaSrvService: CategoriaSrvService, public service: ClassificaSvcService, private modalService: NgbModal) {
 
     this.CategoriaSrvService.getAllCategorie().subscribe(data => {
       this.Categorie = data
@@ -42,6 +49,17 @@ export class ClassificaComponent {
     this.Foto$ = this.service._foto$;
     this.Poesie$ = this.service._poesie$
    }
+
+   apriModale(poesia: any) {
+    console.log('poesia.id:', poesia.id);
+    this.poesiaSelezionata = poesia;
+    this.modalService.open(this.poesiaModal, { centered: true, size: 'lg' });
+  }
+
+  apriModaleFoto(foto: any) {
+    this.fotoSelezionata = foto;
+    this.modalService.open(this.fotoModal, { centered: true, size: 'lg' });
+  }
 
 
    updatePagination(): void {
@@ -99,3 +117,4 @@ export class ClassificaComponent {
 
 
 }
+

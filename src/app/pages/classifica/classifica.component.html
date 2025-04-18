@@ -35,9 +35,23 @@
         <td>{{ poesia.titolo }}</td>
         <td [style.white-space]="'pre-line'">{{ poesia.nome }} {{ poesia.cognome }}</td>
         <td>{{ poesia.mediaVoti }}</td>
+          <!-- in questo punto voglio inserire un pulsante per visualizzare la poesia in una modale devo passarmi poesia-->
+          <td>
+            <button class="btn btn-primary btn-sm" (click)="apriModale(poesia)">Leggi</button>
+          </td>
       </tr>
     </tbody>
   </table>
+
+  <ng-template #poesiaModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">{{ poesiaSelezionata.titolo }}</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body">
+      <p class="flex-grow-1" [style.white-space]="'pre-line'">{{ poesiaSelezionata.id }}</p>
+    </div>
+  </ng-template>
 
   <table class="table mt-4" *ngIf="sblocco">
     <thead>
@@ -57,10 +71,24 @@
         <td>{{ foto.titolo }}</td>
         <td [style.white-space]="'pre-line'">{{ foto.nome }} {{ foto.cognome }}</td>
         <td>{{ foto.mediaVoti }}</td>
+        <!-- in questo punto voglio inserire un pulsante per visualizzare l'immagine in una modale-->
+        <td>
+          <button class="btn btn-primary btn-sm" (click)="apriModaleFoto(foto)">Visualizza</button>
+        </td>
       </tr>
     </tbody>
   </table>
 </div>
+
+<ng-template #fotoModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">{{ fotoSelezionata.titolo }}</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body text-center">
+    <img [src]="baseUrl + 'uploads/fotografie/' + (fotoSelezionata.percorsoFile.split('/').pop())" class="img-fluid imgDem" alt="Foto selezionata" >
+  </div>
+</ng-template>
 
 <div class="d-flex justify-content-between p-2 mt-3">
   <!-- Paginazione personalizzata -->

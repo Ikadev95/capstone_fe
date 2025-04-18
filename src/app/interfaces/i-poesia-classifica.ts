@@ -5,4 +5,5 @@ export interface iPoesiaClassifica {
   nome: string;
   cognome: string;
   nomeCategoria: string;
+  id: number;
 }

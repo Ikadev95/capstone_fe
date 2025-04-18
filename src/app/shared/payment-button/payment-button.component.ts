@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
 import { loadStripe, Stripe } from '@stripe/stripe-js';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-payment-button',
@@ -17,6 +18,7 @@ export class PaymentButtonComponent {
   @Input() ragione: string = '';
   @Input() selectedAmount: number = 0
   stripe: Stripe | null = null;
+  baseUrl:string = environment.baseUrl;
 
 
   constructor(private http: HttpClient) {}
@@ -37,7 +39,7 @@ export class PaymentButtonComponent {
       ragione: this.ragione
     }];
 
-    this.http.post<{ id: string }>('http://localhost:8080/api/payments/create-checkout-session', {
+    this.http.post<{ id: string }>(`${this.baseUrl}payments/create-checkout-session`, {
       items
     }).subscribe(async (session) => {
       const { error } = await this.stripe!.redirectToCheckout({ sessionId: session.id });
